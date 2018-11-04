@@ -1,0 +1,8 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]V:\ZEDBOARD\workspace\sdk\fsbl\Debug\fsbl.elf
+	V:\ZEDBOARD\workspace\sdk\ZEDBOARD_hw_platform_0\zynq_soc_wrapper.bit
+	V:\ZEDBOARD\workspace\sdk\d5mWeb\Debug\d5mWeb.elf
+	[load = 0x7200000]V:\ZEDBOARD\http\image.mfs
+}

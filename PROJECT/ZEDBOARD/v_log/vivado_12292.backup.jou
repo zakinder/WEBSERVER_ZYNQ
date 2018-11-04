@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.2 (64-bit)
+# SW Build 1909853 on Thu Jun 15 18:39:09 MDT 2017
+# IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
+# Start of session at: Sat Nov  3 03:08:34 2018
+# Process ID: 12292
+# Current directory: V:/ZEDBOARD/v_log
+# Command line: vivado.exe -source ../scripts/script_main.tcl -mode batch -notrace -tclargs --run 2 --clean 2 --boardpart 1
+# Log file: V:/ZEDBOARD/v_log/vivado.log
+# Journal file: V:/ZEDBOARD/v_log\vivado.jou
+#-----------------------------------------------------------
+source ../scripts/script_main.tcl -notrace
