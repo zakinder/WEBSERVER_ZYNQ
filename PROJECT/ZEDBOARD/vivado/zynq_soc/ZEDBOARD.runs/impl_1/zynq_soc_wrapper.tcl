@@ -48,9 +48,9 @@ set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param general.maxThreads 4
-  set_param board.repoPaths V:/ZEDBOARD/board_files
+  set_param board.repoPaths V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/board_files
   open_checkpoint zynq_soc_wrapper_routed.dcp
-  set_property webtalk.parent_dir V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.cache/wt [current_project]
+  set_property webtalk.parent_dir V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.cache/wt [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
   catch { write_mem_info -force zynq_soc_wrapper.mmi }
   write_bitstream -force zynq_soc_wrapper.bit 

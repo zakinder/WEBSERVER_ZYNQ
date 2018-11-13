@@ -9,35 +9,35 @@
     ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 
 source zynq_soc_CLK_GEN_148MHZ_0.tcl -notrace
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 397.129 ; gain = 82.277
-INFO: [Synth 8-638] synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0.v:71]
-INFO: [Synth 8-638] synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0_clk_wiz' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0_clk_wiz.v:69]
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 396.883 ; gain = 82.922
+INFO: [Synth 8-638] synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0.v:71]
+INFO: [Synth 8-638] synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0_clk_wiz' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0_clk_wiz.v:69]
 INFO: [Synth 8-638] synthesizing module 'IBUF' [C:/Xilinx/Vivado/2017.2/scripts/rt/data/unisim_comp.v:14470]
 INFO: [Synth 8-256] done synthesizing module 'IBUF' (1#1) [C:/Xilinx/Vivado/2017.2/scripts/rt/data/unisim_comp.v:14470]
 INFO: [Synth 8-638] synthesizing module 'MMCME2_ADV' [C:/Xilinx/Vivado/2017.2/scripts/rt/data/unisim_comp.v:20759]
 INFO: [Synth 8-256] done synthesizing module 'MMCME2_ADV' (2#1) [C:/Xilinx/Vivado/2017.2/scripts/rt/data/unisim_comp.v:20759]
 INFO: [Synth 8-638] synthesizing module 'BUFG' [C:/Xilinx/Vivado/2017.2/scripts/rt/data/unisim_comp.v:607]
 INFO: [Synth 8-256] done synthesizing module 'BUFG' (3#1) [C:/Xilinx/Vivado/2017.2/scripts/rt/data/unisim_comp.v:607]
-INFO: [Synth 8-256] done synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0_clk_wiz' (4#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0_clk_wiz.v:69]
-INFO: [Synth 8-256] done synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0' (5#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0.v:71]
-Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 446.758 ; gain = 131.906
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 446.758 ; gain = 131.906
+INFO: [Synth 8-256] done synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0_clk_wiz' (4#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0_clk_wiz.v:69]
+INFO: [Synth 8-256] done synthesizing module 'zynq_soc_CLK_GEN_148MHZ_0' (5#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_CLK_GEN_148MHZ_0/zynq_soc_CLK_GEN_148MHZ_0.v:71]
+Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 446.805 ; gain = 132.844
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 446.805 ; gain = 132.844
 INFO: [Device 21-403] Loading part xc7z020clg484-1
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.047 . Memory (MB): peak = 714.875 ; gain = 0.000
-Finished Constraint Validation : Time (s): cpu = 00:00:41 ; elapsed = 00:00:49 . Memory (MB): peak = 714.875 ; gain = 400.023
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:41 ; elapsed = 00:00:49 . Memory (MB): peak = 714.875 ; gain = 400.023
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:41 ; elapsed = 00:00:49 . Memory (MB): peak = 714.875 ; gain = 400.023
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:41 ; elapsed = 00:00:49 . Memory (MB): peak = 714.875 ; gain = 400.023
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:42 ; elapsed = 00:00:50 . Memory (MB): peak = 714.875 ; gain = 400.023
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:09 ; elapsed = 00:01:19 . Memory (MB): peak = 762.336 ; gain = 447.484
-Finished Timing Optimization : Time (s): cpu = 00:01:09 ; elapsed = 00:01:19 . Memory (MB): peak = 762.336 ; gain = 447.484
-Finished Technology Mapping : Time (s): cpu = 00:01:09 ; elapsed = 00:01:19 . Memory (MB): peak = 771.867 ; gain = 457.016
-Finished IO Insertion : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.029 . Memory (MB): peak = 714.719 ; gain = 0.000
+Finished Constraint Validation : Time (s): cpu = 00:00:41 ; elapsed = 00:00:46 . Memory (MB): peak = 714.719 ; gain = 400.758
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:41 ; elapsed = 00:00:46 . Memory (MB): peak = 714.719 ; gain = 400.758
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:41 ; elapsed = 00:00:47 . Memory (MB): peak = 714.719 ; gain = 400.758
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:41 ; elapsed = 00:00:47 . Memory (MB): peak = 714.719 ; gain = 400.758
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:42 ; elapsed = 00:00:48 . Memory (MB): peak = 714.719 ; gain = 400.758
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:10 ; elapsed = 00:01:17 . Memory (MB): peak = 766.527 ; gain = 452.566
+Finished Timing Optimization : Time (s): cpu = 00:01:10 ; elapsed = 00:01:17 . Memory (MB): peak = 766.527 ; gain = 452.566
+Finished Technology Mapping : Time (s): cpu = 00:01:10 ; elapsed = 00:01:17 . Memory (MB): peak = 776.129 ; gain = 462.168
+Finished IO Insertion : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
 
 Report Cell Usage: 
 +------+-----------+------+
@@ -47,5 +47,5 @@ Report Cell Usage:
 |2     |MMCME2_ADV |     1|
 |3     |IBUF       |     1|
 +------+-----------+------+
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:11 ; elapsed = 00:01:21 . Memory (MB): peak = 771.867 ; gain = 457.016
-synth_design: Time (s): cpu = 00:01:16 ; elapsed = 00:01:27 . Memory (MB): peak = 782.473 ; gain = 470.320
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:12 ; elapsed = 00:01:19 . Memory (MB): peak = 776.129 ; gain = 462.168
+synth_design: Time (s): cpu = 00:01:15 ; elapsed = 00:01:25 . Memory (MB): peak = 791.051 ; gain = 480.055

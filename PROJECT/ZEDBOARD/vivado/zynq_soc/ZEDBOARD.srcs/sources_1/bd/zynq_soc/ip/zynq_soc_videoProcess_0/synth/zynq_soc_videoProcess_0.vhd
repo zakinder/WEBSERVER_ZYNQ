@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: xilinx.com:user:videoProcess:1.0
--- IP Revision: 8
+-- IP Revision: 11
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -188,8 +188,8 @@ ARCHITECTURE zynq_soc_videoProcess_0_arch OF zynq_soc_videoProcess_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF zynq_soc_videoProcess_0_arch : ARCHITECTURE IS "zynq_soc_videoProcess_0,videoProcess_v1_0,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF zynq_soc_videoProcess_0_arch: ARCHITECTURE IS "zynq_soc_videoProcess_0,videoProcess_v1_0,{x_ipProduct=Vivado 2017.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=videoProcess,x_ipVersion=1.0,x_ipCoreRevision=8,x_ipLanguage=VHDL,x_ipSimLanguage=MIXED,C_config_axis_DATA_WIDTH=32,C_config_axis_ADDR_WIDTH=7,C_rgb_s_axis_TDATA_WIDTH=16,C_m_axis_mm2s_TDATA_WIDTH=16,C_m_axis_mm2s_START_COUNT=32,C_rgb_m_axis_TDATA_WIDTH=16,C_rgb_m_axis_START_COUNT=32,revision_number=0x10212018,i_data_width=8,s_data_width=16,i_precision=12,i_full_range=FALSE,conf_d" & 
-"ata_width=32,conf_addr_width=4,img_width=4096,p_data_width=11}";
+  ATTRIBUTE CORE_GENERATION_INFO OF zynq_soc_videoProcess_0_arch: ARCHITECTURE IS "zynq_soc_videoProcess_0,videoProcess_v1_0,{x_ipProduct=Vivado 2017.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=videoProcess,x_ipVersion=1.0,x_ipCoreRevision=11,x_ipLanguage=VHDL,x_ipSimLanguage=MIXED,C_config_axis_DATA_WIDTH=32,C_config_axis_ADDR_WIDTH=7,C_rgb_s_axis_TDATA_WIDTH=16,C_m_axis_mm2s_TDATA_WIDTH=16,C_m_axis_mm2s_START_COUNT=32,C_rgb_m_axis_TDATA_WIDTH=16,C_rgb_m_axis_START_COUNT=32,revision_number=0x10212018,i_data_width=8,s_data_width=16,i_precision=12,i_full_range=FALSE,conf_" & 
+"data_width=32,conf_addr_width=4,img_width=4096,p_data_width=11}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_INFO OF config_axis_awaddr: SIGNAL IS "xilinx.com:interface:aximm:1.0 config_axis AWADDR";
   ATTRIBUTE X_INTERFACE_INFO OF config_axis_awprot: SIGNAL IS "xilinx.com:interface:aximm:1.0 config_axis AWPROT";

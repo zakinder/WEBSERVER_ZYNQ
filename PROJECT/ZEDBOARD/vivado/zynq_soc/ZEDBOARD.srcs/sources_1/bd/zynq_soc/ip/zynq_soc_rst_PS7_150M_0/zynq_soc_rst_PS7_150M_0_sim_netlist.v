@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-// Date        : Sat Nov  3 03:12:36 2018
+// Date        : Mon Nov 12 22:12:45 2018
 // Host        : DESKTOP-7G37KAP running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_rst_PS7_150M_0/zynq_soc_rst_PS7_150M_0_sim_netlist.v
+//               v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_rst_PS7_150M_0/zynq_soc_rst_PS7_150M_0_sim_netlist.v
 // Design      : zynq_soc_rst_PS7_150M_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.

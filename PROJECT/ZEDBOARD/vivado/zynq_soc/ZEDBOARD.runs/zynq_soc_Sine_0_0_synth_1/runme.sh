@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_Sine_0_0_synth_1'
+HD_PWD='V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_Sine_0_0_synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

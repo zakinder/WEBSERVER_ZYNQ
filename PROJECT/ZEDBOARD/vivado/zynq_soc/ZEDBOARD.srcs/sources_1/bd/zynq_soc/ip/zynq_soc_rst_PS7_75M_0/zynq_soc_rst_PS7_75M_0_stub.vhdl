@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
--- Date        : Sat Nov  3 03:14:33 2018
+-- Date        : Mon Nov 12 22:15:09 2018
 -- Host        : DESKTOP-7G37KAP running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
---               v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_rst_PS7_75M_0/zynq_soc_rst_PS7_75M_0_stub.vhdl
+--               v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_rst_PS7_75M_0/zynq_soc_rst_PS7_75M_0_stub.vhdl
 -- Design      : zynq_soc_rst_PS7_75M_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg484-1

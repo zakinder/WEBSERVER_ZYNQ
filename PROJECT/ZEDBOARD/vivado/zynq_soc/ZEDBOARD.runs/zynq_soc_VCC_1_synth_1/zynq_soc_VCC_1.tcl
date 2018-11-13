@@ -11,18 +11,18 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.cache/wt [current_project]
-set_property parent.project_path V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.xpr [current_project]
+set_property webtalk.parent_dir V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.cache/wt [current_project]
+set_property parent.project_path V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
-set_property board_part_repo_paths V:/ZEDBOARD/board_files [current_project]
+set_property board_part_repo_paths V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/board_files [current_project]
 set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
-set_property ip_repo_paths v:/ZEDBOARD/ip_lib [current_project]
-set_property ip_output_repo v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.cache/ip [current_project]
+set_property ip_repo_paths v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/ip_lib [current_project]
+set_property ip_output_repo v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
-read_ip -quiet v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.xci
-set_property is_locked true [get_files v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.xci]
+read_ip -quiet v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.xci
+set_property is_locked true [get_files v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.xci]
 
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -33,7 +33,7 @@ foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
 
-set cached_ip [config_ip_cache -export -no_bom -use_project_ipc -dir V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1 -new_name zynq_soc_VCC_1 -ip [get_ips zynq_soc_VCC_1]]
+set cached_ip [config_ip_cache -export -no_bom -use_project_ipc -dir V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1 -new_name zynq_soc_VCC_1 -ip [get_ips zynq_soc_VCC_1]]
 
 if { $cached_ip eq {} } {
 
@@ -68,32 +68,32 @@ write_checkpoint -force -noxdef zynq_soc_VCC_1.dcp
 catch { report_utilization -file zynq_soc_VCC_1_utilization_synth.rpt -pb zynq_soc_VCC_1_utilization_synth.pb }
 
 if { [catch {
-  file copy -force V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1.dcp v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.dcp
+  file copy -force V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1.dcp v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
 }
 
 if { [catch {
-  write_verilog -force -mode synth_stub v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.v
+  write_verilog -force -mode synth_stub v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a Verilog synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  write_vhdl -force -mode synth_stub v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.vhdl
+  write_vhdl -force -mode synth_stub v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a VHDL synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  write_verilog -force -mode funcsim v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.v
+  write_verilog -force -mode funcsim v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the Verilog functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
 
 if { [catch {
-  write_vhdl -force -mode funcsim v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.vhdl
+  write_vhdl -force -mode funcsim v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the VHDL functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
@@ -103,46 +103,46 @@ if { [catch {
 
 
 if { [catch {
-  file copy -force V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1.dcp v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.dcp
+  file copy -force V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1.dcp v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1.dcp
 } _RESULT ] } { 
   send_msg_id runtcl-3 error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
   error "ERROR: Unable to successfully create or copy the sub-design checkpoint file."
 }
 
 if { [catch {
-  file rename -force V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_stub.v v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.v
+  file rename -force V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_stub.v v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a Verilog synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_stub.vhdl v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.vhdl
+  file rename -force V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_stub.vhdl v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create a VHDL synthesis stub for the sub-design. This may lead to errors in top level synthesis of the design. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_sim_netlist.v v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.v
+  file rename -force V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_sim_netlist.v v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.v
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the Verilog functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
 
 if { [catch {
-  file rename -force V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_sim_netlist.vhdl v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.vhdl
+  file rename -force V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.runs/zynq_soc_VCC_1_synth_1/zynq_soc_VCC_1_sim_netlist.vhdl v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_sim_netlist.vhdl
 } _RESULT ] } { 
   puts "CRITICAL WARNING: Unable to successfully create the VHDL functional simulation sub-design file. Post-Synthesis Functional Simulation with this file may not be possible or may give incorrect results. Error reported: $_RESULT"
 }
 
 }; # end if cached_ip 
 
-if {[file isdir V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1]} {
+if {[file isdir V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1]} {
   catch { 
-    file copy -force v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.v V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1
+    file copy -force v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.v V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1
   }
 }
 
-if {[file isdir V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1]} {
+if {[file isdir V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1]} {
   catch { 
-    file copy -force v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.vhdl V:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1
+    file copy -force v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_VCC_1/zynq_soc_VCC_1_stub.vhdl V:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.ip_user_files/ip/zynq_soc_VCC_1
   }
 }

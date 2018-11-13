@@ -1,11 +1,11 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
--- Date        : Sat Nov  3 03:15:13 2018
+-- Date        : Mon Nov 12 22:10:59 2018
 -- Host        : DESKTOP-7G37KAP running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top zynq_soc_auto_cc_0 -prefix
---               zynq_soc_auto_cc_0_ zynq_soc_auto_cc_5_sim_netlist.vhdl
--- Design      : zynq_soc_auto_cc_5
+-- Command     : write_vhdl -force -mode funcsim
+--               v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_auto_cc_0/zynq_soc_auto_cc_0_sim_netlist.vhdl
+-- Design      : zynq_soc_auto_cc_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
 -- Device      : xc7z020clg484-1
@@ -23,6 +23,8 @@ entity zynq_soc_auto_cc_0_xpm_cdc_single is
   );
   attribute DEST_SYNC_FF : integer;
   attribute DEST_SYNC_FF of zynq_soc_auto_cc_0_xpm_cdc_single : entity is 2;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of zynq_soc_auto_cc_0_xpm_cdc_single : entity is "xpm_cdc_single";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of zynq_soc_auto_cc_0_xpm_cdc_single : entity is 0;
   attribute SRC_INPUT_REG : integer;
@@ -607,6 +609,8 @@ entity zynq_soc_auto_cc_0_xpm_cdc_handshake is
   attribute DEST_EXT_HSK of zynq_soc_auto_cc_0_xpm_cdc_handshake : entity is 1;
   attribute DEST_SYNC_FF : integer;
   attribute DEST_SYNC_FF of zynq_soc_auto_cc_0_xpm_cdc_handshake : entity is 2;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of zynq_soc_auto_cc_0_xpm_cdc_handshake : entity is "xpm_cdc_handshake";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of zynq_soc_auto_cc_0_xpm_cdc_handshake : entity is 0;
   attribute SRC_SYNC_FF : integer;
@@ -2909,6 +2913,8 @@ entity zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_lite_async is
     s_axi_awvalid : in STD_LOGIC;
     m_axi_awready : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_lite_async : entity is "axi_clock_converter_v2_1_12_lite_async";
 end zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_lite_async;
 
 architecture STRUCTURE of zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_lite_async is
@@ -4464,6 +4470,8 @@ entity zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_axi_clock_converter is
   attribute C_W_WIDTH of zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_axi_clock_converter : entity is 36;
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_axi_clock_converter : entity is "yes";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_axi_clock_converter : entity is "axi_clock_converter_v2_1_12_axi_clock_converter";
   attribute P_ACLK_RATIO : integer;
   attribute P_ACLK_RATIO of zynq_soc_auto_cc_0_axi_clock_converter_v2_1_12_axi_clock_converter : entity is 2;
   attribute P_AXI3 : integer;
@@ -4685,7 +4693,7 @@ entity zynq_soc_auto_cc_0 is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of zynq_soc_auto_cc_0 : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of zynq_soc_auto_cc_0 : entity is "zynq_soc_auto_cc_5,axi_clock_converter_v2_1_12_axi_clock_converter,{}";
+  attribute CHECK_LICENSE_TYPE of zynq_soc_auto_cc_0 : entity is "zynq_soc_auto_cc_0,axi_clock_converter_v2_1_12_axi_clock_converter,{}";
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of zynq_soc_auto_cc_0 : entity is "yes";
   attribute X_CORE_INFO : string;

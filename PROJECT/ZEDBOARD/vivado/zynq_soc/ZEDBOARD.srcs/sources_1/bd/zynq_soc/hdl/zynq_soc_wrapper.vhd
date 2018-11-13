@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
---Date        : Sat Nov  3 03:09:36 2018
+--Date        : Mon Nov 12 22:07:18 2018
 --Host        : DESKTOP-7G37KAP running 64-bit major release  (build 9200)
 --Command     : generate_target zynq_soc_wrapper.bd
 --Design      : zynq_soc_wrapper
@@ -51,6 +51,7 @@ entity zynq_soc_wrapper is
     o_xclkin : out STD_LOGIC;
     pixclk : in STD_LOGIC;
     reseto : out STD_LOGIC_VECTOR ( 0 to 0 );
+    sws_8bits_tri_i : in STD_LOGIC_VECTOR ( 7 downto 0 );
     trigger : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
 end zynq_soc_wrapper;
@@ -59,6 +60,7 @@ architecture STRUCTURE of zynq_soc_wrapper is
   component zynq_soc is
   port (
     leds_8bits_tri_o : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    sws_8bits_tri_i : in STD_LOGIC_VECTOR ( 7 downto 0 );
     o_xclkin : out STD_LOGIC;
     reseto : out STD_LOGIC_VECTOR ( 0 to 0 );
     trigger : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -204,6 +206,7 @@ zynq_soc_i: component zynq_soc
       o_xclkin => o_xclkin,
       pixclk => pixclk,
       reseto(0) => reseto(0),
+      sws_8bits_tri_i(7 downto 0) => sws_8bits_tri_i(7 downto 0),
       trigger(0) => trigger(0)
     );
 end STRUCTURE;

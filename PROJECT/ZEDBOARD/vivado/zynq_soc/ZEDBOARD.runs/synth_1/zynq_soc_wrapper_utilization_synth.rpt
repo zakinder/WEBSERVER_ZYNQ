@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date         : Sat Nov  3 03:28:02 2018
+| Date         : Mon Nov 12 22:26:15 2018
 | Host         : DESKTOP-7G37KAP running 64-bit major release  (build 9200)
 | Command      : report_utilization -file zynq_soc_wrapper_utilization_synth.rpt -pb zynq_soc_wrapper_utilization_synth.pb
 | Design       : zynq_soc_wrapper
@@ -109,7 +109,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |   30 |     0 |       200 | 15.00 |
+| Bonded IOB                  |   38 |     0 |       200 | 19.00 |
 | Bonded IPADs                |    0 |     0 |         2 |  0.00 |
 | Bonded IOPADs               |    0 |     0 |       130 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |         4 |  0.00 |
@@ -165,7 +165,7 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| IBUF     |   19 |                  IO |
+| IBUF     |   27 |                  IO |
 | OBUF     |   11 |                  IO |
 | OBUFT    |    4 |                  IO |
 +----------+------+---------------------+
@@ -183,9 +183,9 @@ Table of Contents
 | zynq_soc_rst_PS7_75M_0        |    1 |
 | zynq_soc_rst_PS7_25M_0        |    1 |
 | zynq_soc_rst_PS7_150M_0       |    1 |
-| zynq_soc_axi_gpio_0_0         |    1 |
 | zynq_soc_auto_pc_1            |    1 |
 | zynq_soc_auto_pc_0            |    1 |
+| zynq_soc_auto_cc_6            |    1 |
 | zynq_soc_auto_cc_5            |    1 |
 | zynq_soc_auto_cc_4            |    1 |
 | zynq_soc_auto_cc_3            |    1 |
@@ -199,10 +199,12 @@ Table of Contents
 | zynq_soc_TIMMING_CONTROLELR_0 |    1 |
 | zynq_soc_Sine_0_0             |    1 |
 | zynq_soc_PS7_0                |    1 |
+| zynq_soc_LEDS_8BITS_0         |    1 |
 | zynq_soc_HDMI_IIC_0           |    1 |
 | zynq_soc_HDMI_0               |    1 |
 | zynq_soc_GND_1                |    1 |
 | zynq_soc_GND_0                |    1 |
+| zynq_soc_DIP_SWITCHES_8BITS_0 |    1 |
 | zynq_soc_D5M_IIC_0            |    1 |
 | zynq_soc_CLK_GEN_148MHZ_0     |    1 |
 +-------------------------------+------+

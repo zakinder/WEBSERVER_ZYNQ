@@ -2,9 +2,9 @@
 <Root MajorVersion="0" MinorVersion="33">
   <CompositeFile CompositeFileTopName="zynq_soc" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1541239823"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1541239823"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1541239823"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1542089282"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1542089282"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1542089282"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip\zynq_soc_CLK_GEN_148MHZ_0\zynq_soc_CLK_GEN_148MHZ_0.xci" Type="IP">
         <Instance HierarchyPath="CLK_GEN_148MHZ"/>
@@ -14,8 +14,16 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip\zynq_soc_axi_gpio_0_0\zynq_soc_axi_gpio_0_0.xci" Type="IP">
-        <Instance HierarchyPath="axi_gpio_0"/>
+      <File Name="ip\zynq_soc_DIP_SWITCHES_8BITS_0\zynq_soc_DIP_SWITCHES_8BITS_0.xci" Type="IP">
+        <Instance HierarchyPath="DIP_SWITCHES_8BITS"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\zynq_soc_LEDS_8BITS_0\zynq_soc_LEDS_8BITS_0.xci" Type="IP">
+        <Instance HierarchyPath="LEDS_8BITS"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -182,6 +190,14 @@
       </File>
       <File Name="ip\zynq_soc_auto_pc_1\zynq_soc_auto_pc_1.xci" Type="IP">
         <Instance HierarchyPath="PS_VIDEO/PS/TO_PS/axi_mem_intercon/m00_couplers/auto_pc"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\zynq_soc_auto_cc_6\zynq_soc_auto_cc_6.xci" Type="IP">
+        <Instance HierarchyPath="PS_VIDEO/PS/TO_PS/PS7_axi_periph/m07_couplers/auto_cc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>

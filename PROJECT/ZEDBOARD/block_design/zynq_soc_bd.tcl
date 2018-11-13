@@ -1,4 +1,4 @@
-puts "Info:(ZQ) This block design file has been exported with Reference-Design Scripts from zynq Electronic GmbH for Board Part:em.avnet.com:zed:part0:1.4 with FPGA xc7z020clg484-1 at 2018-11-03T03:07:39."
+puts "Info:(ZQ) This block design file has been exported with Reference-Design Scripts from zynq Electronic GmbH for Board Part:em.avnet.com:zed:part0:1.4 with FPGA xc7z020clg484-1 at 2018-11-12T22:05:06."
 
 ################################################################
 # This is a generated script based on design: zynq_soc
@@ -243,6 +243,7 @@ proc create_hier_cell_TO_PS { parentCell nameHier } {
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M03_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M04_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M06_AXI
+  create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M07_AXI
   create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S00_AXI
   create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S01_AXI
 
@@ -906,7 +907,7 @@ CONFIG.preset {ZedBoard} \
   # Create instance: PS7_axi_periph, and set properties
   set PS7_axi_periph [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 PS7_axi_periph ]
   set_property -dict [ list \
-CONFIG.NUM_MI {7} \
+CONFIG.NUM_MI {8} \
  ] $PS7_axi_periph
 
   # Create instance: Sine_0, and set properties
@@ -922,6 +923,7 @@ CONFIG.NUM_SI {2} \
   # Create interface connections
   connect_bd_intf_net -intf_net Conn1 [get_bd_intf_pins M04_AXI] [get_bd_intf_pins PS7_axi_periph/M04_AXI]
   connect_bd_intf_net -intf_net Conn2 [get_bd_intf_pins M06_AXI] [get_bd_intf_pins PS7_axi_periph/M06_AXI]
+  connect_bd_intf_net -intf_net Conn3 [get_bd_intf_pins M07_AXI] [get_bd_intf_pins PS7_axi_periph/M07_AXI]
   connect_bd_intf_net -intf_net PS7_M_AXI_GP0 [get_bd_intf_pins PS7/M_AXI_GP0] [get_bd_intf_pins PS7_axi_periph/S00_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M00_AXI [get_bd_intf_pins M00_AXI] [get_bd_intf_pins PS7_axi_periph/M00_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M01_AXI [get_bd_intf_pins M01_AXI] [get_bd_intf_pins PS7_axi_periph/M01_AXI]
@@ -935,14 +937,14 @@ CONFIG.NUM_SI {2} \
   connect_bd_intf_net -intf_net axi_mem_intercon_M00_AXI [get_bd_intf_pins PS7/S_AXI_HP0] [get_bd_intf_pins axi_mem_intercon/M00_AXI]
 
   # Create port connections
-  connect_bd_net -net PS7_FCLK_CLK2 [get_bd_pins CLK_75MHZ] [get_bd_pins PS7/FCLK_CLK2] [get_bd_pins PS7_axi_periph/M01_ACLK] [get_bd_pins PS7_axi_periph/M02_ACLK] [get_bd_pins PS7_axi_periph/M03_ACLK] [get_bd_pins PS7_axi_periph/M04_ACLK] [get_bd_pins PS7_axi_periph/M05_ACLK] [get_bd_pins PS7_axi_periph/M06_ACLK] [get_bd_pins Sine_0/ctrl_saxi_aclk]
+  connect_bd_net -net PS7_FCLK_CLK2 [get_bd_pins CLK_75MHZ] [get_bd_pins PS7/FCLK_CLK2] [get_bd_pins PS7_axi_periph/M01_ACLK] [get_bd_pins PS7_axi_periph/M02_ACLK] [get_bd_pins PS7_axi_periph/M03_ACLK] [get_bd_pins PS7_axi_periph/M04_ACLK] [get_bd_pins PS7_axi_periph/M05_ACLK] [get_bd_pins PS7_axi_periph/M06_ACLK] [get_bd_pins PS7_axi_periph/M07_ACLK] [get_bd_pins Sine_0/ctrl_saxi_aclk]
   connect_bd_net -net PS7_FCLK_CLK3 [get_bd_pins FCLK_CLK3] [get_bd_pins PS7/FCLK_CLK3]
   connect_bd_net -net PS_VIDEO_FCLK_CLK1 [get_bd_pins CLK_100MHZ] [get_bd_pins PS7/FCLK_CLK1]
   connect_bd_net -net PS_VIDEO_FCLK_RESET0_N [get_bd_pins FCLK_RESET0_N] [get_bd_pins PS7/FCLK_RESET0_N]
   connect_bd_net -net SYSTEM_RESETS_interconnect_aresetn [get_bd_pins ARESETN] [get_bd_pins PS7_axi_periph/ARESETN] [get_bd_pins axi_mem_intercon/ARESETN]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins CLK_150MHZ] [get_bd_pins PS7/FCLK_CLK0] [get_bd_pins PS7/M_AXI_GP0_ACLK] [get_bd_pins PS7/S_AXI_HP0_ACLK] [get_bd_pins PS7_axi_periph/ACLK] [get_bd_pins PS7_axi_periph/M00_ACLK] [get_bd_pins PS7_axi_periph/S00_ACLK] [get_bd_pins axi_mem_intercon/ACLK] [get_bd_pins axi_mem_intercon/M00_ACLK] [get_bd_pins axi_mem_intercon/S00_ACLK] [get_bd_pins axi_mem_intercon/S01_ACLK]
   connect_bd_net -net rst_PS7_150M_peripheral_aresetn [get_bd_pins M00_ARESETN] [get_bd_pins PS7_axi_periph/M00_ARESETN] [get_bd_pins PS7_axi_periph/S00_ARESETN] [get_bd_pins axi_mem_intercon/M00_ARESETN] [get_bd_pins axi_mem_intercon/S00_ARESETN] [get_bd_pins axi_mem_intercon/S01_ARESETN]
-  connect_bd_net -net rst_PS7_75M_peripheral_aresetn [get_bd_pins M02_ARESETN] [get_bd_pins PS7_axi_periph/M01_ARESETN] [get_bd_pins PS7_axi_periph/M02_ARESETN] [get_bd_pins PS7_axi_periph/M03_ARESETN] [get_bd_pins PS7_axi_periph/M04_ARESETN] [get_bd_pins PS7_axi_periph/M05_ARESETN] [get_bd_pins PS7_axi_periph/M06_ARESETN] [get_bd_pins Sine_0/ctrl_saxi_aresetn]
+  connect_bd_net -net rst_PS7_75M_peripheral_aresetn [get_bd_pins M02_ARESETN] [get_bd_pins PS7_axi_periph/M01_ARESETN] [get_bd_pins PS7_axi_periph/M02_ARESETN] [get_bd_pins PS7_axi_periph/M03_ARESETN] [get_bd_pins PS7_axi_periph/M04_ARESETN] [get_bd_pins PS7_axi_periph/M05_ARESETN] [get_bd_pins PS7_axi_periph/M06_ARESETN] [get_bd_pins PS7_axi_periph/M07_ARESETN] [get_bd_pins Sine_0/ctrl_saxi_aresetn]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -990,6 +992,7 @@ proc create_hier_cell_PS { parentCell nameHier } {
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M02_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M04_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M06_AXI
+  create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M07_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:axis_rtl:1.0 M_AXIS
   create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:axis_rtl:1.0 S_AXIS_S2MM
 
@@ -1011,6 +1014,7 @@ proc create_hier_cell_PS { parentCell nameHier } {
 
   # Create interface connections
   connect_bd_intf_net -intf_net Conn1 [get_bd_intf_pins M06_AXI] [get_bd_intf_pins TO_PS/M06_AXI]
+  connect_bd_intf_net -intf_net Conn2 [get_bd_intf_pins M07_AXI] [get_bd_intf_pins TO_PS/M07_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M00_AXI [get_bd_intf_pins M00_AXI] [get_bd_intf_pins TO_PS/M00_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M01_AXI [get_bd_intf_pins M01_AXI] [get_bd_intf_pins TO_PS/M01_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M02_AXI [get_bd_intf_pins M02_AXI] [get_bd_intf_pins TO_PS/M02_AXI]
@@ -1332,6 +1336,7 @@ proc create_hier_cell_PS_VIDEO { parentCell nameHier } {
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M01_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M02_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M06_AXI
+  create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M07_AXI
   create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:axis_rtl:1.0 M_AXIS
 
   # Create pins
@@ -1356,6 +1361,7 @@ proc create_hier_cell_PS_VIDEO { parentCell nameHier } {
 
   # Create interface connections
   connect_bd_intf_net -intf_net Conn1 [get_bd_intf_pins M06_AXI] [get_bd_intf_pins PS/M06_AXI]
+  connect_bd_intf_net -intf_net Conn2 [get_bd_intf_pins M07_AXI] [get_bd_intf_pins PS/M07_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M00_AXI [get_bd_intf_pins M00_AXI] [get_bd_intf_pins PS/M00_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M01_AXI [get_bd_intf_pins M01_AXI] [get_bd_intf_pins PS/M01_AXI]
   connect_bd_intf_net -intf_net PS7_axi_periph_M02_AXI [get_bd_intf_pins M02_AXI] [get_bd_intf_pins PS/M02_AXI]
@@ -1567,6 +1573,7 @@ proc create_root_design { parentCell } {
   set hdmi_iic [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:iic_rtl:1.0 hdmi_iic ]
   set io_hdmio [ create_bd_intf_port -mode Master -vlnv avnet.com:interface:avnet_hdmi_rtl:1.0 io_hdmio ]
   set leds_8bits [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 leds_8bits ]
+  set sws_8bits [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:gpio_rtl:1.0 sws_8bits ]
 
   # Create ports
   set idata [ create_bd_port -dir I -from 11 -to 0 idata ]
@@ -1604,8 +1611,24 @@ CONFIG.USE_RESET {false} \
   # Create instance: D5M_OUTPUT
   create_hier_cell_D5M_OUTPUT [current_bd_instance .] D5M_OUTPUT
 
+  # Create instance: DIP_SWITCHES_8BITS, and set properties
+  set DIP_SWITCHES_8BITS [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 DIP_SWITCHES_8BITS ]
+  set_property -dict [ list \
+CONFIG.C_ALL_INPUTS {1} \
+CONFIG.C_GPIO_WIDTH {8} \
+CONFIG.GPIO_BOARD_INTERFACE {sws_8bits} \
+CONFIG.USE_BOARD_FLOW {true} \
+ ] $DIP_SWITCHES_8BITS
+
   # Create instance: HDMI_OUTPUT
   create_hier_cell_HDMI_OUTPUT [current_bd_instance .] HDMI_OUTPUT
+
+  # Create instance: LEDS_8BITS, and set properties
+  set LEDS_8BITS [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 LEDS_8BITS ]
+  set_property -dict [ list \
+CONFIG.GPIO_BOARD_INTERFACE {leds_8bits} \
+CONFIG.USE_BOARD_FLOW {true} \
+ ] $LEDS_8BITS
 
   # Create instance: PS_VIDEO
   create_hier_cell_PS_VIDEO [current_bd_instance .] PS_VIDEO
@@ -1616,15 +1639,9 @@ CONFIG.USE_RESET {false} \
   # Create instance: VIDEO_PIPELINE
   create_hier_cell_VIDEO_PIPELINE [current_bd_instance .] VIDEO_PIPELINE
 
-  # Create instance: axi_gpio_0, and set properties
-  set axi_gpio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0 ]
-  set_property -dict [ list \
-CONFIG.GPIO_BOARD_INTERFACE {leds_8bits} \
-CONFIG.USE_BOARD_FLOW {true} \
- ] $axi_gpio_0
-
   # Create interface connections
   connect_bd_intf_net -intf_net D5M_OUTPUT_IIC [get_bd_intf_ports d5m_iic] [get_bd_intf_pins D5M_OUTPUT/D5M_IIC]
+  connect_bd_intf_net -intf_net DIP_SWITCHES_8BITS_GPIO [get_bd_intf_ports sws_8bits] [get_bd_intf_pins DIP_SWITCHES_8BITS/GPIO]
   connect_bd_intf_net -intf_net HDMI_OUTPUT_IIC [get_bd_intf_ports hdmi_iic] [get_bd_intf_pins HDMI_OUTPUT/HDMI_IIC]
   connect_bd_intf_net -intf_net HDMI_OUTPUT_IO_HDMIO [get_bd_intf_ports io_hdmio] [get_bd_intf_pins HDMI_OUTPUT/IO_HDMIO]
   connect_bd_intf_net -intf_net PS7_axi_periph_M00_AXI [get_bd_intf_pins PS_VIDEO/M00_AXI] [get_bd_intf_pins VIDEO_PIPELINE/ctrl]
@@ -1632,16 +1649,17 @@ CONFIG.USE_BOARD_FLOW {true} \
   connect_bd_intf_net -intf_net PS7_axi_periph_M02_AXI [get_bd_intf_pins HDMI_OUTPUT/S_AXI] [get_bd_intf_pins PS_VIDEO/M02_AXI]
   connect_bd_intf_net -intf_net PS_VIDEO_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins PS_VIDEO/DDR]
   connect_bd_intf_net -intf_net PS_VIDEO_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins PS_VIDEO/FIXED_IO]
-  connect_bd_intf_net -intf_net PS_VIDEO_M06_AXI [get_bd_intf_pins PS_VIDEO/M06_AXI] [get_bd_intf_pins axi_gpio_0/S_AXI]
+  connect_bd_intf_net -intf_net PS_VIDEO_M06_AXI [get_bd_intf_pins LEDS_8BITS/S_AXI] [get_bd_intf_pins PS_VIDEO/M06_AXI]
+  connect_bd_intf_net -intf_net PS_VIDEO_M07_AXI [get_bd_intf_pins DIP_SWITCHES_8BITS/S_AXI] [get_bd_intf_pins PS_VIDEO/M07_AXI]
   connect_bd_intf_net -intf_net PS_VIDEO_M_AXIS [get_bd_intf_pins PS_VIDEO/M_AXIS] [get_bd_intf_pins VIDEO_PIPELINE/video_in]
   connect_bd_intf_net -intf_net VIDEO_PIPELINE_vid_io_out [get_bd_intf_pins HDMI_OUTPUT/VID_IO_IN] [get_bd_intf_pins VIDEO_PIPELINE/vid_io_out]
-  connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports leds_8bits] [get_bd_intf_pins axi_gpio_0/GPIO]
+  connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports leds_8bits] [get_bd_intf_pins LEDS_8BITS/GPIO]
 
   # Create port connections
   connect_bd_net -net CLK_GEN_148MHZ_clk_out2 [get_bd_ports o_xclkin] [get_bd_pins CLK_GEN_148MHZ/clk_out2]
   connect_bd_net -net D5M_OUTPUT_reseto [get_bd_ports reseto] [get_bd_pins D5M_OUTPUT/reseto]
   connect_bd_net -net D5M_OUTPUT_trigger [get_bd_ports trigger] [get_bd_pins D5M_OUTPUT/trigger]
-  connect_bd_net -net PS7_FCLK_CLK2 [get_bd_pins D5M_OUTPUT/CLK_75MHZ] [get_bd_pins HDMI_OUTPUT/CLK_75MHZ] [get_bd_pins PS_VIDEO/CLK_75MHZ] [get_bd_pins SYSTEM_RESETS/slowest_sync_clk] [get_bd_pins axi_gpio_0/s_axi_aclk]
+  connect_bd_net -net PS7_FCLK_CLK2 [get_bd_pins D5M_OUTPUT/CLK_75MHZ] [get_bd_pins DIP_SWITCHES_8BITS/s_axi_aclk] [get_bd_pins HDMI_OUTPUT/CLK_75MHZ] [get_bd_pins LEDS_8BITS/s_axi_aclk] [get_bd_pins PS_VIDEO/CLK_75MHZ] [get_bd_pins SYSTEM_RESETS/slowest_sync_clk]
   connect_bd_net -net PS_VIDEO_FCLK_CLK1 [get_bd_pins CLK_GEN_148MHZ/clk_in1] [get_bd_pins PS_VIDEO/CLK_100MHZ]
   connect_bd_net -net PS_VIDEO_FCLK_CLK3 [get_bd_pins PS_VIDEO/FCLK_CLK3] [get_bd_pins SYSTEM_RESETS/slowest_sync_clk2]
   connect_bd_net -net PS_VIDEO_FCLK_RESET0_N [get_bd_pins PS_VIDEO/FCLK_RESET0_N] [get_bd_pins SYSTEM_RESETS/ext_reset_in]
@@ -1653,15 +1671,16 @@ CONFIG.USE_BOARD_FLOW {true} \
   connect_bd_net -net pixclk_1 [get_bd_ports pixclk] [get_bd_pins PS_VIDEO/pixclk]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins PS_VIDEO/CLK_150MHZ] [get_bd_pins SYSTEM_RESETS/slowest_sync_clk1] [get_bd_pins VIDEO_PIPELINE/CLK_150MHZ]
   connect_bd_net -net rst_PS7_150M_peripheral_aresetn [get_bd_pins PS_VIDEO/ap_rst_n] [get_bd_pins SYSTEM_RESETS/peripheral_aresetn1] [get_bd_pins VIDEO_PIPELINE/s_axi_aresetn]
-  connect_bd_net -net rst_PS7_75M_peripheral_aresetn [get_bd_pins D5M_OUTPUT/s_axi_aresetn] [get_bd_pins HDMI_OUTPUT/s_axi_aresetn] [get_bd_pins PS_VIDEO/M01_ARESETN] [get_bd_pins SYSTEM_RESETS/peripheral_aresetn] [get_bd_pins axi_gpio_0/s_axi_aresetn]
+  connect_bd_net -net rst_PS7_75M_peripheral_aresetn [get_bd_pins D5M_OUTPUT/s_axi_aresetn] [get_bd_pins DIP_SWITCHES_8BITS/s_axi_aresetn] [get_bd_pins HDMI_OUTPUT/s_axi_aresetn] [get_bd_pins LEDS_8BITS/s_axi_aresetn] [get_bd_pins PS_VIDEO/M01_ARESETN] [get_bd_pins SYSTEM_RESETS/peripheral_aresetn]
 
   # Create address segments
   create_bd_addr_seg -range 0x00010000 -offset 0x41600000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs D5M_OUTPUT/D5M_IIC/S_AXI/Reg] SEG_D5M_IIC_Reg
+  create_bd_addr_seg -range 0x00010000 -offset 0x41210000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs DIP_SWITCHES_8BITS/S_AXI/Reg] SEG_DIP_SWITCHES_8BITS_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x41610000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs HDMI_OUTPUT/HDMI_IIC/S_AXI/Reg] SEG_HDMI_IIC_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x43C20000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs PS_VIDEO/PS/TO_PS/Sine_0/ctrl_saxi/ctrl_saxi_reg] SEG_Sine_0_ctrl_saxi_reg
   create_bd_addr_seg -range 0x00010000 -offset 0x43C00000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs VIDEO_PIPELINE/TIMMING_CONTROLELR/ctrl/Reg] SEG_TIMMING_CONTROLELR_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x43000000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs PS_VIDEO/PS/V_DMA/VDMA1/S_AXI_LITE/Reg] SEG_VDMA1_Reg
-  create_bd_addr_seg -range 0x00010000 -offset 0x41200000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs axi_gpio_0/S_AXI/Reg] SEG_axi_gpio_0_Reg
+  create_bd_addr_seg -range 0x00010000 -offset 0x41200000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs LEDS_8BITS/S_AXI/Reg] SEG_axi_gpio_0_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x43C10000 [get_bd_addr_spaces PS_VIDEO/PS/TO_PS/PS7/Data] [get_bd_addr_segs PS_VIDEO/D5M/videoProcess/config_axis/config_axis_reg] SEG_videoProcess_0_config_axis_reg
   create_bd_addr_seg -range 0x20000000 -offset 0x00000000 [get_bd_addr_spaces PS_VIDEO/PS/V_DMA/VDMA1/Data_MM2S] [get_bd_addr_segs PS_VIDEO/PS/TO_PS/PS7/S_AXI_HP0/HP0_DDR_LOWOCM] SEG_PS7_HP0_DDR_LOWOCM
   create_bd_addr_seg -range 0x20000000 -offset 0x00000000 [get_bd_addr_spaces PS_VIDEO/PS/V_DMA/VDMA1/Data_S2MM] [get_bd_addr_segs PS_VIDEO/PS/TO_PS/PS7/S_AXI_HP0/HP0_DDR_LOWOCM] SEG_PS7_HP0_DDR_LOWOCM

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7z020clg484-1" LaunchTime="1541239839">
+<GenRun Id="synth_1" LaunchPart="xc7z020clg484-1" LaunchTime="1542089296">
   <File Type="RDS-PROPCONSTRS" Name="zynq_soc_wrapper_drc_synth.rpt"/>
   <File Type="PA-TCL" Name="zynq_soc_wrapper.tcl"/>
   <File Type="RDS-RDS" Name="zynq_soc_wrapper.vds"/>
@@ -54,32 +54,34 @@
     </StratHandle>
     <Step Id="synth_design"/>
   </Strategy>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_rst_PS7_25M_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_pc_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_TIMMING_CONTROLELR_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VIDEO_OUT_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_HDMI_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_rst_PS7_150M_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_videoProcess_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_GND_1"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_axi_gpio_0_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VCC_1"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_D5M_IIC_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_CLK_GEN_148MHZ_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_xbar_1"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_PS7_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_Sine_0_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_rst_PS7_75M_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_xbar_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VDMA1_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_pc_1"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_4"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_2"/>
   <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_3"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_pc_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_GND_0"/>
   <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_5"/>
   <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_GND_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_2"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_4"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_LEDS_8BITS_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_GND_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_videoProcess_0"/>
   <BlockFileSet Type="BlockSrcs" Name="zynq_soc_HDMI_IIC_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_CLK_GEN_148MHZ_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_D5M_IIC_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_rst_PS7_150M_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_HDMI_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_pc_1"/>
   <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VCC_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_auto_cc_6"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_rst_PS7_25M_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_Sine_0_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VDMA1_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_rst_PS7_75M_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_xbar_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_PS7_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_xbar_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_TIMMING_CONTROLELR_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VIDEO_OUT_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_DIP_SWITCHES_8BITS_0"/>
+  <BlockFileSet Type="BlockSrcs" Name="zynq_soc_VCC_1"/>
 </GenRun>

@@ -9,40 +9,40 @@
     ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 
 source zynq_soc_auto_pc_1.tcl -notrace
-Starting RTL Elaboration : Time (s): cpu = 00:00:18 ; elapsed = 00:00:23 . Memory (MB): peak = 403.875 ; gain = 85.348
-INFO: [Synth 8-638] synthesizing module 'zynq_soc_auto_pc_1' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_auto_pc_1/synth/zynq_soc_auto_pc_1.v:58]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_axi_protocol_converter' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4811]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_axi3_conv' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:954]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_b_downsizer' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2276]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_b_downsizer' (1#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2276]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
-INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
-INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
-INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen' (20#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
-INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo' (21#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv' (22#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_w_axi3_conv' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2004]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_w_axi3_conv' (23#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2004]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv__parameterized0' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
-INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo__parameterized0' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
-INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen__parameterized0' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
-INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen__parameterized0' (23#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
-INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo__parameterized0' (23#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv__parameterized0' (23#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
-INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_r_axi3_conv' [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:1789]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_r_axi3_conv' (24#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:1789]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_axi3_conv' (25#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:954]
-INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_axi_protocol_converter' (26#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4811]
-INFO: [Synth 8-256] done synthesizing module 'zynq_soc_auto_pc_1' (27#1) [v:/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_auto_pc_1/synth/zynq_soc_auto_pc_1.v:58]
-Finished RTL Elaboration : Time (s): cpu = 00:01:55 ; elapsed = 00:02:15 . Memory (MB): peak = 553.258 ; gain = 234.730
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:01:55 ; elapsed = 00:02:15 . Memory (MB): peak = 553.258 ; gain = 234.730
+Starting RTL Elaboration : Time (s): cpu = 00:00:18 ; elapsed = 00:00:24 . Memory (MB): peak = 403.730 ; gain = 86.629
+INFO: [Synth 8-638] synthesizing module 'zynq_soc_auto_pc_1' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_auto_pc_1/synth/zynq_soc_auto_pc_1.v:58]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_axi_protocol_converter' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4811]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_axi3_conv' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:954]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_b_downsizer' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2276]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_b_downsizer' (1#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2276]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
+INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
+INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
+INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen' (20#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
+INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo' (21#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv' (22#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_w_axi3_conv' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2004]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_w_axi3_conv' (23#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2004]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv__parameterized0' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
+INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo__parameterized0' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
+INFO: [Synth 8-638] synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen__parameterized0' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
+INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_fifo_gen__parameterized0' (23#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:168]
+INFO: [Synth 8-256] done synthesizing module 'axi_data_fifo_v2_1_12_axic_fifo__parameterized0' (23#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/95b9/hdl/axi_data_fifo_v2_1_vl_rfs.v:64]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_a_axi3_conv__parameterized0' (23#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:62]
+INFO: [Synth 8-638] synthesizing module 'axi_protocol_converter_v2_1_13_r_axi3_conv' [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:1789]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_r_axi3_conv' (24#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:1789]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_axi3_conv' (25#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:954]
+INFO: [Synth 8-256] done synthesizing module 'axi_protocol_converter_v2_1_13_axi_protocol_converter' (26#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ipshared/f0ae/hdl/axi_protocol_converter_v2_1_vl_rfs.v:4811]
+INFO: [Synth 8-256] done synthesizing module 'zynq_soc_auto_pc_1' (27#1) [v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/vivado/zynq_soc/ZEDBOARD.srcs/sources_1/bd/zynq_soc/ip/zynq_soc_auto_pc_1/synth/zynq_soc_auto_pc_1.v:58]
+Finished RTL Elaboration : Time (s): cpu = 00:01:53 ; elapsed = 00:02:09 . Memory (MB): peak = 551.426 ; gain = 234.324
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:01:53 ; elapsed = 00:02:09 . Memory (MB): peak = 551.426 ; gain = 234.324
 INFO: [Device 21-403] Loading part xc7z020clg484-1
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.103 . Memory (MB): peak = 817.449 ; gain = 1.578
-Finished Constraint Validation : Time (s): cpu = 00:02:26 ; elapsed = 00:02:51 . Memory (MB): peak = 817.449 ; gain = 498.922
-Finished Loading Part and Timing Information : Time (s): cpu = 00:02:26 ; elapsed = 00:02:51 . Memory (MB): peak = 817.449 ; gain = 498.922
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:02:26 ; elapsed = 00:02:51 . Memory (MB): peak = 817.449 ; gain = 498.922
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:29 ; elapsed = 00:02:54 . Memory (MB): peak = 817.449 ; gain = 498.922
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:34 ; elapsed = 00:03:02 . Memory (MB): peak = 817.449 ; gain = 498.922
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.086 . Memory (MB): peak = 816.133 ; gain = 1.637
+Finished Constraint Validation : Time (s): cpu = 00:02:22 ; elapsed = 00:02:43 . Memory (MB): peak = 816.133 ; gain = 499.031
+Finished Loading Part and Timing Information : Time (s): cpu = 00:02:22 ; elapsed = 00:02:43 . Memory (MB): peak = 816.133 ; gain = 499.031
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:02:22 ; elapsed = 00:02:43 . Memory (MB): peak = 816.133 ; gain = 499.031
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:25 ; elapsed = 00:02:46 . Memory (MB): peak = 816.133 ; gain = 499.031
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:31 ; elapsed = 00:02:55 . Memory (MB): peak = 816.133 ; gain = 499.031
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
@@ -60,15 +60,15 @@ Note: The table above is a preliminary report that shows the Distributed RAMs at
 ---------------------------------------------------------------------------------
 Finished ROM, RAM, DSP and Shift Register Reporting
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:57 ; elapsed = 00:03:24 . Memory (MB): peak = 817.449 ; gain = 498.922
-Finished Timing Optimization : Time (s): cpu = 00:02:58 ; elapsed = 00:03:25 . Memory (MB): peak = 817.953 ; gain = 499.426
-Finished Technology Mapping : Time (s): cpu = 00:02:58 ; elapsed = 00:03:26 . Memory (MB): peak = 828.488 ; gain = 509.961
-Finished IO Insertion : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
-Finished Renaming Generated Instances : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
-Finished Renaming Generated Ports : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
-Finished Handling Custom Attributes : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
-Finished Renaming Generated Nets : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:58 ; elapsed = 00:03:24 . Memory (MB): peak = 816.133 ; gain = 499.031
+Finished Timing Optimization : Time (s): cpu = 00:02:59 ; elapsed = 00:03:25 . Memory (MB): peak = 823.262 ; gain = 506.160
+Finished Technology Mapping : Time (s): cpu = 00:03:00 ; elapsed = 00:03:27 . Memory (MB): peak = 833.934 ; gain = 516.832
+Finished IO Insertion : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
+Finished Renaming Generated Instances : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
+Finished Renaming Generated Ports : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
+Finished Renaming Generated Nets : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
 
 Report Cell Usage: 
 +------+---------+------+
@@ -88,5 +88,5 @@ Report Cell Usage:
 |12    |FDRE     |   335|
 |13    |FDSE     |     5|
 +------+---------+------+
-Finished Writing Synthesis Report : Time (s): cpu = 00:03:00 ; elapsed = 00:03:28 . Memory (MB): peak = 828.488 ; gain = 509.961
-synth_design: Time (s): cpu = 00:03:05 ; elapsed = 00:03:34 . Memory (MB): peak = 828.488 ; gain = 516.438
+Finished Writing Synthesis Report : Time (s): cpu = 00:03:02 ; elapsed = 00:03:29 . Memory (MB): peak = 833.934 ; gain = 516.832
+synth_design: Time (s): cpu = 00:03:07 ; elapsed = 00:03:37 . Memory (MB): peak = 833.934 ; gain = 522.605
