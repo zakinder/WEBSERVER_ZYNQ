@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebServer</title>
+<meta content="text/html; charset=utf-8" />
+</head>
+<script type="text/javascript">
+    var space  = "\n\t\t";
+    var RresponseData;
+    var GresponseData;
+    var BresponseData;
+    var X;
+    var Y;
+     var red;
+     var green;
+     var blue;
+
+    //-------------------------------------------------------------
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+        X =0;
+        Y =0;
+        red =0;
+        green =0;
+        blue =0;
+        RresponseData =222;
+        GresponseData =333;
+        BresponseData =22;
+
+    } 
+    else {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    //-------------------------------------------------------------
+    //RX
+    xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4) 
+    {
+    var respData = JSON.parse(this.responseText);
+    //var respData=xmlhttp.responseText;
+    RresponseData =respData[0];
+    GresponseData =respData[1];
+    BresponseData =respData[2];//xxfxxfxx
+    //red   = RresponseData.slice(0, 2);
+    //green = GresponseData.slice(2, 4);
+    //blue  = BresponseData.slice(4, 6);
+    }
+    }
+    //-------------------------------------------------------------
+    //-------------------------------------------------------------
+    //SETINTERVAL FOR NEW DATA FROM ZYNQ
+    //every 1 seconds (1000 milliseconds):
+    // TX REQUEST AT GIVEN INTERVAL = 10ms
+    
+    setInterval(function() {
+    var xmlHttp = new XMLHttpRequest();
+    X++;
+    if(X==241){X =0;Y++;}
+    if(Y==120){Y =0;}//if(Y==135){Y =0;}
+    BresponseData = lsbByte(RresponseData);
+    GresponseData = msbByte(RresponseData);
+    DRAW(BresponseData,GresponseData,RresponseData);
+    xmlhttp.open("POST", "CMD/PL_PS_STREAMER_ASSERT," + 0, true);//TX
+    xmlhttp.send();}, 20);//sample rate
+    //-------------------------------------------------------------
+    function DRAW(BresponseData,GresponseData,RresponseData) {
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var imgData = ctx.createImageData(1, 1);
+    var i;
+    document.getElementById('displayX').value = X;
+    document.getElementById('displayY').value = Y;
+    document.getElementById('displayR').value = GresponseData;
+    document.getElementById('displayG').value = BresponseData;
+    document.getElementById('displayB').value = RresponseData;
+            for (i = 0; i < imgData.data.length; i += 4) 
+            {
+                imgData.data[i+0] = GresponseData;  //R grayed
+                imgData.data[i+1] = BresponseData;  //G grayed
+                imgData.data[i+2] = GresponseData;  //B grayed
+                imgData.data[i+3] = 255;
+            }
+            ctx.putImageData(imgData, X, Y);
+  }  
+  
+function lsbByte(RresponseData) { 
+var lsbByteS = String(RresponseData); 
+
+var lsbByteSLV =Number(lsbByteS);
+return lsbByteSLV;
+}
+function msbByte(GresponseData) { 
+var msbByteS = String(GresponseData); 
+
+var msbByteSLV =Number(msbByteS);
+return msbByteSLV;
+}
+</script>
+<body >
+X<textarea id="displayX" readonly="readonly" rows="1" STYLE="font-family : monospace; width:40px;"></textarea>
+Y<textarea id="displayY" readonly="readonly" rows="1" STYLE="font-family : monospace; width:40px;"></textarea>
+R<textarea id="displayR" readonly="readonly" rows="1" STYLE="font-family : monospace; width:40px;"></textarea>
+G<textarea id="displayG" readonly="readonly" rows="1" STYLE="font-family : monospace; width:40px;"></textarea>
+B<textarea id="displayB" readonly="readonly" rows="1" STYLE="font-family : monospace; width:40px;"></textarea>
+<br>
+<canvas id="myCanvas" width="242" height="120" style="border:1px solid #d3d3d3;">
+</body>
+</html>
