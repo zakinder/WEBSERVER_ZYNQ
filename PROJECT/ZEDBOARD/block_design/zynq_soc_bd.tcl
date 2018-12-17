@@ -1,4 +1,4 @@
-puts "Info:(ZQ) This block design file has been exported with Reference-Design Scripts from zynq Electronic GmbH for Board Part:em.avnet.com:zed:part0:1.4 with FPGA xc7z020clg484-1 at 2018-11-12T22:05:06."
+puts "Info:(ZQ) This block design file has been exported with Reference-Design Scripts from zynq Electronic GmbH for Board Part:em.avnet.com:zed:part0:1.4 with FPGA xc7z020clg484-1 at 2018-12-16T00:44:28."
 
 ################################################################
 # This is a generated script based on design: zynq_soc
@@ -177,7 +177,7 @@ CONFIG.c_m_axis_mm2s_tdata_width {16} \
 CONFIG.c_mm2s_genlock_mode {1} \
 CONFIG.c_mm2s_linebuffer_depth {512} \
 CONFIG.c_mm2s_max_burst_length {32} \
-CONFIG.c_num_fstores {3} \
+CONFIG.c_num_fstores {1} \
 CONFIG.c_s2mm_genlock_mode {0} \
 CONFIG.c_s2mm_linebuffer_depth {2048} \
 CONFIG.c_s2mm_max_burst_length {8} \
