@@ -751,12 +751,15 @@
         <spirit:language>vhdl</spirit:language>
         <spirit:modelName>videoProcess_v1_0</spirit:modelName>
         <spirit:fileSetRef>
+          <spirit:localName>xilinx_vhdlsynthesis_xilinx_com_ip_div_gen_5_1__ref_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:fileSetRef>
           <spirit:localName>xilinx_vhdlsynthesis_view_fileset</spirit:localName>
         </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>4d0c2bd0</spirit:value>
+            <spirit:value>29c4ec56</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -767,12 +770,15 @@
         <spirit:language>vhdl</spirit:language>
         <spirit:modelName>videoProcess_v1_0</spirit:modelName>
         <spirit:fileSetRef>
+          <spirit:localName>xilinx_vhdlbehavioralsimulation_xilinx_com_ip_div_gen_5_1__ref_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:fileSetRef>
           <spirit:localName>xilinx_vhdlbehavioralsimulation_view_fileset</spirit:localName>
         </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>4d0c2bd0</spirit:value>
+            <spirit:value>29c4ec56</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -800,7 +806,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>40f3f3ba</spirit:value>
+            <spirit:value>feedffec</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -815,6 +821,21 @@
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
             <spirit:value>16328387</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
+        <spirit:name>xilinx_testbench</spirit:name>
+        <spirit:displayName>Test Bench</spirit:displayName>
+        <spirit:envIdentifier>:vivado.xilinx.com:simulation.testbench</spirit:envIdentifier>
+        <spirit:modelName>videoProcess_tb</spirit:modelName>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_testbench_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>57c957ea</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1585,7 +1606,7 @@
       <spirit:modelParameter spirit:dataType="std_logic_vector(31 downto 0)">
         <spirit:name>revision_number</spirit:name>
         <spirit:displayName>Revision Number</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.revision_number" spirit:bitStringLength="32">0x11122018</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.revision_number" spirit:bitStringLength="32">0x12162018</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>i_data_width</spirit:name>
@@ -1626,6 +1647,11 @@
         <spirit:name>p_data_width</spirit:name>
         <spirit:displayName>P Data Width</spirit:displayName>
         <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.p_data_width">11</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>b_data_width</spirit:name>
+        <spirit:displayName>B Data Width</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.b_data_width">32</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -1673,7 +1699,19 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/divider.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>src/frameProcess.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/gridLockFifo.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/hsv.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -1681,7 +1719,15 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/imageFilter2.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>src/imageRGBmac.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/pointOfInterest.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -1713,10 +1759,24 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/div_gen_0.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/videoProcess_v1_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_340fa3f0</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_86e92050</spirit:userFileType>
       </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_vhdlsynthesis_xilinx_com_ip_div_gen_5_1__ref_view_fileset</spirit:name>
+      <spirit:vendorExtensions>
+        <xilinx:subCoreRef>
+          <xilinx:componentRef xilinx:vendor="xilinx.com" xilinx:library="ip" xilinx:name="div_gen" xilinx:version="5.1">
+            <xilinx:mode xilinx:name="create_mode"/>
+          </xilinx:componentRef>
+        </xilinx:subCoreRef>
+      </spirit:vendorExtensions>
     </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_vhdlbehavioralsimulation_view_fileset</spirit:name>
@@ -1741,7 +1801,19 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/divider.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>src/frameProcess.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/gridLockFifo.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/hsv.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -1749,7 +1821,15 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/imageFilter2.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>src/imageRGBmac.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>src/pointOfInterest.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -1781,9 +1861,23 @@
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
+        <spirit:name>src/div_gen_0.xci</spirit:name>
+        <spirit:userFileType>xci</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/videoProcess_v1_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_vhdlbehavioralsimulation_xilinx_com_ip_div_gen_5_1__ref_view_fileset</spirit:name>
+      <spirit:vendorExtensions>
+        <xilinx:subCoreRef>
+          <xilinx:componentRef xilinx:vendor="xilinx.com" xilinx:library="ip" xilinx:name="div_gen" xilinx:version="5.1">
+            <xilinx:mode xilinx:name="create_mode"/>
+          </xilinx:componentRef>
+        </xilinx:subCoreRef>
+      </spirit:vendorExtensions>
     </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_softwaredriver_view_fileset</spirit:name>
@@ -1822,7 +1916,7 @@
       <spirit:file>
         <spirit:name>xgui/videoProcess_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_545e258e</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_7363f4b1</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1831,6 +1925,13 @@
       <spirit:file>
         <spirit:name>bd/bd.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_testbench_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>tb/videoProcess_tb.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
   </spirit:fileSets>
@@ -1944,7 +2045,7 @@
     <spirit:parameter>
       <spirit:name>revision_number</spirit:name>
       <spirit:displayName>Revision Number</spirit:displayName>
-      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.revision_number" spirit:bitStringLength="32">0x11122018</spirit:value>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.revision_number" spirit:bitStringLength="32">0x12162018</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>i_data_width</spirit:name>
@@ -1986,6 +2087,11 @@
       <spirit:displayName>P Data Width</spirit:displayName>
       <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.p_data_width">11</spirit:value>
     </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>b_data_width</spirit:name>
+      <spirit:displayName>B Data Width</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.b_data_width">32</spirit:value>
+    </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
@@ -1996,20 +2102,20 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>videoProcess_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>11</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-11-13T06:03:45Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>21</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2018-12-16T08:43:02Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="xilinx.com:user:videoProcess:1.0_ARCHIVE_LOCATION">v:/SOBELDETECT/DEBUG/RELEASED/ZEDBOARD/ip_lib/videoProcess_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="xilinx.com:user:videoProcess:1.0_ARCHIVE_LOCATION">v:/RELEASED/ZEDBOARD/ip_lib/videoProcess_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2017.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="6bb183dd"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="db57f548"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="3e10d55c"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d85beda7"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="5d99f4d8"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="ea8f88a1"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="1b24a47e"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="a1cf0a55"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="558da018"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

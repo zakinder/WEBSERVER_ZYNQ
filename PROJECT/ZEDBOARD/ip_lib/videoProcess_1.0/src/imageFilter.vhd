@@ -3,21 +3,21 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity imageFilter is
 generic (
+    i_data_width  : integer := 8;
     img_width     : integer := 256;
     adwr_width    : integer := 16;
-    p_data_width  : integer := 16;
     addr_width    : integer := 11);
 port (
     clk           : in std_logic;
     rst_l         : in std_logic;
-    d_Ri          : in std_logic_vector(7 downto 0);
-    d_Gi          : in std_logic_vector(7 downto 0);
-    d_Bi          : in std_logic_vector(7 downto 0);
+    iRed          : in std_logic_vector(i_data_width-1 downto 0);
+    iGreen        : in std_logic_vector(i_data_width-1 downto 0);
+    iBlue         : in std_logic_vector(i_data_width-1 downto 0);
     iValid        : in std_logic;
     iaddress      : in std_logic_vector(15 downto 0);
-    d_Ro          : out std_logic_vector(7 downto 0);
-    d_Go          : out std_logic_vector(7 downto 0);
-    d_Bo          : out std_logic_vector(7 downto 0);
+    oRed          : out std_logic_vector(i_data_width-1 downto 0);
+    oGreen        : out std_logic_vector(i_data_width-1 downto 0);
+    oBlue         : out std_logic_vector(i_data_width-1 downto 0);
     oValid        : out std_logic);
 end entity;
 architecture arch of imageFilter is
@@ -47,9 +47,6 @@ port (
     vTap2x      : in std_logic_vector(7 downto 0);
     DataO       : out std_logic_vector(7 downto 0));
 end component imageRGBmac;
----------------------------------------------------------------------------------
-constant i_data_width                : integer := 8;
----------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
     signal vTapRGB0x   : std_logic_vector(23 downto 0);
     signal vTapRGB1x   : std_logic_vector(23 downto 0);
@@ -94,7 +91,7 @@ MAC_R_inst: imageRGBmac
     vTap0x          => vTapRGB0x(23 downto 16),
     vTap1x          => vTapRGB1x(23 downto 16),
     vTap2x          => vTapRGB2x(23 downto 16),
-    DataO           => d_Ro);
+    DataO           => oRed);
 MAC_G_inst: imageRGBmac
     port map(
     clk             => clk,
@@ -102,15 +99,15 @@ MAC_G_inst: imageRGBmac
     vTap0x          => vTapRGB0x(15 downto 8),
     vTap1x          => vTapRGB1x(15 downto 8),
     vTap2x          => vTapRGB2x(15 downto 8),
-    DataO           => d_Go);
+    DataO           => oGreen);
 MAC_B_inst: imageRGBmac
     port map(
     clk             => clk,
     rst_l           => rst_l,
-    vTap0x          => vTapRGB0x(7 downto 0),
-    vTap1x          => vTapRGB1x(7 downto 0),
-    vTap2x          => vTapRGB2x(7 downto 0),
-    DataO           => d_Bo);
+    vTap0x          => vTapRGB0x(i_data_width-1 downto 0),
+    vTap1x          => vTapRGB1x(i_data_width-1 downto 0),
+    vTap2x          => vTapRGB2x(i_data_width-1 downto 0),
+    DataO           => oBlue);
   TAP_SIGNED : process (clk, rst_l) begin
     if rst_l = '0' then
       d1en      <= '0';
@@ -118,11 +115,11 @@ MAC_B_inst: imageRGBmac
       d3en      <= '0';
       d4en      <= '0';
     elsif rising_edge(clk) then
-      d1R      <= d_Ri;  
+      d1R      <= iRed;  
       d2R      <= d1R;
-      d1G      <= d_Gi;  
+      d1G      <= iGreen;  
       d2G      <= d1G;
-      d1B      <= d_Bi;  
+      d1B      <= iBlue;  
       d2B      <= d1B;
       d2RGB    <= d1R & d1G & d1B;
       d1en     <= enable;

@@ -20,6 +20,12 @@ entity videoProcess_v1_0_config_axis is
 		configReg6    			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		configReg7    			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		configReg8    			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg19 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg20 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg40 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg41 			: in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        gridLockDatao           : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        gridDataRdEn            : out std_logic;
 		Kernal1                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		Kernal2                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		Kernal3                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
@@ -56,56 +62,60 @@ architecture arch_imp of videoProcess_v1_0_config_axis is
     constant OPT_MEM_ADDR_BITS : integer := 4;
     constant ADDR_LSB  : integer := (C_S_AXI_DATA_WIDTH/32)+ 1;
 	type pDataBuffer is array (0 to 31) of std_logic_vector(31 downto 0);
-	signal dataBuffer     : pDataBuffer := (others => (others => '0'));
-    signal axi_awaddr     : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
-    signal axi_awready    : std_logic;
-    signal axi_wready     : std_logic;
-    signal axi_bresp      : std_logic_vector(1 downto 0);
-    signal axi_bvalid     : std_logic;
-    signal axi_araddr     : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
-    signal axi_arready    : std_logic;
-    signal axi_rdata      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal axi_rresp      : std_logic_vector(1 downto 0);
-    signal axi_rvalid     : std_logic;
-    signal slv_reg0       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg1       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg2       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg3       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg4       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg5       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg6       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg7       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg8       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg9       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg10      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg11      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg12      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg13      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg14      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg15      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg16      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg17      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg18      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg19      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg20      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg21      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg22      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg23      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg24      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg25      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg26      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg27      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg28      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg29      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg30      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg31      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg_rden   : std_logic;
-    signal slv_reg_wren   : std_logic;
-    signal reg_data_out   : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal byte_index     : integer;
-    signal aw_en          : std_logic;
-    signal w1sync         : std_logic;    
-    signal w2sync         : std_logic;
+	signal dataBuffer            : pDataBuffer := (others => (others => '0'));
+    signal axi_awaddr            : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+    signal axi_awready           : std_logic;
+    signal axi_wready            : std_logic;
+    signal axi_bresp             : std_logic_vector(1 downto 0);
+    signal axi_bvalid            : std_logic;
+    signal axi_araddr            : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+    signal axi_arready           : std_logic;
+    signal axi_rdata             : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal axi_rresp             : std_logic_vector(1 downto 0);
+    signal axi_rvalid            : std_logic;
+    -------------------------------------------------------------------------
+    signal configRegister1       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister2       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister3       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister4       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister5       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister6       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister7       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister8       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister9       : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister10      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister11      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister12      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister13      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister14      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister15      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister16      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister17      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister18      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister19      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister20      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister21      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister22      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister23      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister24      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister25      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister26      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister27      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister28      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister29      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister30      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister31      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal configRegister32      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    -------------------------------------------------------------------------
+    signal slv_reg_rden          : std_logic;
+    signal slv_reg_srden         : std_logic;
+    signal slv_reg_wren          : std_logic;
+    signal reg_data_out          : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal byte_index            : integer;
+    signal aw_en                 : std_logic;
+    signal w1sync                : std_logic;    
+    signal w2sync                : std_logic;
+    -------------------------------------------------------------------------
 begin
     S_AXI_AWREADY    <= axi_awready;
     S_AXI_WREADY     <= axi_wready;
@@ -165,38 +175,38 @@ begin
     begin
       if rising_edge(S_AXI_ACLK) then 
         if S_AXI_ARESETN = '0' then
-          slv_reg0 <= (others => '0');
-          slv_reg1 <= (others => '0');
-          slv_reg2 <= (others => '0');
-          slv_reg3 <= (others => '0');
-          slv_reg4 <= (others => '0');
-          slv_reg5 <= (others => '0');
-          slv_reg6 <= (others => '0');
-          slv_reg7 <= (others => '0');
-          slv_reg8 <= (others => '0');
-          slv_reg9 <= (others => '0');
-          slv_reg10 <= (others => '0');
-          slv_reg11 <= (others => '0');
-          slv_reg12 <= (others => '0');
-          slv_reg13 <= (others => '0');
-          slv_reg14 <= (others => '0');
-          slv_reg15 <= (others => '0');
-          slv_reg16 <= (others => '0');
-          slv_reg17 <= (others => '0');
-          slv_reg18 <= (others => '0');
-          slv_reg19 <= (others => '0');
-          slv_reg20 <= (others => '0');
-          slv_reg21 <= (others => '0');
-          slv_reg22 <= (others => '0');
-          slv_reg23 <= (others => '0');
-          slv_reg24 <= (others => '0');
-          slv_reg25 <= (others => '0');
-          slv_reg26 <= (others => '0');
-          slv_reg27 <= (others => '0');
-          slv_reg28 <= (others => '0');
-          slv_reg29 <= (others => '0');
-          slv_reg30 <= (others => '0');
-          slv_reg31 <= (others => '0');
+          configRegister1 <= (others => '0');
+          configRegister2 <= (others => '0');
+          configRegister3 <= (others => '0');
+          configRegister4 <= (others => '0');
+          configRegister5 <= (others => '0');
+          configRegister6 <= (others => '0');
+          configRegister7 <= (others => '0');
+          configRegister8 <= (others => '0');
+          configRegister9 <= (others => '0');
+          configRegister10 <= (others => '0');
+          configRegister11 <= (others => '0');
+          configRegister12 <= (others => '0');
+          configRegister13 <= (others => '0');
+          configRegister14 <= (others => '0');
+          configRegister15 <= (others => '0');
+          configRegister16 <= (others => '0');
+          configRegister17 <= (others => '0');
+          configRegister18 <= (others => '0');
+          configRegister19 <= (others => '0');
+          configRegister20 <= (others => '0');
+          configRegister21 <= (others => '0');
+          configRegister22 <= (others => '0');
+          configRegister23 <= (others => '0');
+          configRegister24 <= (others => '0');
+          configRegister25 <= (others => '0');
+          configRegister26 <= (others => '0');
+          configRegister27 <= (others => '0');
+          configRegister28 <= (others => '0');
+          configRegister29 <= (others => '0');
+          configRegister30 <= (others => '0');
+          configRegister31 <= (others => '0');
+          configRegister32 <= (others => '0');
         else
           loc_addr := axi_awaddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
           if (slv_reg_wren = '1') then
@@ -204,228 +214,228 @@ begin
               when b"00000" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg0(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister1(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00001" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg1(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister2(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00010" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg2(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister3(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00011" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg3(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister4(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00100" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg4(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister5(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00101" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg5(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister6(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00110" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg6(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister7(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"00111" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg7(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister8(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01000" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg8(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister9(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01001" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg9(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister10(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01010" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg10(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister11(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01011" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg11(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister12(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01100" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg12(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister13(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01101" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg13(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister14(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01110" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg14(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister15(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"01111" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg15(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister16(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10000" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg16(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister17(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10001" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg17(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister18(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10010" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg18(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister19(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10011" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg19(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister20(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10100" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg20(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister21(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10101" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg21(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister22(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10110" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg22(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister23(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"10111" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg23(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister24(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11000" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg24(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister25(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11001" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg25(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister26(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11010" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg26(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister27(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11011" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg27(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister28(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11100" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg28(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister29(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11101" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg29(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister30(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11110" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg30(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister31(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when b"11111" =>
                 for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                   if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                    slv_reg31(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                    configRegister32(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                   end if;
                 end loop;
               when others =>
-                slv_reg0            <= slv_reg0;
-                slv_reg1            <= slv_reg1;
-                slv_reg2            <= slv_reg2;
-                slv_reg3            <= slv_reg3;
-                slv_reg4            <= slv_reg4;
-                slv_reg5            <= slv_reg5;
-                slv_reg6            <= slv_reg6;
-                slv_reg7            <= slv_reg7;
-                slv_reg8       <= slv_reg8;
-                slv_reg9       <= slv_reg9;
-                slv_reg10      <= slv_reg10;
-                slv_reg11      <= slv_reg11;
-                slv_reg12      <= slv_reg12;
-                slv_reg13      <= slv_reg13;
-                slv_reg14      <= slv_reg14;
-                slv_reg15      <= slv_reg15;
-                slv_reg16      <= slv_reg16;
-                slv_reg17      <= slv_reg17;
-                slv_reg18      <= slv_reg18;
-                slv_reg19      <= slv_reg19;
-                slv_reg20      <= slv_reg20;
-                slv_reg21      <= slv_reg21;
-                slv_reg22      <= slv_reg22;
-                slv_reg23      <= slv_reg23;
-                slv_reg24      <= slv_reg24;
-                slv_reg25      <= slv_reg25;
-                slv_reg26      <= slv_reg26;
-                slv_reg27      <= slv_reg27;
-                slv_reg28      <= slv_reg28;
-                slv_reg29      <= slv_reg29;
-                slv_reg30      <= slv_reg30;
-                slv_reg31      <= slv_reg31;
+                configRegister1       <= configRegister1;
+                configRegister2       <= configRegister2;
+                configRegister3       <= configRegister3;
+                configRegister4       <= configRegister4;
+                configRegister5       <= configRegister5;
+                configRegister6       <= configRegister6;
+                configRegister7       <= configRegister7;
+                configRegister8       <= configRegister8;
+                configRegister9       <= configRegister9;
+                configRegister10      <= configRegister10;
+                configRegister11      <= configRegister11;
+                configRegister12      <= configRegister12;
+                configRegister13      <= configRegister13;
+                configRegister14      <= configRegister14;
+                configRegister15      <= configRegister15;
+                configRegister16      <= configRegister16;
+                configRegister17      <= configRegister17;
+                configRegister18      <= configRegister18;
+                configRegister19      <= configRegister19;
+                configRegister20      <= configRegister20;
+                configRegister21      <= configRegister21;
+                configRegister22      <= configRegister22;
+                configRegister23      <= configRegister23;
+                configRegister24      <= configRegister24;
+                configRegister25      <= configRegister25;
+                configRegister26      <= configRegister26;
+                configRegister27      <= configRegister27;
+                configRegister28      <= configRegister28;
+                configRegister29      <= configRegister29;
+                configRegister30      <= configRegister30;
+                configRegister31      <= configRegister31;
+                configRegister32      <= configRegister32;
             end case;
           end if;
         end if;
@@ -480,79 +490,116 @@ begin
       end if;
     end process;
     slv_reg_rden <= axi_arready and S_AXI_ARVALID and (not axi_rvalid) ;
-    process (seconds, minutes, hours, slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, slv_reg8, slv_reg9, slv_reg10, slv_reg11, slv_reg12, slv_reg13, slv_reg14, slv_reg15, slv_reg16, slv_reg17, slv_reg18, slv_reg19, slv_reg20, slv_reg21, slv_reg22, slv_reg23, slv_reg24, slv_reg25, slv_reg26, slv_reg27, slv_reg28, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
+    process (seconds, minutes, hours, configReg41, gridLockDatao, configRegister3, configRegister4, configRegister5, configRegister6, configRegister7, configRegister8, configRegister9, configRegister10, configRegister11, configRegister12, configRegister13, configRegister14, configRegister15, configRegister16, configRegister17, configRegister18, configRegister19, configRegister20, configRegister21, configRegister22, configRegister23, configRegister24, configRegister25, configRegister26, configRegister27, configRegister28, configRegister29, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
     variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
     begin
         loc_addr := axi_araddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
         case loc_addr is
           when b"00000" =>
-            reg_data_out <= slv_reg0;
+            reg_data_out <= gridLockDatao;
+            slv_reg_srden <='1';
           when b"00001" =>
-            reg_data_out <= slv_reg1;
+            slv_reg_srden <='0';
+            reg_data_out <= x"000000" & "0000000" & configReg41(0);
+            slv_reg_srden <='0';
           when b"00010" =>
-            reg_data_out <= slv_reg2;
+            reg_data_out <= x"000000" & "0000000" & configReg41(1);
+            slv_reg_srden <='0';
           when b"00011" =>
-            reg_data_out <= slv_reg3;
+            reg_data_out <= x"000000" & "0000000" & configReg41(2);
+            slv_reg_srden <='0';
           when b"00100" =>
-            reg_data_out <= slv_reg4;
+            reg_data_out <= x"000000" & configReg41(23 downto 16);
+            slv_reg_srden <='0';
           when b"00101" =>
-            reg_data_out <= slv_reg5;
+            reg_data_out <= configRegister6;
+            slv_reg_srden <='0';
           when b"00110" =>
-            reg_data_out <= slv_reg6;
+            reg_data_out <= configRegister7;
+            slv_reg_srden <='0';
           when b"00111" =>
-            reg_data_out <= slv_reg7;
+            reg_data_out <= configRegister8;
+            slv_reg_srden <='0';
           when b"01000" =>
-            reg_data_out <= slv_reg8;
+            reg_data_out <= configRegister9;
+            slv_reg_srden <='0';
           when b"01001" =>
-            reg_data_out <= slv_reg9;
+            reg_data_out <= configRegister10;
+            slv_reg_srden <='0';
           when b"01010" =>
-            reg_data_out <= slv_reg10;
+            reg_data_out <= configRegister11;
+            slv_reg_srden <='0';
           when b"01011" =>
-            reg_data_out <= slv_reg11;
+            reg_data_out <= configRegister12;
+            slv_reg_srden <='0';
           when b"01100" =>
-            reg_data_out <= slv_reg12;
+            reg_data_out <= configRegister13;
+            slv_reg_srden <='0';
           when b"01101" =>
-            reg_data_out <= slv_reg13;
+            reg_data_out <= configRegister14;
+            slv_reg_srden <='0';
           when b"01110" =>
-            reg_data_out <= slv_reg14;
+            reg_data_out <= configRegister15;
+            slv_reg_srden <='0';
           when b"01111" =>
-            reg_data_out <= slv_reg15;
+            reg_data_out <= configRegister16;
+            slv_reg_srden <='0';
           when b"10000" =>
-            reg_data_out <= slv_reg16;
+            reg_data_out <= configRegister17;
+            slv_reg_srden <='0';
           when b"10001" =>
-            reg_data_out <= slv_reg17;
+            reg_data_out <= configRegister18;
+            slv_reg_srden <='0';
           when b"10010" =>
-            reg_data_out <= slv_reg18;
+            reg_data_out <= configRegister19;
+            slv_reg_srden <='0';
           when b"10011" =>
-            reg_data_out <= slv_reg19;
+            reg_data_out <= configRegister20;
+            slv_reg_srden <='0';
           when b"10100" =>
-            reg_data_out <= slv_reg20;
+            reg_data_out <= configRegister21;
+            slv_reg_srden <='0';
           when b"10101" =>
-            reg_data_out <= slv_reg21;
+            reg_data_out <= configRegister22;
+            slv_reg_srden <='0';
           when b"10110" =>
-            reg_data_out <= slv_reg22;
+            reg_data_out <= configRegister23;
+            slv_reg_srden <='0';
           when b"10111" =>
-            reg_data_out <= slv_reg23;
+            reg_data_out <= configRegister24;
+            slv_reg_srden <='0';
           when b"11000" =>
-            reg_data_out <= slv_reg24;
+            reg_data_out <= configRegister25;
+            slv_reg_srden <='0';
           when b"11001" =>
-            reg_data_out <= slv_reg25;
+            reg_data_out <= configRegister26;
+            slv_reg_srden <='0';
           when b"11010" =>
-            reg_data_out <= slv_reg26;
+            reg_data_out <= configRegister27;
+            slv_reg_srden <='0';
           when b"11011" =>
-            reg_data_out <= slv_reg27;
+            reg_data_out <= configRegister28;
+            slv_reg_srden <='0';
           when b"11100" =>
-            reg_data_out <= slv_reg28;
+            reg_data_out <= configRegister29;
+            slv_reg_srden <='0';
           when b"11101" =>
             reg_data_out <= x"000000" & "00" & seconds;
+            slv_reg_srden <='0';
           when b"11110" =>
             reg_data_out <= x"000000" & "00" & minutes;
+            slv_reg_srden <='0';
           when b"11111" =>
             reg_data_out <= x"000000" & "000" & hours;
+            slv_reg_srden <='0';
           when others =>
+            slv_reg_srden <='0';
             reg_data_out  <= (others => '0');
         end case;
-    end process; 
+    end process;
+    
+    gridDataRdEn <= '1' when (slv_reg_srden ='1' and slv_reg_rden ='1') else '0';
+    
     process( S_AXI_ACLK ) is
     begin
       if (rising_edge (S_AXI_ACLK)) then
@@ -567,40 +614,41 @@ begin
     end process;
     portaW: process (S_AXI_ACLK)begin
     if (rising_edge (S_AXI_ACLK)) then
-		dataBuffer(0) <= slv_reg0;
-		dataBuffer(1) <= slv_reg1;
-		dataBuffer(2) <= slv_reg2;
-		dataBuffer(3) <= slv_reg3;
-		dataBuffer(4) <= slv_reg4;
-		dataBuffer(5) <= slv_reg5;
-		dataBuffer(6) <= slv_reg6;
-		dataBuffer(7) <= slv_reg7;
+		dataBuffer(0) <= configRegister1;
+		dataBuffer(1) <= configRegister2;
+		dataBuffer(2) <= configRegister3;
+		dataBuffer(3) <= configRegister4;
+		dataBuffer(4) <= configRegister5;
+		dataBuffer(5) <= configRegister6;
+		dataBuffer(6) <= configRegister7;
+		dataBuffer(7) <= configRegister8;
 		-------------------------
-		dataBuffer(8)  <= slv_reg8;
-		dataBuffer(9)  <= slv_reg9;
-		dataBuffer(10) <= slv_reg10;
-		dataBuffer(11) <= slv_reg11;
-		dataBuffer(12) <= slv_reg12;
-		dataBuffer(13) <= slv_reg13;
-		dataBuffer(14) <= slv_reg14;
-		dataBuffer(15) <= slv_reg15;
-		dataBuffer(16) <= slv_reg16;
-		dataBuffer(17) <= slv_reg17;
-		dataBuffer(18) <= slv_reg18;
-		dataBuffer(19) <= slv_reg19;
+		dataBuffer(8)  <= configRegister9;
+		dataBuffer(9)  <= configRegister10;
+		dataBuffer(10) <= configRegister11;
+		dataBuffer(11) <= configRegister12;
+		dataBuffer(12) <= configRegister13;
+		dataBuffer(13) <= configRegister14;
+		dataBuffer(14) <= configRegister15;
+		dataBuffer(15) <= configRegister16;
+		dataBuffer(16) <= configRegister17;
+		dataBuffer(17) <= configRegister18;
+		dataBuffer(18) <= configRegister19;
+		dataBuffer(19) <= configRegister20;
+		dataBuffer(20) <= configRegister21;
 		-------------------------
     end if;
     end process portaW;
     portar: process (m_axis_mm2s_aclk)begin
     if (rising_edge (m_axis_mm2s_aclk)) then
-		configReg1 <= dataBuffer(0);
-		configReg2 <= dataBuffer(1);
-		configReg3 <= dataBuffer(2);
-		configReg4 <= dataBuffer(3);
-		configReg5 <= dataBuffer(4);
-		configReg6 <= dataBuffer(5);
-		configReg7 <= dataBuffer(6);
-		configReg8 <= dataBuffer(7);
+		configReg1     <= dataBuffer(0);
+		configReg2     <= dataBuffer(1);
+		configReg3     <= dataBuffer(2);
+		configReg4     <= dataBuffer(3);
+		configReg5     <= dataBuffer(4);
+		configReg6     <= dataBuffer(5);
+		configReg7     <= dataBuffer(6);
+		configReg8     <= dataBuffer(7);
 		-------------------------
 		Kernal1        <= dataBuffer(8);
 		Kernal2        <= dataBuffer(9);
@@ -612,6 +660,9 @@ begin
 		Kernal8        <= dataBuffer(15);
 		Kernal9        <= dataBuffer(16);
 		KernalConfig   <= dataBuffer(17);
+		configReg19    <= dataBuffer(18);
+		configReg20    <= dataBuffer(19);
+		configReg40    <= dataBuffer(20);
 		-------------------------
     end if;
     end process portar;

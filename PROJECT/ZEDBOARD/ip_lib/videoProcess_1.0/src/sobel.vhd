@@ -3,18 +3,18 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity sobel is
 generic (
+    i_data_width   : integer := 8;
     img_width      : integer := 256;
     adwr_width     : integer := 16;
-    p_data_width   : integer := 16;
     addr_width     : integer := 11);
 port (
     clk            : in std_logic;
     rst_l          : in std_logic;
-    configReg5     : in std_logic_vector(31 downto 0);
+    configReg6     : in std_logic_vector(31 downto 0);
     endOfFrame     : in std_logic;
-    d_R            : in std_logic_vector(7 downto 0);
-    d_G            : in std_logic_vector(7 downto 0);
-    d_B            : in std_logic_vector(7 downto 0);
+    iRed           : in std_logic_vector(i_data_width-1 downto 0);
+    iGreen         : in std_logic_vector(i_data_width-1 downto 0);
+    iBlue          : in std_logic_vector(i_data_width-1 downto 0);
     iValid         : in std_logic;
     threshold      : in std_logic_vector(15 downto 0);
     iaddress       : in std_logic_vector(15 downto 0);
@@ -28,10 +28,10 @@ port (
     Kernal8        : in std_logic_vector(31 downto 0);
     Kernal9        : in std_logic_vector(31 downto 0);
     KernalConfig   : in std_logic_vector(31 downto 0);
-    sRed           : out std_logic_vector(7 downto 0);
-    sGreen         : out std_logic_vector(7 downto 0);
-    sBlue          : out std_logic_vector(7 downto 0);
-    sValid         : out std_logic);   
+    oRed           : out std_logic_vector(i_data_width-1 downto 0);
+    oGreen         : out std_logic_vector(i_data_width-1 downto 0);
+    oBlue          : out std_logic_vector(i_data_width-1 downto 0);
+    oValid         : out std_logic);
 end entity;
 architecture arch of sobel is
 component buffer_controller is
@@ -59,40 +59,38 @@ port (
     data_out   : out unsigned(15 downto 0));
 end component squareRoot;
 ---------------------------------------------------------------------------------
-constant i_data_width : integer := 8;
----------------------------------------------------------------------------------
 --GX
 --[-1 +0 +1]
 --[-2 +0 +2]
 --[-1 +0 +1]
 --ROW-1[-1 0 1]
-signal Kernel_1_X : signed(7 downto 0) :=x"FF";
-signal Kernel_2_X : signed(7 downto 0) :=x"00";
-signal Kernel_3_X : signed(7 downto 0) :=x"01";
+signal Kernel_1_X : signed(i_data_width-1 downto 0) :=x"FF";
+signal Kernel_2_X : signed(i_data_width-1 downto 0) :=x"00";
+signal Kernel_3_X : signed(i_data_width-1 downto 0) :=x"01";
 --ROW-2[-2 0 2]
-signal Kernel_4_X : signed(7 downto 0) :=x"FE";
-signal Kernel_5_X : signed(7 downto 0) :=x"00";
-signal Kernel_6_X : signed(7 downto 0) :=x"02";
+signal Kernel_4_X : signed(i_data_width-1 downto 0) :=x"FE";
+signal Kernel_5_X : signed(i_data_width-1 downto 0) :=x"00";
+signal Kernel_6_X : signed(i_data_width-1 downto 0) :=x"02";
 --ROW-3[-1 0 1]
-signal Kernel_7_X : signed(7 downto 0) :=x"FF";
-signal Kernel_8_X : signed(7 downto 0) :=x"00";
-signal Kernel_9_X : signed(7 downto 0) :=x"01";
+signal Kernel_7_X : signed(i_data_width-1 downto 0) :=x"FF";
+signal Kernel_8_X : signed(i_data_width-1 downto 0) :=x"00";
+signal Kernel_9_X : signed(i_data_width-1 downto 0) :=x"01";
 --GY
 --[+1 +2 +1]
 --[+0 +0 +0]
 --[-1 -2 -1]
 --ROW-1[+1 +2 +1]
-signal Kernel_1_Y : signed(7 downto 0) :=x"01";
-signal Kernel_2_Y : signed(7 downto 0) :=x"02";
-signal Kernel_3_Y : signed(7 downto 0) :=x"01";
+signal Kernel_1_Y : signed(i_data_width-1 downto 0) :=x"01";
+signal Kernel_2_Y : signed(i_data_width-1 downto 0) :=x"02";
+signal Kernel_3_Y : signed(i_data_width-1 downto 0) :=x"01";
 --ROW-2[+0 +0 +0]
-signal Kernel_4_Y : signed(7 downto 0) :=x"00";
-signal Kernel_5_Y : signed(7 downto 0) :=x"00";
-signal Kernel_6_Y : signed(7 downto 0) :=x"00";
+signal Kernel_4_Y : signed(i_data_width-1 downto 0) :=x"00";
+signal Kernel_5_Y : signed(i_data_width-1 downto 0) :=x"00";
+signal Kernel_6_Y : signed(i_data_width-1 downto 0) :=x"00";
 --ROW-3[-1 -2 -1]
-signal Kernel_7_Y : signed(7 downto 0) :=x"FF";
-signal Kernel_8_Y : signed(7 downto 0) :=x"FE";
-signal Kernel_9_Y : signed(7 downto 0) :=x"FF";
+signal Kernel_7_Y : signed(i_data_width-1 downto 0) :=x"FF";
+signal Kernel_8_Y : signed(i_data_width-1 downto 0) :=x"FE";
+signal Kernel_9_Y : signed(i_data_width-1 downto 0) :=x"FF";
 ---------------------------------------------------------------------------------
     type vSB is record
         vTap0x     : signed(i_data_width downto 0);
@@ -148,19 +146,19 @@ signal Kernel_9_Y : signed(7 downto 0) :=x"FF";
     signal configReg   : integer;
 ---------------------------------------------------------------------------------
 begin
-configReg <= to_integer(unsigned(configReg5));
+configReg <= to_integer(unsigned(configReg6));
 KUPDATE : process (clk) begin
   if rising_edge(clk) then
   if (endOfFrame = '1' and KernalConfig = x"00000001") then
-      Kernel_1_X    <= signed(Kernal1(7 downto 0));
-      Kernel_2_X    <= signed(Kernal2(7 downto 0));
-      Kernel_3_X    <= signed(Kernal3(7 downto 0));
-      Kernel_4_X    <= signed(Kernal4(7 downto 0));
-      Kernel_5_X    <= signed(Kernal5(7 downto 0));
-      Kernel_6_X    <= signed(Kernal6(7 downto 0));
-      Kernel_7_X    <= signed(Kernal7(7 downto 0));
-      Kernel_8_X    <= signed(Kernal8(7 downto 0));
-      Kernel_9_X    <= signed(Kernal9(7 downto 0));
+      Kernel_1_X    <= signed(Kernal1(i_data_width-1 downto 0));
+      Kernel_2_X    <= signed(Kernal2(i_data_width-1 downto 0));
+      Kernel_3_X    <= signed(Kernal3(i_data_width-1 downto 0));
+      Kernel_4_X    <= signed(Kernal4(i_data_width-1 downto 0));
+      Kernel_5_X    <= signed(Kernal5(i_data_width-1 downto 0));
+      Kernel_6_X    <= signed(Kernal6(i_data_width-1 downto 0));
+      Kernel_7_X    <= signed(Kernal7(i_data_width-1 downto 0));
+      Kernel_8_X    <= signed(Kernal8(i_data_width-1 downto 0));
+      Kernel_9_X    <= signed(Kernal9(i_data_width-1 downto 0));
       Kernel_1_Y    <= signed(Kernal1(15 downto 8));
       Kernel_2_Y    <= signed(Kernal2(15 downto 8));
       Kernel_3_Y    <= signed(Kernal3(15 downto 8));
@@ -204,18 +202,18 @@ mod6_1_1_inst: buffer_controller
       d1en      <= '0';
       d2en      <= '0';
       d3en      <= '0';
-      sValid    <= '0';
+      oValid    <= '0';
     elsif rising_edge(clk) then
-      d1R      <= d_R;  
+      d1R      <= iRed;  
       d2R      <= d1R;
-      d1G      <= d_G;  
+      d1G      <= iGreen;  
       d2G      <= d1G;
-      d1B      <= d_B;  
+      d1B      <= iBlue;  
       d2B      <= d1B;
       d1en     <= en_datao;
       d2en     <= d1en;
       d3en     <= d2en;
-      sValid   <= d3en;
+      oValid   <= d3en;
     end if;
   end process TAP_SIGNED;
   TAP_DELAY : process (clk, rst_l)
@@ -371,23 +369,23 @@ port map(
 ------------------------------------------------------------------------------------------------
   RT : process (clk, rst_l) begin
     if rst_l = '0' then
-        sRed   <= (others => '0');
-        sGreen <= (others => '0');
-        sBlue  <= (others => '0');
+        oRed   <= (others => '0');
+        oGreen <= (others => '0');
+        oBlue  <= (others => '0');
     elsif rising_edge(clk) then
     if (sobel.sbo > unsigned(threshold)) then
-            sRed   <= x"00";--BLACK
-            sGreen <= x"00";--BLACK
-            sBlue  <= x"00";--BLACK
+            oRed   <= x"00";--BLACK
+            oGreen <= x"00";--BLACK
+            oBlue  <= x"00";--BLACK
     else
         if (configReg = 1) then
-            sRed   <= d2R;--Replace WHITE with Original sRed
-            sGreen <= d2G;--Replace WHITE with Original sGreen
-            sBlue  <= d2B;--Replace WHITE with Original sBlue
+            oRed   <= d2R;--Replace WHITE with Original oRed
+            oGreen <= d2G;--Replace WHITE with Original oGreen
+            oBlue  <= d2B;--Replace WHITE with Original oBlue
         else
-            sRed   <= x"FF";--WHITE
-            sGreen <= x"FF";--WHITE
-            sBlue  <= x"FF";--WHITE
+            oRed   <= x"FF";--WHITE
+            oGreen <= x"FF";--WHITE
+            oBlue  <= x"FF";--WHITE
         end if;
     end if;
     end if;

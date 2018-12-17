@@ -28,8 +28,18 @@ proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "conf_addr_width" -parent ${Page_0}
   ipgui::add_param $IPINST -name "img_width" -parent ${Page_0}
   ipgui::add_param $IPINST -name "p_data_width" -parent ${Page_0}
+  ipgui::add_param $IPINST -name "b_data_width" -parent ${Page_0}
 
 
+}
+
+proc update_PARAM_VALUE.b_data_width { PARAM_VALUE.b_data_width } {
+	# Procedure called to update b_data_width when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.b_data_width { PARAM_VALUE.b_data_width } {
+	# Procedure called to validate b_data_width
+	return true
 }
 
 proc update_PARAM_VALUE.conf_addr_width { PARAM_VALUE.conf_addr_width } {
@@ -273,5 +283,10 @@ proc update_MODELPARAM_VALUE.img_width { MODELPARAM_VALUE.img_width PARAM_VALUE.
 proc update_MODELPARAM_VALUE.p_data_width { MODELPARAM_VALUE.p_data_width PARAM_VALUE.p_data_width } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.p_data_width}] ${MODELPARAM_VALUE.p_data_width}
+}
+
+proc update_MODELPARAM_VALUE.b_data_width { MODELPARAM_VALUE.b_data_width PARAM_VALUE.b_data_width } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.b_data_width}] ${MODELPARAM_VALUE.b_data_width}
 }
 

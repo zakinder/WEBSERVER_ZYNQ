@@ -9,10 +9,10 @@
 --
 -- DESCRIPTION
 --
--- Converts RGB pixels to YCbCr. Data is written to the core by asserting r, g,
--- and b with the RGB pixel data and holding wr_en high for one clock
+-- Converts RGB pixels to YCbCr. Data is written to the core by asserting iRed, iGreen,
+-- and iBlue with the RGB pixel data and holding iValid high for one clock
 -- cycle. After conversion, the YCbCr data is asserted on the y, cb, and cr
--- outputs and valid is held high for one clock cycle. No flow control is
+-- outputs and oValid is held high for one clock cycle. No flow control is
 -- supported. You can adjust the pixel input/output width by changing the
 -- i_data_width generic. The precision of the fixed point computation can be
 -- adjusted by changing the i_precision generic. Up to 32-bit precision is
@@ -64,13 +64,13 @@
 --
 -- PRECISION
 --
--- You can set i_data_width to indicate the input pixel width (e.g., 8 for 8
+-- You can set i_data_width to indicate the input pixel width (e.iGreen., 8 for 8
 -- bits per pixel) and i_precision to indicate the precision to be used in the
 -- arithmetic computation. For simplicity, rounding is only performed at the
 -- end of computation, which generally provides very good results.
 --
 -- In a bit-accurate software version I found that rounding intermediate
--- results (e.g., after the multiplication) had only a very small effect on the
+-- results (e.iGreen., after the multiplication) had only a very small effect on the
 -- final result. Assuming a i_data_width of 8, I found that a i_precision of 12
 -- will cause the resulting output values to be inexact about 6% of the time. A
 -- i_precision of 14 gives inexact results about 1.5% of the time. A
@@ -87,15 +87,15 @@ entity rgb_ycbcr is
     i_full_range    : boolean := FALSE);  -- RGB input from 0-255 (true)
   port (
     clk       : in  std_logic;
-    aresetn   : in  std_logic;
-    r         : in  std_logic_vector(i_data_width-1 downto 0);
-    g         : in  std_logic_vector(i_data_width-1 downto 0);
-    b         : in  std_logic_vector(i_data_width-1 downto 0);
-    wr_en     : in  std_logic;
+    rst_l     : in  std_logic;
+    iRed      : in  std_logic_vector(i_data_width-1 downto 0);
+    iGreen    : in  std_logic_vector(i_data_width-1 downto 0);
+    iBlue     : in  std_logic_vector(i_data_width-1 downto 0);
+    iValid    : in  std_logic;
     y         : out std_logic_vector(i_data_width-1 downto 0);
     cb        : out std_logic_vector(i_data_width-1 downto 0);
     cr        : out std_logic_vector(i_data_width-1 downto 0);
-    valid     : out std_logic);
+    oValid    : out std_logic);
 end rgb_ycbcr;
 architecture imp of rgb_ycbcr is
   constant C_1_PRE : unsigned(i_precision-1 downto 0) := to_unsigned(1, i_precision);
@@ -196,27 +196,27 @@ begin
   -----------------------------------------------------------------------------
   -- STAGE 0: Input registers
   -----------------------------------------------------------------------------
-  STAGE_0_PROC: process (clk, aresetn, r, g, b, wr_en)
+  STAGE_0_PROC: process (clk, rst_l, iRed, iGreen, iBlue, iValid)
   begin
-    if aresetn = '0' then
+    if rst_l = '0' then
       en_0 <= '0';
       r_0  <= (others => '0');
       g_0  <= (others => '0');
       b_0  <= (others => '0');
     elsif clk'event and clk = '1' then
-      r_0  <= unsigned(r);
-      g_0  <= unsigned(g);
-      b_0  <= unsigned(b);
-      en_0 <= wr_en;
+      r_0  <= unsigned(iRed);
+      g_0  <= unsigned(iGreen);
+      b_0  <= unsigned(iBlue);
+      en_0 <= iValid;
     end if;
   end process;
   -----------------------------------------------------------------------------
   -- STAGE 1: Multiplication
   -----------------------------------------------------------------------------
-  STAGE_1_PROC: process (clk, aresetn, en_0, r_0, g_0, b_0)
+  STAGE_1_PROC: process (clk, rst_l, en_0, r_0, g_0, b_0)
     variable temp : unsigned(i_data_width+i_precision-1 downto 0);
   begin
-    if aresetn = '0' then
+    if rst_l = '0' then
       en_1 <= '0';
       y_r <= (others => '0');
       y_g <= (others => '0');
@@ -254,12 +254,12 @@ begin
   -----------------------------------------------------------------------------
   -- STAGE 2: Addition
   -----------------------------------------------------------------------------
-  STAGE_2_PROC: process (clk, aresetn, en_1,y_r, y_g, y_b,cb_r, cb_g, cb_b,cr_r, cr_g, cr_b)
+  STAGE_2_PROC: process (clk, rst_l, en_1,y_r, y_g, y_b,cb_r, cb_g, cb_b,cr_r, cr_g, cr_b)
     variable temp_y   : unsigned(i_precision-1 downto 0);
     variable temp_cb  : unsigned(i_precision-1 downto 0);
     variable temp_cr  : unsigned(i_precision-1 downto 0);
   begin
-    if aresetn = '0' then
+    if rst_l = '0' then
       en_2 <= '0';
       y_2 <= (others => '0');
       cb_2 <= (others => '0');
@@ -279,12 +279,12 @@ begin
   -----------------------------------------------------------------------------
   -- STAGE 3: Final Addition and Rounding
   -----------------------------------------------------------------------------
-  STAGE_3_PROC: process (clk, aresetn, en_2,y_r, y_g, y_b,cb_r, cb_g, cb_b,cr_r, cr_g, cr_b)
+  STAGE_3_PROC: process (clk, rst_l, en_2,y_r, y_g, y_b,cb_r, cb_g, cb_b,cr_r, cr_g, cr_b)
     variable y_round  : unsigned(i_data_width-1 downto 0);
     variable cb_round : unsigned(i_data_width-1 downto 0);
     variable cr_round : unsigned(i_data_width-1 downto 0);
   begin
-    if aresetn = '0' then
+    if rst_l = '0' then
       en_3 <= '0';
       y_3 <= (others => '0');
       cb_3 <= (others => '0');
@@ -323,5 +323,5 @@ begin
   y     <= std_logic_vector(y_3);
   cb    <= std_logic_vector(cb_3);
   cr    <= std_logic_vector(cr_3);
-  valid <= en_3;
+  oValid <= en_3;
 end imp;

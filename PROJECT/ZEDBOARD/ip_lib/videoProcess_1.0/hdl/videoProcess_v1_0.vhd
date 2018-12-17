@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity videoProcess_v1_0 is
 generic (
-    revision_number             : std_logic_vector(31 downto 0) := x"11122018";
+    revision_number             : std_logic_vector(31 downto 0) := x"12162018";
     C_rgb_m_axis_TDATA_WIDTH    : integer := 16;
     C_rgb_m_axis_START_COUNT    : integer := 32;
     C_rgb_s_axis_TDATA_WIDTH    : integer := 16;
@@ -13,6 +13,7 @@ generic (
     C_config_axis_ADDR_WIDTH    : integer := 7;
     i_data_width                : integer := 8;
     s_data_width                : integer := 16;
+    b_data_width                : integer := 32;
     i_precision                 : integer := 12;
     i_full_range                : boolean := FALSE;
     conf_data_width             : integer := 32;
@@ -170,6 +171,12 @@ port (
         configReg6              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         configReg7              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         configReg8              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg19             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg20             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg40 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg41             : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        gridLockDatao           : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        gridDataRdEn            : out std_logic;
 		Kernal1                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		Kernal2                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		Kernal3                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
@@ -236,24 +243,6 @@ port (
     ogreen                      : out std_logic_vector(12 downto 0);
     oblue                       : out std_logic_vector(11 downto 0));
 end component raw2rgb;
---EXTERNAL LOGIC SRC SOURCE : SEE REFERENCE LINK IN README
-component rgb_ycbcr is
-generic (
-    i_data_width                : integer:= 8;
-    i_precision                 : integer:= 12;
-    i_full_range                : boolean:= FALSE);
-port (                          
-    clk                         : in  std_logic;
-    aresetn                     : in  std_logic;
-    r                           : in  std_logic_vector(i_data_width-1 downto 0);
-    g                           : in  std_logic_vector(i_data_width-1 downto 0);
-    b                           : in  std_logic_vector(i_data_width-1 downto 0);
-    wr_en                       : in  std_logic;
-    y                           : out std_logic_vector(i_data_width-1 downto 0);
-    cb                          : out std_logic_vector(i_data_width-1 downto 0);
-    cr                          : out std_logic_vector(i_data_width-1 downto 0);
-    valid                       : out std_logic);
-end component rgb_ycbcr;
 component digi_clk is
 port (
     clk1                        : in std_logic;
@@ -261,67 +250,66 @@ port (
     minutes                     : out std_logic_vector(5 downto 0);
     hours                       : out std_logic_vector(4 downto 0));
 end component digi_clk;
---EXTERNAL LOGIC SRC SOURCE : SEE REFERENCE LINK IN README
-component color_correction is
-generic (
-    i_data_width                : integer := 8;
-    C_WHOLE_WIDTH               : integer := 3;
-    C_FRAC_WIDTH                : integer := 8);
-port (                          
-    clk                         : in  std_logic;
-    rst                         : in  std_logic;
-    r                           : in  std_logic_vector(i_data_width-1 downto 0);
-    g                           : in  std_logic_vector(i_data_width-1 downto 0);
-    b                           : in  std_logic_vector(i_data_width-1 downto 0);
-    wr_en                       : in  std_logic;
-    iXcont                      : in std_logic_vector(15 downto 0);
-    iYcont                      : in std_logic_vector(15 downto 0);
-    oXcont                      : out std_logic_vector(15 downto 0);
-    oYcont                      : out std_logic_vector(15 downto 0);
-    rp                          : out std_logic_vector(i_data_width-1 downto 0);
-    gp                          : out std_logic_vector(i_data_width-1 downto 0);
-    bp                          : out std_logic_vector(i_data_width-1 downto 0);
-    valid                       : out std_logic);
-end component color_correction;
 component frameProcess is
 generic (
-    img_width                   : integer := 256;
-    adwr_width                  : integer := 16;
-    p_data_width                : integer := 16;
-    addr_width                  : integer := 11);
-port (                          
-    clk                         : in std_logic;
-    rst_l                       : in std_logic;
-    configReg5                  : in std_logic_vector(31 downto 0);
-    endOfFrame                  : in std_logic;
-    d_R                         : in std_logic_vector(7 downto 0);
-    d_G                         : in std_logic_vector(7 downto 0);
-    d_B                         : in std_logic_vector(7 downto 0);
-    iValid                      : in std_logic;
-    threshold                   : in std_logic_vector(15 downto 0);
-    iaddress                    : in std_logic_vector(15 downto 0);
-	Kernal1                     : in std_logic_vector(31 downto 0);
-	Kernal2                     : in std_logic_vector(31 downto 0);
-	Kernal3                     : in std_logic_vector(31 downto 0);
-	Kernal4                     : in std_logic_vector(31 downto 0);
-	Kernal5                     : in std_logic_vector(31 downto 0);
-	Kernal6                     : in std_logic_vector(31 downto 0);
-	Kernal7                     : in std_logic_vector(31 downto 0);
-	Kernal8                     : in std_logic_vector(31 downto 0);
-	Kernal9                     : in std_logic_vector(31 downto 0);
-	KernalConfig                : in std_logic_vector(31 downto 0);
-    rl                          : in std_logic_vector(7 downto 0);
-    rh                          : in std_logic_vector(7 downto 0);
-    gl                          : in std_logic_vector(7 downto 0);
-    gh                          : in std_logic_vector(7 downto 0);
-    bl                          : in std_logic_vector(7 downto 0);
-    bh                          : in std_logic_vector(7 downto 0);
-    Xcont                       : in std_logic_vector(15 downto 0);
-    Ycont                       : in std_logic_vector(15 downto 0);
-    dsR                         : out std_logic_vector(7 downto 0);
-    dsG                         : out std_logic_vector(7 downto 0);
-    dsB                         : out std_logic_vector(7 downto 0);
-    oValid                      : out std_logic);
+    i_data_width   : integer := 8;
+    s_data_width   : integer := 16;
+    b_data_width   : integer := 32;
+    i_precision    : integer := 12;
+    i_full_range   : boolean := FALSE;
+    img_width      : integer := 256;
+    adwr_width     : integer := 16;
+    addr_width     : integer := 11);
+port (              
+    clk            : in std_logic;
+    rclk          : in std_logic;
+    rst_l          : in std_logic;
+    -----------------------------------------------------------
+    iRed           : in std_logic_vector(i_data_width-1 downto 0);
+    iGreen         : in std_logic_vector(i_data_width-1 downto 0);
+    iBlue          : in std_logic_vector(i_data_width-1 downto 0);
+    iValid         : in std_logic;
+    -----------------------------------------------------------
+    configReg6     : in std_logic_vector(b_data_width-1 downto 0);
+    configReg7     : in std_logic_vector(b_data_width-1 downto 0);
+    configReg8     : in std_logic_vector(b_data_width-1 downto 0);
+    configReg19    : in std_logic_vector(b_data_width-1 downto 0);
+    configReg20    : in std_logic_vector(b_data_width-1 downto 0);
+    configReg40    : in std_logic_vector(b_data_width-1 downto 0);
+    configReg41    : out std_logic_vector(b_data_width-1 downto 0);
+    gridLockDatao  : out std_logic_vector(31 downto 0);
+    gridDataRdEn   : in std_logic;
+    endOfFrame     : in std_logic;
+    threshold      : in std_logic_vector(s_data_width-1 downto 0);
+    -----------------------------------------------------------
+    Kernal1        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal2        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal3        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal4        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal5        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal6        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal7        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal8        : in std_logic_vector(b_data_width-1 downto 0);
+    Kernal9        : in std_logic_vector(b_data_width-1 downto 0);
+    KernalConfig   : in std_logic_vector(b_data_width-1 downto 0);
+    -----------------------------------------------------------
+    rl             : in std_logic_vector(i_data_width-1 downto 0);
+    rh             : in std_logic_vector(i_data_width-1 downto 0);
+    gl             : in std_logic_vector(i_data_width-1 downto 0);
+    gh             : in std_logic_vector(i_data_width-1 downto 0);
+    bl             : in std_logic_vector(i_data_width-1 downto 0);
+    bh             : in std_logic_vector(i_data_width-1 downto 0);
+    -----------------------------------------------------------
+    iXcont         : in std_logic_vector(s_data_width-1 downto 0);
+    iYcont         : in std_logic_vector(s_data_width-1 downto 0);
+    oXcont         : out std_logic_vector(s_data_width-1 downto 0);
+    oYcont         : out std_logic_vector(s_data_width-1 downto 0);
+    -----------------------------------------------------------
+    oRed           : out std_logic_vector(i_data_width-1 downto 0);
+    oGreen         : out std_logic_vector(i_data_width-1 downto 0);
+    oBlue          : out std_logic_vector(i_data_width-1 downto 0);
+    oValid         : out std_logic);
+-----------------------------------------------------------
 end component frameProcess;
     constant rgb_msb            : integer := 12;
     constant rgb_lsb            : integer := 5;
@@ -339,6 +327,8 @@ end component frameProcess;
     signal configReg6           : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
     signal configReg7           : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
     signal configReg8           : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
+    signal configReg19          : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
+    signal configReg20          : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
     signal configRegW           : std_logic:='0';
     signal en1pvalid            : std_logic:='0';
     signal en2pvalid            : std_logic:='0';
@@ -390,7 +380,16 @@ end component frameProcess;
     signal endOfFrame           : std_logic;
     signal oData                : std_logic_vector(i_data_width-1 downto 0);
     signal threshold            : std_logic_vector(15 downto 0) :=x"0100";
+    
+    signal configReg40 			   :  std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg41             :  std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal gridLockDatao           :  std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal gridDataRdEn            :  std_logic;
+    
 begin
+---------------------------------------------------------------------------------
+-- PSELECT
+---------------------------------------------------------------------------------
 PSELECT: process (m_axis_mm2s_aclk)begin
     if (rising_edge (m_axis_mm2s_aclk)) then
         if(configRegW ='1') then
@@ -404,6 +403,9 @@ PSELECT: process (m_axis_mm2s_aclk)begin
         end if; 
     end if;
 end process PSELECT;
+---------------------------------------------------------------------------------
+-- d5m_raw_data
+---------------------------------------------------------------------------------
 mod1_inst: d5m_raw_data
 port map(
     pixclk              => pixclk,
@@ -417,6 +419,9 @@ port map(
     m_axis_ycont        => p1Ycont,
     m_axis_aclk         => m_axis_mm2s_aclk,
     m_axis_aresetn      => m_axis_mm2s_aresetn);
+---------------------------------------------------------------------------------
+-- buffer_controller
+---------------------------------------------------------------------------------
 mod2_inst: buffer_controller
     generic map(
     img_width            => img_width,
@@ -433,6 +438,9 @@ mod2_inst: buffer_controller
     taps0x               => vTap0x,
     taps1x               => vTap1x,
     taps2x               => vTap2x);
+---------------------------------------------------------------------------------
+-- raw2rgb
+---------------------------------------------------------------------------------
 mod3_inst: raw2rgb
 generic map(
     rgbo_width           => i_data_width,
@@ -449,37 +457,42 @@ port map(
     ored                 => vRed,
     ogreen               => vGreen,
     oblue                => vBlue);
-mod4_inst: color_correction
-generic map(
-    i_data_width         => i_data_width,
-    C_WHOLE_WIDTH        => 3,
-    C_FRAC_WIDTH         => 8)
-port map(           
-    clk                  => m_axis_mm2s_aclk,
-    rst                  => m_axis_mm2s_aresetn,
-    r                    => vRed(rgb_msb-1 downto rgb_lsb-1),
-    g                    => vGreen(rgb_msb downto rgb_lsb),
-    b                    => vBlue(rgb_msb-1 downto rgb_lsb-1),
-    wr_en                => en1pvalid,
-    iXcont               => p1Xcont,
-    iYcont               => p1Ycont,
-    oXcont               => p2Xcont,
-    oYcont               => p2Ycont,
-    rp                   => cRed,
-    gp                   => cGreen,
-    bp                   => cBlue,
-    valid                => en2pvalid);
+---------------------------------------------------------------------------------
+-- frameProcess
+---------------------------------------------------------------------------------
+
 mod5_inst: frameProcess
 generic map(
+    i_data_width        => i_data_width,
+    s_data_width        => s_data_width,
+    b_data_width        => b_data_width,
+    i_precision         => i_precision,
+    i_full_range        => FALSE,
     img_width           => img_width,
     adwr_width          => 15,
-    p_data_width        => 7,
     addr_width          => 11)
 port map(
     clk                 => m_axis_mm2s_aclk,
+    rclk                => config_axis_aclk,
     rst_l               => m_axis_mm2s_aresetn,
-	configReg5          => configReg6,
+    -----------------------------------------------------------
+    iRed                => vRed(rgb_msb-1 downto rgb_lsb-1),
+    iGreen              => vGreen(rgb_msb downto rgb_lsb),
+    iBlue               => vBlue(rgb_msb-1 downto rgb_lsb-1),
+    iValid              => en1pvalid,
+    -----------------------------------------------------------
+	configReg6          => configReg6,
+	configReg7          => configReg7,
+    configReg8          => configReg8,
+    configReg19         => configReg19,
+    configReg20         => configReg20,
+    configReg40         => configReg40,
+    configReg41         => configReg41,
+    gridLockDatao       => gridLockDatao,
+    gridDataRdEn        => gridDataRdEn,
+    threshold           => threshold,
     endOfFrame          => endOfFrame,
+    -----------------------------------------------------------
 	Kernal1             => Kernal1,
 	Kernal2             => Kernal2,
 	Kernal3             => Kernal3,
@@ -490,40 +503,27 @@ port map(
 	Kernal8             => Kernal8,
 	Kernal9             => Kernal9,
 	KernalConfig        => KernalConfig,
+    -----------------------------------------------------------
     rl                  => rl,
     rh                  => rh,
     gl                  => gl,
     gh                  => gh,
     bl                  => bl,
     bh                  => bh,
-    d_R                 => cRed,
-    d_G                 => cGreen,
-    d_B                 => cBlue,
-    iValid              => en2pvalid,
-    threshold           => threshold,
-    iaddress            => p2Xcont,
-    Xcont               => p2Xcont,
-    Ycont               => p2Ycont,
-    dsR                 => dsR,
-    dsG                 => dsG,
-    dsB                 => dsB,
+    -----------------------------------------------------------
+    iXcont              => p1Xcont,
+    iYcont              => p1Ycont,
+    -----------------------------------------------------------
+    oXcont              => p2Xcont,
+    oYcont              => p2Ycont,
+    -----------------------------------------------------------
+    oRed                => dsR,
+    oGreen              => dsG,
+    oBlue               => dsB,
     oValid              => en4pvalid);
-mod6_inst: rgb_ycbcr
-generic map(
-    i_data_width         => i_data_width,
-    i_precision          => i_precision,
-    i_full_range         => FALSE)
-port map(
-    clk                  => m_axis_mm2s_aclk,
-    aresetn              => m_axis_mm2s_aresetn,
-    r                    => dsR,
-    g                    => dsG,
-    b                    => dsB,
-    wr_en                => en4pvalid,
-    y                    => mpegY,
-    cb                   => mpegCB,
-    cr                   => mpegCR,
-    valid                => en5pvalid);
+---------------------------------------------------------------------------------
+-- videoProcess_v1_0_rgb_m_axis
+---------------------------------------------------------------------------------
 mod7_inst: videoProcess_v1_0_rgb_m_axis
 generic map (
     i_data_width         => i_data_width,
@@ -536,10 +536,10 @@ port map (
     configRegW           =>  configRegW,
     configReg4           =>  configReg4,
     --ycbcr
-    color_valid          =>  en5pvalid,
-    mpeg444Y             =>  mpegY,
-    mpeg444CB            =>  mpegCB,
-    mpeg444CR            =>  mpegCR,
+    color_valid          =>  en4pvalid,--en5pvalid,
+    mpeg444Y             =>  dsR,--mpegY,
+    mpeg444CB            =>  dsG,--mpegCB,
+    mpeg444CR            =>  dsB,--mpegCR,
     --image resolution
     pXcont               =>  p2Xcont,
     pYcont               =>  p2Ycont,
@@ -562,6 +562,9 @@ port map (
     rgb_s_axis_tuser     =>  rgb_s_axis_tuser,
     rgb_s_axis_tlast     =>  rgb_s_axis_tlast,
     rgb_s_axis_tdata     =>  rgb_s_axis_tdata);
+---------------------------------------------------------------------------------
+-- videoProcess_v1_0_m_axis_mm2s
+---------------------------------------------------------------------------------
 mod8_inst: videoProcess_v1_0_m_axis_mm2s
 generic map(
     s_data_width         => s_data_width)
@@ -582,6 +585,9 @@ port map(
     m_axis_mm2s_tuser    => m_axis_mm2s_tuser,
     m_axis_mm2s_tlast    => m_axis_mm2s_tlast,    
     m_axis_mm2s_tdata    => m_axis_mm2s_tdata);
+---------------------------------------------------------------------------------
+-- videoProcess_v1_0_config_axis
+---------------------------------------------------------------------------------
 mod9_inst : videoProcess_v1_0_config_axis
 generic map(
     C_S_AXI_DATA_WIDTH   => conf_data_width,
@@ -601,6 +607,12 @@ port map(
     configReg6           => configReg6,
     configReg7           => configReg7,
     configReg8           => configReg8,
+    configReg19          => configReg19,
+    configReg20          => configReg20,
+    configReg40          => configReg40,
+    configReg41          => configReg41,
+    gridLockDatao        => gridLockDatao,
+    gridDataRdEn         => gridDataRdEn,
 	Kernal1              => Kernal1,
 	Kernal2              => Kernal2,
 	Kernal3              => Kernal3,
@@ -632,6 +644,9 @@ port map(
     S_AXI_RRESP          => config_axis_rresp,
     S_AXI_RVALID         => config_axis_rvalid,
     S_AXI_RREADY         => config_axis_rready);
+---------------------------------------------------------------------------------
+-- digi_clk
+---------------------------------------------------------------------------------
 mod10_inst: digi_clk
 port map(
     clk1                 => config_axis_aclk,

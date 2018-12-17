@@ -2,27 +2,29 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity detect is
+generic (
+    i_data_width   : integer := 8);
 port (
     clk             : in std_logic;
     rst_l           : in std_logic;
     pValid          : in std_logic;
     endOfFrame      : in std_logic;
-    iRed            : in std_logic_vector(7 downto 0);
-    iGreen          : in std_logic_vector(7 downto 0);
-    iBlue           : in std_logic_vector(7 downto 0);
-    rl              : in std_logic_vector(7 downto 0);
-    rh              : in std_logic_vector(7 downto 0);
-    gl              : in std_logic_vector(7 downto 0);
-    gh              : in std_logic_vector(7 downto 0);
-    bl              : in std_logic_vector(7 downto 0);
-    bh              : in std_logic_vector(7 downto 0);
+    iRed            : in std_logic_vector(i_data_width-1 downto 0);
+    iGreen          : in std_logic_vector(i_data_width-1 downto 0);
+    iBlue           : in std_logic_vector(i_data_width-1 downto 0);
+    rl              : in std_logic_vector(i_data_width-1 downto 0);
+    rh              : in std_logic_vector(i_data_width-1 downto 0);
+    gl              : in std_logic_vector(i_data_width-1 downto 0);
+    gh              : in std_logic_vector(i_data_width-1 downto 0);
+    bl              : in std_logic_vector(i_data_width-1 downto 0);
+    bh              : in std_logic_vector(i_data_width-1 downto 0);
     Xcont           : in std_logic_vector(15 downto 0);
     Ycont           : in std_logic_vector(15 downto 0);
     pDetect         : out std_logic;
-    qValid          : out std_logic;
-    d_R             : out std_logic_vector(7 downto 0);
-    d_G             : out std_logic_vector(7 downto 0);
-    d_B             : out std_logic_vector(7 downto 0));
+    oRed            : out std_logic_vector(i_data_width-1 downto 0);
+    oGreen          : out std_logic_vector(i_data_width-1 downto 0);
+    oBlue           : out std_logic_vector(i_data_width-1 downto 0);
+    oValid          : out std_logic);
 end entity;
 architecture arch of detect is
     --------------------------------------------------------------
@@ -33,18 +35,14 @@ architecture arch of detect is
     --------------------------------------------------------------
     signal pEnable         : std_logic;
     --------------------------------------------------------------
-    
-    
     signal newRightX       : unsigned(15 downto 0) := x"0000";
     signal newLeftX        : unsigned(15 downto 0) := x"FFFF";
     signal newTopY         : unsigned(15 downto 0) := x"FFFF";
     signal newBotY         : unsigned(15 downto 0) := x"0000";
-    
     signal updateRightX    : unsigned(15 downto 0) := x"0000";
     signal updateLeftX     : unsigned(15 downto 0) := x"FFFF";
     signal updateTopY      : unsigned(15 downto 0) := x"FFFF";
     signal updateBotY      : unsigned(15 downto 0) := x"0000";
-    
     signal leftX           : unsigned(15 downto 0);
     signal rightX          : unsigned(15 downto 0);
     signal topY            : unsigned(15 downto 0);
@@ -64,9 +62,9 @@ architecture arch of detect is
     --------------------------------------------------------------
     signal pXcont          : unsigned(15 downto 0);
     signal pYcont          : unsigned(15 downto 0);
-    signal Cur_Color_R     : std_logic_vector(7 downto 0);
-    signal Cur_Color_G     : std_logic_vector(7 downto 0);
-    signal Cur_Color_B     : std_logic_vector(7 downto 0); 
+    signal Cur_Color_R     : std_logic_vector(i_data_width-1 downto 0);
+    signal Cur_Color_G     : std_logic_vector(i_data_width-1 downto 0);
+    signal Cur_Color_B     : std_logic_vector(i_data_width-1 downto 0); 
     --------------------------------------------------------------
 begin
 pDetect <= pEnable;
@@ -83,10 +81,10 @@ dataOutP: process (clk)begin
     if rising_edge(clk) then
        pXcont <=unsigned(Xcont);
        pYcont <=unsigned(Ycont);
-        qValid <= pValid;
-        d_R    <= Cur_Color_R;
-        d_G    <= Cur_Color_G;
-        d_B    <= Cur_Color_B;
+        oValid <= pValid;
+        oRed    <= Cur_Color_R;
+        oGreen    <= Cur_Color_G;
+        oBlue    <= Cur_Color_B;
     end if;
 end process dataOutP;
 pixelCoordP: process (clk)begin
@@ -150,12 +148,6 @@ pixelCoordP: process (clk)begin
                 Cur_Color_R        <=    x"FF";
                 Cur_Color_G        <=    x"00";
                 Cur_Color_B        <=    x"00";
-            -- else
-                --Original pixels
-                -- Cur_Color_R        <=    iRed;
-                -- Cur_Color_G        <=    iGreen;
-                -- Cur_Color_B        <=    iBlue;
-            -- end if;
             ------------------------------------
             -- 2ND FRAME DISPLAY 2ND
             ------------------------------------
@@ -175,12 +167,6 @@ pixelCoordP: process (clk)begin
                 Cur_Color_R        <=    x"00";
                 Cur_Color_G        <=    x"FF";
                 Cur_Color_B        <=    x"00";
-            -- else
-                --Original pixels
-                -- Cur_Color_R        <=    iRed;
-                -- Cur_Color_G        <=    iGreen;
-                -- Cur_Color_B        <=    iBlue;
-            -- end if;
             ------------------------------------
             -- 1ST FRAME DISPLAY 3RD
             ------------------------------------
@@ -200,12 +186,6 @@ pixelCoordP: process (clk)begin
                 Cur_Color_R        <=    x"00";
                 Cur_Color_G        <=    x"00";
                 Cur_Color_B        <=    x"FF";
-            -- else
-                --Original pixels
-                -- Cur_Color_R        <=    iRed;
-                -- Cur_Color_G        <=    iGreen;
-                -- Cur_Color_B        <=    iBlue;
-            -- end if;
             ------------------------------------
             -- INIT FRAME DISPLAY LAST
             ------------------------------------
@@ -226,7 +206,6 @@ pixelCoordP: process (clk)begin
                 Cur_Color_G        <=    x"00";
                 Cur_Color_B        <=    x"80";
             else
-                -- Original pixels
                 Cur_Color_R        <=    iRed;
                 Cur_Color_G        <=    iGreen;
                 Cur_Color_B        <=    iBlue;

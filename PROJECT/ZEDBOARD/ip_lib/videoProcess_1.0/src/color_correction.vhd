@@ -16,8 +16,8 @@
 -- image sensor or lighting conditions change.
 --
 -- Data is written to the core by asserting r, g, and b with the RGB pixel data
--- and holding wr_en high for one clock cycle. After conversion, the corrected
--- RGB data is asserted on the rc, gc, and bc outputs and valid is held high
+-- and holding iValid high for one clock cycle. After conversion, the corrected
+-- RGB data is asserted on the rc, gc, and bc outputs and oValid is held high
 -- for one clock cycle. No flow control is supported. You can adjust the pixel
 -- input/output width by changing the i_data_width generic. The precision of
 -- the fixed point computation can be adjusted by changing the C_FRAC_WIDTH
@@ -93,21 +93,22 @@ entity color_correction is
     C_WHOLE_WIDTH : integer := 3;	-- @DKW Extended for a larger range
     C_FRAC_WIDTH  : integer := 8);
   port (
-    clk    : in  std_logic;
-    rst    : in  std_logic;
-    r      : in  std_logic_vector(i_data_width-1 downto 0);
-    g      : in  std_logic_vector(i_data_width-1 downto 0);
-    b      : in  std_logic_vector(i_data_width-1 downto 0);
-    wr_en  : in  std_logic;
-    --image resolution          
-    iXcont : in std_logic_vector(15 downto 0);
-    iYcont : in std_logic_vector(15 downto 0);
-    oXcont : out std_logic_vector(15 downto 0);
-    oYcont : out std_logic_vector(15 downto 0);
-    rp     : out std_logic_vector(i_data_width-1 downto 0);
-    gp     : out std_logic_vector(i_data_width-1 downto 0);
-    bp     : out std_logic_vector(i_data_width-1 downto 0);
-    valid  : out std_logic);
+    clk       : in std_logic;
+    rst       : in std_logic;
+    iRed      : in std_logic_vector(i_data_width-1 downto 0);
+    iGreen    : in std_logic_vector(i_data_width-1 downto 0);
+    iBlue     : in std_logic_vector(i_data_width-1 downto 0);
+    iValid    : in std_logic;
+    iXcont    : in std_logic_vector(15 downto 0);
+    iYcont    : in std_logic_vector(15 downto 0);
+    oXcont    : out std_logic_vector(15 downto 0);
+    oYcont    : out std_logic_vector(15 downto 0);
+    Xcont     : out std_logic_vector(15 downto 0);
+    Ycont     : out std_logic_vector(15 downto 0);
+    oRed      : out std_logic_vector(i_data_width-1 downto 0);
+    oGreen    : out std_logic_vector(i_data_width-1 downto 0);
+    oBlue     : out std_logic_vector(i_data_width-1 downto 0);
+    oValid    : out std_logic);
 end color_correction;
 architecture Behavioral of color_correction is
 --  constant C_A11         : real    := 1.0970;   -- @DKW put in values measured from V024
@@ -201,7 +202,7 @@ begin
   -----------------------------------------------------------------------------
   -- STAGE 0: Input registers
   -----------------------------------------------------------------------------
-  STAGE_0_PROC : process (clk, rst, r, g, b, wr_en)
+  STAGE_0_PROC : process (clk, rst, iRed, iGreen, iBlue, iValid)
   begin
     if rst = '0' then
       en_0 <= '0';
@@ -209,10 +210,10 @@ begin
       g_0  <= (others => '0');
       b_0  <= (others => '0');
     elsif clk'event and clk = '1' then
-      r_0  <= signed('0' & r);
-      g_0  <= signed('0' & g);
-      b_0  <= signed('0' & b);
-      en_0 <= wr_en;
+      r_0  <= signed('0' & iRed);
+      g_0  <= signed('0' & iGreen);
+      b_0  <= signed('0' & iBlue);
+      en_0 <= iValid;
     end if;
   end process;
   -----------------------------------------------------------------------------
@@ -331,20 +332,19 @@ begin
     end if;
   end process;
   -- Send results to the output
-  rp    <= std_logic_vector(r_3);
-  gp    <= std_logic_vector(g_3);
-  bp    <= std_logic_vector(b_3);
-
+  oRed    <= std_logic_vector(r_3);
+  oGreen    <= std_logic_vector(g_3);
+  oBlue    <= std_logic_vector(b_3);
 SYNC_REG : process (clk) begin
     if rising_edge(clk) then
         en3pvalid  <= en_3;
-        valid      <= en3pvalid;
+        oValid      <= en3pvalid;
         s1pXcont   <= iXcont;
         s1pYcont   <= iYcont; 
         oXcont     <= s1pXcont;
         oYcont     <= s1pYcont;  
+        Xcont      <= s1pXcont;
+        Ycont      <= s1pYcont;
     end if;
 end process SYNC_REG;
-  
-  
 end Behavioral;
