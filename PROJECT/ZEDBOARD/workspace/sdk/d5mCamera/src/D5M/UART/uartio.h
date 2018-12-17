@@ -151,5 +151,9 @@ void uartvalue();
 #define coord 0x10FCFC
 #define colorbars 0x976BA59B
 #define genimage 0x44236327
-#
+#define cmds_readfifo 0x66696664
+#define cmds_fifomode 0x646F6D6F
+#define cmds_fifostatus 0x5B28281D
+#define cmds_gridpoint 0x148D411C
+#define cmds_griddelta 0x148B46A1
 #define quit_current_state 0x71

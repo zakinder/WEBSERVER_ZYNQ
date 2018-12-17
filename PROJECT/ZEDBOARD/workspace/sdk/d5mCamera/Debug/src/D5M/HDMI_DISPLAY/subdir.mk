@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/D5M/HDMI_DISPLAY/hdmi_display.c 
+../src/D5M/HDMI_DISPLAY/hdmi_display.c \
+../src/D5M/HDMI_DISPLAY/test.c 
 
 OBJS += \
-./src/D5M/HDMI_DISPLAY/hdmi_display.o 
+./src/D5M/HDMI_DISPLAY/hdmi_display.o \
+./src/D5M/HDMI_DISPLAY/test.o 
 
 C_DEPS += \
-./src/D5M/HDMI_DISPLAY/hdmi_display.d 
+./src/D5M/HDMI_DISPLAY/hdmi_display.d \
+./src/D5M/HDMI_DISPLAY/test.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

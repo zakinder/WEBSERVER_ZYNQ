@@ -13,6 +13,7 @@
 #define RegKernel_8   60
 #define RegKernel_9   64
 #define KernalConfig  68
+
 void sobel();
 void prewitt();
 void computeBrightness();
@@ -21,4 +22,11 @@ void selected_channel();
 void edgeThreshold(u16 thresholdValue);
 void videoFeatureSelect(u16 videoType);
 void edgeType(u16 edgeTypeValue);
+void color_correction(u16 videoType);
+void ycbcrSelect(u16 videoType);
+void deltaConfig(u16 videoType);
+void framefifoMode(u16 fifoMode);
+void point_Interest(u16 videoType);
+void frameReadData();
+void fifoStatus();
 #endif // __CHANNEL_H__

@@ -1,7 +1,5 @@
-src/WEB/webserver/dispatch.o src/WEB/webserver/dispatch.o: \
- ../src/WEB/webserver/dispatch.c ../src/WEB/webserver/webserver.h \
- ../../d5mCamera_bsp/ps7_cortexa9_0/include/xbasic_types.h \
- ../src/WEB/webserver/../../D5M/HDMI_DISPLAY/hdmi_display.h \
+src/D5M/HDMI_DISPLAY/test.o src/D5M/HDMI_DISPLAY/test.o: \
+ ../src/D5M/HDMI_DISPLAY/test.c \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xaxivdma.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xaxivdma_hw.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_types.h \
@@ -16,15 +14,21 @@ src/WEB/webserver/dispatch.o src/WEB/webserver/dispatch.o: \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xdebug.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xstatus.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_assert.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xaxivdma_hw.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_cache.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_printf.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_types.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xparameters.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xstatus.h \
+ ../src/D5M/HDMI_DISPLAY/hdmi_display.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xbasic_types.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xvtc.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xvtc_hw.h \
- ../src/WEB/webserver/../../D5M/HDMI_DISPLAY/../HDMI_IIC/zed_iic.h
-
-../src/WEB/webserver/webserver.h:
-
-../../d5mCamera_bsp/ps7_cortexa9_0/include/xbasic_types.h:
-
-../src/WEB/webserver/../../D5M/HDMI_DISPLAY/hdmi_display.h:
+ ../src/D5M/HDMI_DISPLAY/../HDMI_IIC/zed_iic.h \
+ ../src/D5M/HDMI_DISPLAY/../SYSTEM_CONFIG_HEADER/system_config_header.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xscugic.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xscugic_hw.h \
+ ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_exception.h
 
 ../../d5mCamera_bsp/ps7_cortexa9_0/include/xaxivdma.h:
 
@@ -54,8 +58,32 @@ src/WEB/webserver/dispatch.o src/WEB/webserver/dispatch.o: \
 
 ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_assert.h:
 
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xaxivdma_hw.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_cache.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_printf.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_types.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xparameters.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xstatus.h:
+
+../src/D5M/HDMI_DISPLAY/hdmi_display.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xbasic_types.h:
+
 ../../d5mCamera_bsp/ps7_cortexa9_0/include/xvtc.h:
 
 ../../d5mCamera_bsp/ps7_cortexa9_0/include/xvtc_hw.h:
 
-../src/WEB/webserver/../../D5M/HDMI_DISPLAY/../HDMI_IIC/zed_iic.h:
+../src/D5M/HDMI_DISPLAY/../HDMI_IIC/zed_iic.h:
+
+../src/D5M/HDMI_DISPLAY/../SYSTEM_CONFIG_HEADER/system_config_header.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xscugic.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xscugic_hw.h:
+
+../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_exception.h:

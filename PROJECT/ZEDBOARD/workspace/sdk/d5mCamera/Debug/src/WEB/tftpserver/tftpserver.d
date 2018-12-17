@@ -20,7 +20,6 @@ src/WEB/tftpserver/tftpserver.o src/WEB/tftpserver/tftpserver.o: \
  ../src/WEB/tftpserver/tftputils.h \
  ../src/WEB/tftpserver/../prot_malloc/prot_malloc.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/lwip/mem.h \
- ../src/WEB/tftpserver/../eplatform/platform_fs.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_printf.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../d5mCamera_bsp/ps7_cortexa9_0/include/xparameters.h \
@@ -65,8 +64,6 @@ src/WEB/tftpserver/tftpserver.o src/WEB/tftpserver/tftpserver.o: \
 ../src/WEB/tftpserver/../prot_malloc/prot_malloc.h:
 
 ../../d5mCamera_bsp/ps7_cortexa9_0/include/lwip/mem.h:
-
-../src/WEB/tftpserver/../eplatform/platform_fs.h:
 
 ../../d5mCamera_bsp/ps7_cortexa9_0/include/xil_printf.h:
 

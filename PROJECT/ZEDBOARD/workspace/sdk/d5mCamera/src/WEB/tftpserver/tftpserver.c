@@ -7,7 +7,7 @@
 #include "tftpserver.h"
 #include "tftputils.h"
 #include "../prot_malloc/prot_malloc.h"
-#include "../eplatform/platform_fs.h"
+
 #ifdef __arm__
 #include "xil_printf.h"
 #endif
@@ -23,8 +23,7 @@ char *tftp_errorcode_string[] = {
 };
 static unsigned tftp_port = 69;
 static int tftp_server_started = 0;
-err_t
-tftp_send_message(struct udp_pcb *pcb, struct ip_addr *to_ip, int to_port, char *buf, int buflen)
+err_t tftp_send_message(struct udp_pcb *pcb, struct ip_addr *to_ip, int to_port, char *buf, int buflen)
 {
 	err_t err;
 	struct pbuf *p;
@@ -38,8 +37,7 @@ tftp_send_message(struct udp_pcb *pcb, struct ip_addr *to_ip, int to_port, char 
 	pbuf_free(p);
         return err;
 }
-int
-tftp_construct_error_message(char *buf, tftp_errorcode err)
+int tftp_construct_error_message(char *buf, tftp_errorcode err)
 {
 	int errorlen;
 	tftp_set_opcode(buf, TFTP_ERROR);
@@ -48,16 +46,14 @@ tftp_construct_error_message(char *buf, tftp_errorcode err)
 	errorlen = strlen(tftp_errorcode_string[err]);
 	return 4 + errorlen + 1;
 }
-int
-tftp_send_error_message(struct udp_pcb *pcb, struct ip_addr *to, int to_port, tftp_errorcode err)
+int tftp_send_error_message(struct udp_pcb *pcb, struct ip_addr *to, int to_port, tftp_errorcode err)
 {
 	char buf[512];
 	int n;
 	n = tftp_construct_error_message(buf, err);
 	return tftp_send_message(pcb, to, to_port, buf, n);
 }
-int
-tftp_send_data_packet(struct udp_pcb *pcb, struct ip_addr *to, int to_port, int block, char *buf, int buflen)
+int tftp_send_data_packet(struct udp_pcb *pcb, struct ip_addr *to, int to_port, int block, char *buf, int buflen)
 {
 	char packet[TFTP_MAX_MSG_LEN];
 	tftp_set_opcode(packet, TFTP_DATA);
@@ -65,36 +61,29 @@ tftp_send_data_packet(struct udp_pcb *pcb, struct ip_addr *to, int to_port, int 
 	tftp_set_data_message(packet, buf, buflen);
 	return tftp_send_message(pcb, to, to_port, packet, buflen + 4);
 }
-int
-tftp_send_ack_packet(struct udp_pcb *pcb, struct ip_addr *to, int to_port, int block)
+int tftp_send_ack_packet(struct udp_pcb *pcb, struct ip_addr *to, int to_port, int block)
 {
 	char packet[TFTP_MAX_ACK_LEN];
 	tftp_set_opcode(packet, TFTP_ACK);
 	tftp_set_block(packet, block);
 	return tftp_send_message(pcb, to, to_port, packet, TFTP_MAX_ACK_LEN);
 }
-void
-tftp_cleanup(struct udp_pcb *pcb, tftp_connection_args *args)
+void tftp_cleanup(struct udp_pcb *pcb, tftp_connection_args *args)
 {
 	mfs_file_close(args->fd);
 	prot_mem_free(args);
 	udp_remove(pcb);
 }
-void
-tftp_send_next_block(struct udp_pcb *pcb, tftp_connection_args *args,
-		struct ip_addr *to_ip, u16_t to_port)
+void tftp_send_next_block(struct udp_pcb *pcb, tftp_connection_args *args, 		struct ip_addr *to_ip, u16_t to_port)
 {
 	args->data_len = mfs_file_read(args->fd, args->data, TFTP_DATA_PACKET_MSG_LEN);
 	if (args->data_len <= 0) {
 		xil_printf("closing connection, ret = %d\r\n", args->data_len);
 		return tftp_cleanup(pcb, args);
 	}
-	tftp_send_data_packet(pcb, to_ip, to_port,
-			args->block, args->data, args->data_len);
+	tftp_send_data_packet(pcb, to_ip, to_port,args->block, args->data, args->data_len);
 }
-static void
-rrq_recv_callback(void *_args, struct udp_pcb *upcb,
-                               struct pbuf *p, struct ip_addr *addr, u16_t port)
+static void rrq_recv_callback(void *_args, struct udp_pcb *upcb,struct pbuf *p, struct ip_addr *addr, u16_t port)
 {
         struct ip_addr dst_ip = *addr;
 	tftp_connection_args *args = (tftp_connection_args *)_args;
@@ -108,8 +97,7 @@ rrq_recv_callback(void *_args, struct udp_pcb *upcb,
 		return tftp_cleanup(upcb, args);
 	tftp_send_next_block(upcb, args, &dst_ip, port);
 }
-int
-tftp_process_read(struct udp_pcb *pcb, struct ip_addr *to, int to_port, char *fname)
+int tftp_process_read(struct udp_pcb *pcb, struct ip_addr *to, int to_port, char *fname)
 {
 	int fd;
 	tftp_connection_args *args;
@@ -136,9 +124,7 @@ tftp_process_read(struct udp_pcb *pcb, struct ip_addr *to, int to_port, char *fn
 	tftp_send_next_block(pcb, args, to, to_port);
 	return 0;
 }
-void
-wrq_recv_callback(void *_args, struct udp_pcb *upcb,
-                               struct pbuf *p, struct ip_addr *addr, u16_t port)
+void wrq_recv_callback(void *_args, struct udp_pcb *upcb,struct pbuf *p, struct ip_addr *addr, u16_t port)
 {
         struct ip_addr dst_ip = *addr;
 	tftp_connection_args *args = (tftp_connection_args *)_args;
@@ -163,8 +149,7 @@ wrq_recv_callback(void *_args, struct udp_pcb *upcb,
 		return tftp_cleanup(upcb, args);
         pbuf_free(p);
 }
-int
-tftp_process_write(struct udp_pcb *pcb, struct ip_addr *to, int to_port, char *fname)
+int tftp_process_write(struct udp_pcb *pcb, struct ip_addr *to, int to_port, char *fname)
 {
 	int fd;
 	tftp_connection_args *args;
@@ -197,8 +182,7 @@ tftp_process_write(struct udp_pcb *pcb, struct ip_addr *to, int to_port, char *f
 	tftp_send_ack_packet(pcb, to, to_port, args->block);
 	return 0;
 }
-static void
-process_tftp_request(struct pbuf *p, struct ip_addr *addr, u16_t port)
+static void process_tftp_request(struct pbuf *p, struct ip_addr *addr, u16_t port)
 {
 	tftp_opcode op = tftp_decode_op(p->payload);
 	char fname[512];
@@ -232,16 +216,13 @@ process_tftp_request(struct pbuf *p, struct ip_addr *addr, u16_t port)
 		break;
 	}
 }
-static void
-tftp_recv_callback(void *arg, struct udp_pcb *upcb,
-                               struct pbuf *p, struct ip_addr *_addr, u16_t port)
+static void tftp_recv_callback(void *arg, struct udp_pcb *upcb,struct pbuf *p, struct ip_addr *_addr, u16_t port)
 {
-        struct ip_addr addr = *_addr;
+	struct ip_addr addr = *_addr;
 	process_tftp_request(p, &addr, port);
 	pbuf_free(p);
 }
-int
-start_tftp_application()
+int start_tftp_application()
 {
 	struct udp_pcb *pcb;
 	err_t err;
@@ -260,12 +241,9 @@ start_tftp_application()
     tftp_server_started = 1;
     return 0;
 }
-void
-print_tftp_app_header()
+void print_tftp_app_header()
 {
-        xil_printf("%20s %6d %s\r\n", "tftp server",
-                        tftp_port,
-                        "$ tftp -i 192.168.1.10 PUT <source-file>");
+    xil_printf("%20s %6d %s\r\n", "tftp server",tftp_port,"$ tftp -i 192.168.1.10 PUT <source-file>");
 }
 void
 transfer_tftp_data()

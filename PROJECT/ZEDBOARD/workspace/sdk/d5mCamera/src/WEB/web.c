@@ -3,16 +3,21 @@
 #include <lwip/netif.h>
 #include <lwipopts.h>
 #include <netif/xadapter.h>
+#include <stdio.h>
+#include <xil_io.h>
+#include <xil_types.h>
+#include <xparameters.h>
+#include <xparameters_ps.h>
+#include "../D5M/MENU_CALLS/menu_calls.h"
+#include "../D5M/HDMI_DISPLAY/hdmi_display.h"
 #include "eplatform/platform.h"
 #include "eplatform/platform_config.h"
-#include "../D5M/HDMI_DISPLAY/hdmi_display.h"
-#include "../D5M/MENU_CALLS/menu_calls.h"
-#include "../D5M/SYSTEM_CONFIG_HEADER/system_config_header.h"
-#include "../D5M/VIDEO_CHANNEL/channel.h"
+
 #ifndef __PPC__
 #include "xil_printf.h"
 #endif
 #define D5MBASE XPAR_PS_VIDEO_D5M_VIDEOPROCESS_CONFIG_AXIS_BASEADDR
+
 hdmi_display_start pvideo;
 void print_headers();
 int start_applications();
@@ -42,6 +47,7 @@ void print_ip_settings(struct ip_addr *ip, struct ip_addr *mask, struct ip_addr 
 }
 int web()
 {
+
 	WRITE_SET0();
 	struct netif *netif, server_netif;
 	struct ip_addr ipaddr, netmask, gw;
@@ -101,15 +107,17 @@ int web()
 	start_applications();
 	print_headers();
 	while (1) {
-		pvideo.time = (((0x0000ff& D5M_mReadReg(D5MBASE,REG32))<<16)|((D5M_mReadReg(D5MBASE,REG31) & 0x0000ff)<<8)|(0x0000ff & D5M_mReadReg(D5MBASE,REG30)));
-        if (pvideo.time != (((0x0000ff& D5M_mReadReg(D5M_BASE,REG32))<<16)|((D5M_mReadReg(D5M_BASE,REG31) & 0x0000ff)<<8)|(0x0000ff & D5M_mReadReg(D5M_BASE,REG30))))
-        {
-        	printf("Powered On Time %d:%d:%d\n\r",(unsigned) ((pvideo.time & 0xff0000)>>16),(unsigned) ((pvideo.time & 0x00ff00)>>8),(unsigned) (pvideo.time & 0x0000ff));
-        	*(volatile unsigned int*)XPAR_LEDS_8BITS_BASEADDR=(unsigned) (pvideo.time & 0x0000ff);
-        }
-        if((pvideo.time & 0x0000ff) == 20){
-        	exposerCompansate();
-        }
+//		pvideo.time = (((0x0000ff& D5M_mReadReg(D5MBASE,REG32))<<16)|((D5M_mReadReg(D5MBASE,REG31) & 0x0000ff)<<8)|(0x0000ff & D5M_mReadReg(D5MBASE,REG30)));
+//        if (pvideo.time != (((0x0000ff& D5M_mReadReg(D5MBASE,REG32))<<16)|((D5M_mReadReg(D5MBASE,REG31) & 0x0000ff)<<8)|(0x0000ff & D5M_mReadReg(D5MBASE,REG30))))
+//        {
+//        	printf("Powered On Time %d:%d:%d\n\r",(unsigned) ((pvideo.time & 0xff0000)>>16),(unsigned) ((pvideo.time & 0x00ff00)>>8),(unsigned) (pvideo.time & 0x0000ff));
+//        	*(volatile unsigned int*)XPAR_LEDS_8BITS_BASEADDR=(unsigned) (pvideo.time & 0x0000ff);
+//        }
+
+
+//        if((pvideo.time & 0x0000ff) == 20){
+//        	exposerCompansate();
+//        }
 		if (TcpFastTmrFlag) {
 			tcp_fasttmr();
 			TcpFastTmrFlag = 0;

@@ -14,8 +14,7 @@ void platform_init_gpios();
 int transfer_web_data() {
 	return 0;
 }
-err_t
-http_sent_callback(void *arg, struct tcp_pcb *tpcb, u16_t len)
+err_t http_sent_callback(void *arg, struct tcp_pcb *tpcb, u16_t len)
 {
 	int BUFSIZE = 1400, sndbuf, n;
 	char buf[BUFSIZE];
@@ -48,8 +47,7 @@ http_sent_callback(void *arg, struct tcp_pcb *tpcb, u16_t len)
         }
 	return ERR_OK;
 }
-err_t
-http_recv_callback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
+err_t http_recv_callback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
 {
 	http_arg *a = (http_arg*)arg;
 		if (g_webserver_debug)
@@ -62,18 +60,20 @@ http_recv_callback(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
 			return -1;
 		}
 		tcp_recved(tpcb, p->len);
-		GENERATE_RESPONSE(tpcb, p->payload, p->len);
+		GENERATE_RESPONSE(tpcb, p->payload, p->len);//HTTP RESP ONCE PAGE IS LOADED @ http_sent_callback
 		pbuf_free(p);
 		return ERR_OK;
 }
-static err_t
-http_accept_callback(void *arg, struct tcp_pcb *newpcb, err_t err)
+
+static err_t http_accept_callback(void *arg, struct tcp_pcb *newpcb, err_t err)
 {
 	tcp_arg(newpcb, (void*)palloc_arg());
-	tcp_recv(newpcb, http_recv_callback);
-	tcp_sent(newpcb, http_sent_callback);
+	tcp_recv(newpcb, http_recv_callback);//HTTP RESP ONCE PAGE IS LOADED @ http_sent_callback
+	tcp_sent(newpcb, http_sent_callback);//INIT PAGE LOAD
 	return ERR_OK;
 }
+
+//START THE APP TYPE
 int start_web_application()
 {
 	struct tcp_pcb *pcb;
@@ -101,8 +101,9 @@ int start_web_application()
 		return -3;
 	}
 	xil_printf("TCP accept and http server is running\r\n");
+	//INIT HTTP ON ACCEPT -->http_accept_callback
 	tcp_accept(pcb, http_accept_callback);
-        http_server_running = 1;
+        http_server_running = 1; // WEBSERVER IS ON
 	return 0;
 }
 void print_web_app_header()

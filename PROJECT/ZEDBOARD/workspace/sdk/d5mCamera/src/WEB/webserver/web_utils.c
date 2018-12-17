@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "webserver.h"
+#include "mfs_config.h"
+#include "xil_printf.h"
 int IS_CMD_LED(char *buf)
 {
     buf += 6;
@@ -100,9 +102,9 @@ int GENERATE_HTTP_HEADER(char *buf, char *fext, int fsize)
         strcat(buf, "image/jpeg");
     else if (!strncmp(fext, "gif", 3))
         strcat(buf, "image/gif");
-    else if (!strncmp(fext, "json", 4))
-        strcat(buf, "application/json");
-    else if (!strncmp(fext, "js", 2))
+    else if (!strncmp(fext, "json", 8))
+        strcat(buf, "text/json");
+    else if (!strncmp(fext, "js", fsize))
         strcat(buf, "application/javascript");
     else if (!strncmp(fext, "pdf", 2))
         strcat(buf, "application/pdf");
@@ -136,4 +138,211 @@ http_arg *palloc_arg()
 void pfree_arg(http_arg *arg)
 {
 ;
+}
+void REVERSE(char *str, int len)
+{
+    int i=0, j=len-1, temp;
+    while (i<j)
+    {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+        i++; j--;
+    }
+}
+int INT_TO_STR(int x, char str[], int d)
+{
+   int i = 0;
+   while (x)
+   {
+       str[i++] = (x%10) + '0';
+       x = x/10;
+   }
+   while (i < d)
+   str[i++] = '0';
+   REVERSE(str, i);
+   str[i] = '\0';
+   return i;
+}
+void FLOATING_POINT_ASSERT(int n, char *res, int afterpoint)
+{
+   INT_TO_STR(n, res, 0);
+}
+void FLOATING_POINT_NUMBER_AFTERPOINT(float n, char *res, int afterpoint)
+{
+    int ipart = (int)n;
+    float fpart = n - (float)ipart;
+    int i = INT_TO_STR(ipart, res, 0);
+    if (afterpoint != 0)
+    {
+        res[i] = '.';
+        fpart = fpart * 10* 10*afterpoint;
+        INT_TO_STR((int)fpart, res + i + 1, afterpoint);
+    }
+}
+float STRING_TO_FLOATING_POINT_NUMBER(const char* s)
+{
+float rez = 0, fact = 1;
+    /* ACTION: - ************************************/
+    if (*s == '-')
+    {
+        s++;
+        fact = -1;
+    };
+    /************************************************/
+  int point_seen=0;
+  /* AFTER REACTION: . ****************************/
+  for (point_seen = 0; *s; s++)
+  {
+    if (*s == '.')
+    {
+        point_seen = 1;
+        continue;
+    };
+    int d = *s - '0';
+    if (d >= 0 && d <= 9)
+    {
+        if (point_seen) fact /= 10.0f;
+        rez = rez * 10.0f + (float)d;
+    };
+  };
+  /************************************************/
+  return rez * fact;
+}
+int STRING_TO_NUMBERS(const char* s){
+int rez = 0, fact = 1;
+int point_seen=0;
+  /* AFTER REACTION: . ****************************/
+  for (point_seen = 0; *s; s++)
+  {
+        if (*s == '.')
+        {
+            point_seen = 1;
+            continue;
+        };
+    int d = *s - '0';
+    if (d >= 0 && d <= 9)
+    {
+        rez = rez + (int)d;
+    };
+  };
+  /************************************************/
+  return rez * fact;
+}
+int STRING_TO_NUMBER(const char* s){
+    int rez = 0, fact = 1;
+        /* ACTION: - ************************************/
+        if (*s == '-')
+        {
+            s++;
+            fact = -1;
+        };
+        /************************************************/
+      int point_seen=0;
+      /* AFTER REACTION: . ****************************/
+      for (point_seen = 0; *s; s++)
+      {
+        if (*s == '.')
+        {
+            point_seen = 1;
+            continue;
+        };
+        int d = *s - '0';
+        if (d >= 0 && d <= 9)
+        {
+            rez = rez * 10 + (int)d;
+        };
+      };
+      /************************************************/
+      return rez * fact;
+}
+unsigned volatile char * CONVERT_CHAR_S(char *str)
+{
+    int i,j,cx=0,cnt=0;
+    char num1[20]="\0";
+    char num2[20]="\0";
+    for(i=0;str[i];i++)
+    {
+        if(str[i]=='/')
+        {
+            for(j=i+1;str[j];j++)
+            {
+                num2[cx]=str[j];
+                cx++;
+                if(str[j]==' ')
+                {
+                    cx=1;
+                    break;
+                }
+            }
+            cnt++;
+        }
+        if(cnt>=1)
+        {
+            break;
+        }
+        num1[i]=str[i];
+    }
+f1=STRING_TO_FLOATING_POINT_NUMBER(num1);
+f2=STRING_TO_FLOATING_POINT_NUMBER(num2);
+}
+unsigned volatile char * UNPACK(char *str)
+{
+    int i,j,cx=0,cnt=0;
+    char num1[20]="\0";
+    char num2[20]="\0";
+    for(i=0;str[i];i++)
+    {
+        if(str[i]=='/')
+        {
+            for(j=i+1;str[j];j++)
+            {
+                num2[cx]=str[j];
+                cx++;
+                if(str[j]==' ')
+                {
+                    cx=1;
+                    break;
+                }
+            }
+            cnt++;
+        }
+        if(cnt>=1)
+        {
+            break;
+        }
+        num1[i]=str[i];
+    }
+fk1=STRING_TO_NUMBER(num1);
+fk2=STRING_TO_NUMBER(num2);
+}
+void DUMP_PAYLOAD(char *p, int len)
+{
+    int i, j;
+    for (i = 0; i < len; i+=16)
+    {
+        for (j = 0; j < 16; j++)
+        xil_printf("%c ", p[i+j]);
+        xil_printf("%d ", p[i+j]);
+        xil_printf("%d ", p[i]);
+        xil_printf("%d ", p[j]);
+        xil_printf("\r\n");
+    }
+
+    xil_printf("total len = %d\r\n", len);
+
+    //d5m();
+
+}
+int platform_init_fs()
+{
+	mfs_init_fs(MFS_NUMBYTES, (char *)(MFS_BASE_ADDRESS+4), MFS_INIT_TYPE);
+	if (mfs_exists_file("index.html") == 0) {
+		xil_printf("%s: ERROR: unable to locate index.html in MFS\r\n", __FUNCTION__);
+		xil_printf("One of your applications requires a Memory File System to be loaded.\r\n");
+                xil_printf("Please check if MFS has been loaded, "
+				"and it has index.html file in root directory\r\n");
+		return -1;
+	}
+	return 0;
 }

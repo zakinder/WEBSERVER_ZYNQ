@@ -4,16 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/WEB/eplatform/platform.c \
-../src/WEB/eplatform/platform_fs.c 
+../src/WEB/eplatform/platform.c 
 
 OBJS += \
-./src/WEB/eplatform/platform.o \
-./src/WEB/eplatform/platform_fs.o 
+./src/WEB/eplatform/platform.o 
 
 C_DEPS += \
-./src/WEB/eplatform/platform.d \
-./src/WEB/eplatform/platform_fs.d 
+./src/WEB/eplatform/platform.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
