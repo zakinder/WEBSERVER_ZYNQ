@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity videoProcess_v1_0 is
 generic (
-    revision_number             : std_logic_vector(31 downto 0) := x"12162018";
+    revision_number             : std_logic_vector(31 downto 0) := x"12192018";
     C_rgb_m_axis_TDATA_WIDTH    : integer := 16;
     C_rgb_m_axis_START_COUNT    : integer := 32;
     C_rgb_s_axis_TDATA_WIDTH    : integer := 16;
@@ -26,6 +26,19 @@ port (
     ifval                       : in std_logic;
     ilval                       : in std_logic;
     idata                       : in std_logic_vector(p_data_width downto 0);
+    -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb                : out std_logic;
+--    fifoFullhdb                 : out std_logic;
+--    fifoWritehdb                : out std_logic;
+--    gridDataRdEndb              : out std_logic;
+--    gridDataEndb                : out std_logic;
+--    clearDatadb                 : out std_logic;
+--    gridLocationdb              : out std_logic;
+--    fifoDataindb                : out std_logic_vector(b_data_width-1 downto 0);
+--    cpuGridContdb               : out std_logic_vector(s_data_width-1 downto 0);
+--    fifoDataOutdb               : out std_logic_vector(b_data_width-1 downto 0);
+    -----------------------------------------------------------
     --tx channel                
     rgb_m_axis_aclk             : in std_logic;
     rgb_m_axis_aresetn          : in std_logic;
@@ -157,57 +170,68 @@ generic (
     C_S_AXI_DATA_WIDTH: integer:= 32;
     C_S_AXI_ADDR_WIDTH: integer:= 4);
 port (
-        m_axis_mm2s_aclk        : in std_logic;
-        m_axis_mm2s_aresetn     : in std_logic;
-        seconds                 : in std_logic_vector(5 downto 0);
-        minutes                 : in std_logic_vector(5 downto 0);
-        hours                   : in std_logic_vector(4 downto 0);
-        configRegW              : out std_logic;
-        configReg1              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg2              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg3              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg4              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg5              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg6              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg7              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg8              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg19             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg20             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg40 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg41             : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        gridLockDatao           : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        gridDataRdEn            : out std_logic;
-		Kernal1                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal2                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal3                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal4                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal5                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal6                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal7                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal8                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		Kernal9                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-		KernalConfig            : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        S_AXI_ACLK              : in std_logic;
-        S_AXI_ARESETN           : in std_logic;
-        S_AXI_AWADDR            : in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
-        S_AXI_AWPROT            : in std_logic_vector(2 downto 0);
-        S_AXI_AWVALID           : in std_logic;
-        S_AXI_AWREADY           : out std_logic;
-        S_AXI_WDATA             : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        S_AXI_WSTRB             : in std_logic_vector((C_S_AXI_DATA_WIDTH/8)-1 downto 0);
-        S_AXI_WVALID            : in std_logic;
-        S_AXI_WREADY            : out std_logic;
-        S_AXI_BRESP             : out std_logic_vector(1 downto 0);
-        S_AXI_BVALID            : out std_logic;
-        S_AXI_BREADY            : in std_logic;
-        S_AXI_ARADDR            : in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
-        S_AXI_ARPROT            : in std_logic_vector(2 downto 0);
-        S_AXI_ARVALID           : in std_logic;
-        S_AXI_ARREADY           : out std_logic;
-        S_AXI_RDATA             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        S_AXI_RRESP             : out std_logic_vector(1 downto 0);
-        S_AXI_RVALID            : out std_logic;
-        S_AXI_RREADY            : in std_logic);
+m_axis_mm2s_aclk        : in std_logic;
+m_axis_mm2s_aresetn     : in std_logic;
+seconds                 : in std_logic_vector(5 downto 0);
+minutes                 : in std_logic_vector(5 downto 0);
+hours                   : in std_logic_vector(4 downto 0);
+configRegW              : out std_logic;
+configReg1              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg2              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg3              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg4              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg5              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg6              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg7              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg8              : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg19             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg20             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg21             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg22             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg23             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg24             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg25             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg26             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg27             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg28             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg29             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg30             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg31             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg32             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+configReg41             : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+gridLockDatao           : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+gridDataRdEn            : out std_logic;
+Kernal1                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal2                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal3                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal4                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal5                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal6                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal7                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal8                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+Kernal9                 : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+KernalConfig            : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+S_AXI_ACLK              : in std_logic;
+S_AXI_ARESETN           : in std_logic;
+S_AXI_AWADDR            : in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+S_AXI_AWPROT            : in std_logic_vector(2 downto 0);
+S_AXI_AWVALID           : in std_logic;
+S_AXI_AWREADY           : out std_logic;
+S_AXI_WDATA             : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+S_AXI_WSTRB             : in std_logic_vector((C_S_AXI_DATA_WIDTH/8)-1 downto 0);
+S_AXI_WVALID            : in std_logic;
+S_AXI_WREADY            : out std_logic;
+S_AXI_BRESP             : out std_logic_vector(1 downto 0);
+S_AXI_BVALID            : out std_logic;
+S_AXI_BREADY            : in std_logic;
+S_AXI_ARADDR            : in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+S_AXI_ARPROT            : in std_logic_vector(2 downto 0);
+S_AXI_ARVALID           : in std_logic;
+S_AXI_ARREADY           : out std_logic;
+S_AXI_RDATA             : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+S_AXI_RRESP             : out std_logic_vector(1 downto 0);
+S_AXI_RVALID            : out std_logic;
+S_AXI_RREADY            : in std_logic);
 end component videoProcess_v1_0_config_axis;
 component buffer_controller is
 generic (
@@ -275,12 +299,24 @@ port (
     configReg8     : in std_logic_vector(b_data_width-1 downto 0);
     configReg19    : in std_logic_vector(b_data_width-1 downto 0);
     configReg20    : in std_logic_vector(b_data_width-1 downto 0);
-    configReg40    : in std_logic_vector(b_data_width-1 downto 0);
+    configReg21    : in std_logic_vector(b_data_width-1 downto 0);
     configReg41    : out std_logic_vector(b_data_width-1 downto 0);
     gridLockDatao  : out std_logic_vector(31 downto 0);
     gridDataRdEn   : in std_logic;
     endOfFrame     : in std_logic;
     threshold      : in std_logic_vector(s_data_width-1 downto 0);
+    -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb   : out std_logic;
+--    fifoFullhdb    : out std_logic;
+--    fifoWritehdb   : out std_logic;
+--    gridDataRdEndb : out std_logic;
+--    gridDataEndb   : out std_logic;
+--    clearDatadb    : out std_logic;
+--    gridLocationdb : out std_logic;
+--    fifoDataindb   : out std_logic_vector(b_data_width-1 downto 0);
+--    cpuGridContdb  : out std_logic_vector(s_data_width-1 downto 0);
+--    fifoDataOutdb  : out std_logic_vector(b_data_width-1 downto 0);
     -----------------------------------------------------------
     Kernal1        : in std_logic_vector(b_data_width-1 downto 0);
     Kernal2        : in std_logic_vector(b_data_width-1 downto 0);
@@ -329,6 +365,19 @@ end component frameProcess;
     signal configReg8           : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
     signal configReg19          : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
     signal configReg20          : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0):= (others => '0');
+    signal configReg21 			: std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg22             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg23             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg24             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg25             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg26             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg27             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg28             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg29             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg30             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg31             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg32             : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+    signal configReg41          : std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);    
     signal configRegW           : std_logic:='0';
     signal en1pvalid            : std_logic:='0';
     signal en2pvalid            : std_logic:='0';
@@ -381,8 +430,8 @@ end component frameProcess;
     signal oData                : std_logic_vector(i_data_width-1 downto 0);
     signal threshold            : std_logic_vector(15 downto 0) :=x"0100";
     
-    signal configReg40 			   :  std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
-    signal configReg41             :  std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
+
+
     signal gridLockDatao           :  std_logic_vector(C_config_axis_DATA_WIDTH-1 downto 0);
     signal gridDataRdEn            :  std_logic;
     
@@ -486,12 +535,24 @@ port map(
     configReg8          => configReg8,
     configReg19         => configReg19,
     configReg20         => configReg20,
-    configReg40         => configReg40,
+    configReg21         => configReg21,
     configReg41         => configReg41,
     gridLockDatao       => gridLockDatao,
     gridDataRdEn        => gridDataRdEn,
     threshold           => threshold,
     endOfFrame          => endOfFrame,
+    -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb   => fifoEmptyhdb,
+--    fifoFullhdb    => fifoFullhdb,
+--    fifoWritehdb   => fifoWritehdb,
+--    gridDataRdEndb => gridDataRdEndb,
+--    gridDataEndb   => gridDataEndb,
+--    clearDatadb    => clearDatadb,
+--    gridLocationdb => gridLocationdb,
+--    fifoDataindb   => fifoDataindb,
+--    cpuGridContdb  => cpuGridContdb,
+--    fifoDataOutdb  => fifoDataOutdb,
     -----------------------------------------------------------
 	Kernal1             => Kernal1,
 	Kernal2             => Kernal2,
@@ -586,64 +647,75 @@ port map(
     m_axis_mm2s_tlast    => m_axis_mm2s_tlast,    
     m_axis_mm2s_tdata    => m_axis_mm2s_tdata);
 ---------------------------------------------------------------------------------
--- videoProcess_v1_0_config_axis
----------------------------------------------------------------------------------
-mod9_inst : videoProcess_v1_0_config_axis
-generic map(
-    C_S_AXI_DATA_WIDTH   => conf_data_width,
-    C_S_AXI_ADDR_WIDTH   => C_config_axis_ADDR_WIDTH)
-port map(
-    m_axis_mm2s_aclk     => m_axis_mm2s_aclk,
-	m_axis_mm2s_aresetn  => m_axis_mm2s_aresetn,
-    seconds              => seconds,
-    minutes              => minutes,
-    hours                => hours,
-    configRegW           => configRegW,
-    configReg1           => configReg1,
-    configReg2           => configReg2,
-    configReg3           => configReg3,
-    configReg4           => configReg4,
-    configReg5           => configReg5,
-    configReg6           => configReg6,
-    configReg7           => configReg7,
-    configReg8           => configReg8,
-    configReg19          => configReg19,
-    configReg20          => configReg20,
-    configReg40          => configReg40,
-    configReg41          => configReg41,
-    gridLockDatao        => gridLockDatao,
-    gridDataRdEn         => gridDataRdEn,
-	Kernal1              => Kernal1,
-	Kernal2              => Kernal2,
-	Kernal3              => Kernal3,
-	Kernal4              => Kernal4,
-	Kernal5              => Kernal5,
-	Kernal6              => Kernal6,
-	Kernal7              => Kernal7,
-	Kernal8              => Kernal8,
-	Kernal9              => Kernal9,
-	KernalConfig         => KernalConfig,
-    S_AXI_ACLK           => config_axis_aclk,
-    S_AXI_ARESETN        => config_axis_aresetn,
-    S_AXI_AWADDR         => config_axis_awaddr,
-    S_AXI_AWPROT         => config_axis_awprot,
-    S_AXI_AWVALID        => config_axis_awvalid,
-    S_AXI_AWREADY        => config_axis_awready,
-    S_AXI_WDATA          => config_axis_wdata,
-    S_AXI_WSTRB          => config_axis_wstrb,
-    S_AXI_WVALID         => config_axis_wvalid,
-    S_AXI_WREADY         => config_axis_wready,
-    S_AXI_BRESP          => config_axis_bresp,
-    S_AXI_BVALID         => config_axis_bvalid,
-    S_AXI_BREADY         => config_axis_bready,
-    S_AXI_ARADDR         => config_axis_araddr,
-    S_AXI_ARPROT         => config_axis_arprot,
-    S_AXI_ARVALID        => config_axis_arvalid,
-    S_AXI_ARREADY        => config_axis_arready,
-    S_AXI_RDATA          => config_axis_rdata,
-    S_AXI_RRESP          => config_axis_rresp,
-    S_AXI_RVALID         => config_axis_rvalid,
-    S_AXI_RREADY         => config_axis_rready);
+    -- videoProcess_v1_0_config_axis
+    ---------------------------------------------------------------------------------
+    mod9_inst : videoProcess_v1_0_config_axis
+    generic map(
+        C_S_AXI_DATA_WIDTH   => conf_data_width,
+        C_S_AXI_ADDR_WIDTH   => C_config_axis_ADDR_WIDTH)
+    port map(
+        m_axis_mm2s_aclk     => m_axis_mm2s_aclk,
+        m_axis_mm2s_aresetn  => m_axis_mm2s_aresetn,
+        seconds              => seconds,
+        minutes              => minutes,
+        hours                => hours,
+        configRegW           => configRegW,
+        configReg1           => configReg1,
+        configReg2           => configReg2,
+        configReg3           => configReg3,
+        configReg4           => configReg4,
+        configReg5           => configReg5,
+        configReg6           => configReg6,
+        configReg7           => configReg7,
+        configReg8           => configReg8,
+        configReg19          => configReg19,
+        configReg20          => configReg20,
+        configReg21          => configReg21,
+        configReg22          => configReg22,
+        configReg23          => configReg23,
+        configReg24          => configReg24,
+        configReg25          => configReg25,
+        configReg26          => configReg26,
+        configReg27          => configReg27,
+        configReg28          => configReg28,
+        configReg29          => configReg29,
+        configReg30          => configReg30,
+        configReg31          => configReg31,
+        configReg32          => configReg32,
+        configReg41          => configReg41,
+        gridLockDatao        => gridLockDatao,
+        gridDataRdEn         => gridDataRdEn,
+        Kernal1              => Kernal1,
+        Kernal2              => Kernal2,
+        Kernal3              => Kernal3,
+        Kernal4              => Kernal4,
+        Kernal5              => Kernal5,
+        Kernal6              => Kernal6,
+        Kernal7              => Kernal7,
+        Kernal8              => Kernal8,
+        Kernal9              => Kernal9,
+        KernalConfig         => KernalConfig,
+        S_AXI_ACLK           => config_axis_aclk,
+        S_AXI_ARESETN        => config_axis_aresetn,
+        S_AXI_AWADDR         => config_axis_awaddr,
+        S_AXI_AWPROT         => config_axis_awprot,
+        S_AXI_AWVALID        => config_axis_awvalid,
+        S_AXI_AWREADY        => config_axis_awready,
+        S_AXI_WDATA          => config_axis_wdata,
+        S_AXI_WSTRB          => config_axis_wstrb,
+        S_AXI_WVALID         => config_axis_wvalid,
+        S_AXI_WREADY         => config_axis_wready,
+        S_AXI_BRESP          => config_axis_bresp,
+        S_AXI_BVALID         => config_axis_bvalid,
+        S_AXI_BREADY         => config_axis_bready,
+        S_AXI_ARADDR         => config_axis_araddr,
+        S_AXI_ARPROT         => config_axis_arprot,
+        S_AXI_ARVALID        => config_axis_arvalid,
+        S_AXI_ARREADY        => config_axis_arready,
+        S_AXI_RDATA          => config_axis_rdata,
+        S_AXI_RRESP          => config_axis_rresp,
+        S_AXI_RVALID         => config_axis_rvalid,
+        S_AXI_RREADY         => config_axis_rready);
 ---------------------------------------------------------------------------------
 -- digi_clk
 ---------------------------------------------------------------------------------

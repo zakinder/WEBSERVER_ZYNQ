@@ -26,12 +26,25 @@ port (
     configReg8     : in std_logic_vector(b_data_width-1 downto 0);
     configReg19    : in std_logic_vector(b_data_width-1 downto 0);
     configReg20    : in std_logic_vector(b_data_width-1 downto 0);
-    configReg40    : in std_logic_vector(b_data_width-1 downto 0);
+    configReg21    : in std_logic_vector(b_data_width-1 downto 0);
     configReg41    : out std_logic_vector(b_data_width-1 downto 0);
     gridLockDatao  : out std_logic_vector(b_data_width-1 downto 0);
     gridDataRdEn   : in std_logic;
     endOfFrame     : in std_logic;
     threshold      : in std_logic_vector(s_data_width-1 downto 0);
+    -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb   : out std_logic;
+--    fifoFullhdb    : out std_logic;
+--    fifoWritehdb   : out std_logic;
+--    gridDataRdEndb : out std_logic;
+--    gridDataEndb   : out std_logic;
+--    clearDatadb    : out std_logic;
+--    gridLocationdb : out std_logic;
+--    fifoDataindb   : out std_logic_vector(b_data_width-1 downto 0);
+--    cpuGridContdb  : out std_logic_vector(s_data_width-1 downto 0);
+--    fifoDataOutdb  : out std_logic_vector(b_data_width-1 downto 0);
+    -----------------------------------------------------------
     -----------------------------------------------------------
     Kernal1        : in std_logic_vector(b_data_width-1 downto 0);
     Kernal2        : in std_logic_vector(b_data_width-1 downto 0);
@@ -175,12 +188,24 @@ port (
     iXcont          : in std_logic_vector(s_data_width-1 downto 0);
     iYcont          : in std_logic_vector(s_data_width-1 downto 0);
     -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb   : out std_logic;
+--    fifoFullhdb    : out std_logic;
+--    fifoWritehdb   : out std_logic;
+--    gridDataRdEndb : out std_logic;
+--    gridDataEndb   : out std_logic;
+--    clearDatadb    : out std_logic;
+--    gridLocationdb : out std_logic;
+--    fifoDataindb   : out std_logic_vector(b_data_width-1 downto 0);
+--    cpuGridContdb  : out std_logic_vector(s_data_width-1 downto 0);
+--    fifoDataOutdb  : out std_logic_vector(b_data_width-1 downto 0);
+    -----------------------------------------------------------
     endOfFrame      : in std_logic;
     gridDataRdEn    : in std_logic;
     gridLockDatao   : out std_logic_vector(b_data_width-1 downto 0);
     configReg19     : in std_logic_vector(b_data_width-1 downto 0);
     configReg20     : in std_logic_vector(b_data_width-1 downto 0);
-    configReg40     : in std_logic_vector(b_data_width-1 downto 0);
+    configReg21     : in std_logic_vector(b_data_width-1 downto 0);
     configReg41     : out std_logic_vector(b_data_width-1 downto 0);
     -----------------------------------------------------------
     oGridLocation   : out std_logic;
@@ -464,12 +489,24 @@ port map(
     iXcont              => Xcont,
     iYcont              => Ycont,
     -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb   => fifoEmptyhdb,
+--    fifoFullhdb    => fifoFullhdb,
+--    fifoWritehdb   => fifoWritehdb,
+--    gridDataRdEndb => gridDataRdEndb,
+--    gridDataEndb   => gridDataEndb,
+--    clearDatadb    => clearDatadb,
+--    gridLocationdb => gridLocationdb,
+--    fifoDataindb   => fifoDataindb,
+--    cpuGridContdb  => cpuGridContdb,
+--    fifoDataOutdb  => fifoDataOutdb,
+    -----------------------------------------------------------
     endOfFrame          => endOfFrame,
     gridDataRdEn        => gridDataRdEn,
     gridLockDatao       => gridLockDatao,
     configReg19         => configReg19,
     configReg20         => configReg20,
-    configReg40         => configReg40,
+    configReg21         => configReg21,
     configReg41         => configReg41,
     -----------------------------------------------------------
     oGridLocation       => grid2Lock,

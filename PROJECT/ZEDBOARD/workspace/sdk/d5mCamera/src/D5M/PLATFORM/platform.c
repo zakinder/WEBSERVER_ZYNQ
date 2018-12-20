@@ -1,9 +1,9 @@
+// LAST TESTED : 12/16/2018
 #include <xil_cache.h>
 #ifdef STDOUT_IS_16550
  #include "xuartns550_l.h"
  #define UART_BAUD 9600
 #endif
-
 void enable_caches()
 {
 #ifdef __PPC__
@@ -18,14 +18,11 @@ void enable_caches()
 #endif
 #endif
 }
-
 void disable_caches()
 {
     Xil_DCacheDisable();
     Xil_ICacheDisable();
 }
-
-
 void init_uart()
 {
     #ifdef STDOUT_IS_16550
@@ -33,7 +30,6 @@ void init_uart()
     XUartNs550_SetLineControlReg(STDOUT_BASEADDR, XUN_LCR_8_DATA_BITS);
     #endif
 }
-
 //void init_platform()
 //{
 //    enable_caches();

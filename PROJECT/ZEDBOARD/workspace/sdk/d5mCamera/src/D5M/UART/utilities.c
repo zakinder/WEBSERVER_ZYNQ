@@ -1,3 +1,4 @@
+// LAST TESTED : 12/16/2018
 #include "utilities.h"
 #include <stdio.h>
 #include "uartio.h"
@@ -5,12 +6,13 @@ void cmds_menu() {
 printf(
 "\n"
 "|--------------------------|\n"
-"|D5M RELEASE V11.3.2018    |\n"
+"|D5M RELEASE V12.16.2018   |\n"
 "|--------------------------|\n"
 "|Hardware test             |\n"
 "|--------------------------|\n"
-"| d5m testpattern          |\n"
-"| d5m colorgain            |\n"
+"| cmds fifomode            |\n"
+"| cmds readfifo            |\n"
+"| cmds gridpoint           |\n"
 "| cmds exposer             |\n"
 "| cmds readexposer         |\n"
 "| cmds readd5m             |\n"
@@ -19,6 +21,8 @@ printf(
 "| cmds updated5m           |\n"
 "| cmds configd5m           |\n"
 "| cmds videochannel        |\n"
+"| d5m testpattern          |\n"
+"| d5m colorgain            |\n"
 "| xbright                  |\n"
 "| genimage                 |\n"
 "| zoom                     |\n"

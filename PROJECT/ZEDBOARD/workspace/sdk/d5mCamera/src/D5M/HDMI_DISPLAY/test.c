@@ -1,4 +1,4 @@
-
+// LAST TESTED : 12/16/2018
 #include <xaxivdma.h>
 #include <xaxivdma_hw.h>
 #include <xil_cache.h>
@@ -13,7 +13,6 @@
 #else
 #include "xscugic.h"
 #endif
-
 #define NUM_BANK_BITS		XPAR_S6DDR_0_MEM_BANKADDR_WIDTH
 #define NUM_ROW_BITS		XPAR_S6DDR_0_MEM_ADDR_WIDTH
 #define NUM_COL_BITS		XPAR_S6DDR_0_MEM_NUM_COL_BITS
@@ -206,34 +205,7 @@ static void WriteCallBack(void *CallbackRef, u32 Mask);
 static void WriteErrorCallBack(void *CallbackRef, u32 Mask);
 static int VdmaStart(void);
 u16 frame[V_ACTIVE][H_STRIDE];
-
-
-
-/*****************************************************************************/
-/*
-*
-* Uart16550 setup routine, need to set baudrate to 9600 and data bits to 8
-*
-*
-******************************************************************************/
-/*****************************************************************************/
-/**
-*
-* Main function
-*
-* This function is the main entry point of the example on DMA core. It sets up
-* DMA engine to be ready to receive and send frames, and start the transfers.
-* It waits for the transfer of the specified number of frame sets, and check
-* for transfer errors.
-*
-* @return
-*		- XST_SUCCESS if example finishes successfully
-*		- XST_FAILURE if example fails.
-*
-* @note		None.
-*
-******************************************************************************/
-void test()
+void VdmaInit()
 {
 	int status;
 	ReadFrameAddr = READ_ADDRESS_BASE;
@@ -250,26 +222,16 @@ void test()
 }
 int VdmaStart(void){
 	int status;
-
 	int i = 0;
-
-
 	u16 *fptr2 = (void *) READ_ADDRESS_BASE;
 	xil_printf("pointer to address %d\r\n", fptr2);
 	xil_printf("value at init %d\r\n", *fptr2);
-
-
-
 	u16 *fptr =&frame;
 	fptr = fptr2;
-
 	xil_printf("&frame %d\r\n", &frame);
 	xil_printf("&frame %d\r\n", frame);
 	xil_printf("pointer to address %d\r\n", fptr);
 	xil_printf("value at init %d\r\n", *fptr);
-
-
-
 	XAxiVdma_Config *VdmaConfig;
 	XAxiVdma_FrameCounter FrameCfg;
 	//Retrieve config
@@ -291,7 +253,6 @@ int VdmaStart(void){
 	//set up frames store
 	//print("Setting FrameStore\n\r");
 	//set up read and write
-
 	u32 Addr;
 	ReadCfg.VertSizeInput = V_ACTIVE;
 	ReadCfg.HoriSizeInput = H_STRIDE;
@@ -309,13 +270,11 @@ int VdmaStart(void){
 		xil_printf("Read channel config failed %d\r\n", status);
 		return XST_FAILURE;
 	}
-
 	Addr = READ_ADDRESS_BASE;
 	for(i = 0; i < NUMBER_OF_READ_FRAMES; i++) {
 			ReadCfg.FrameStoreStartAddr[i] = Addr;
 			Addr += H_STRIDE * V_ACTIVE;
 	}
-
 	xil_printf("frame %d\r\n", frame[0][0]);
 	status = XAxiVdma_DmaSetBufferAddr(&AxiVdma, XAXIVDMA_READ, ReadCfg.FrameStoreStartAddr);
 	if (status != XST_SUCCESS) {
@@ -358,9 +317,6 @@ int VdmaStart(void){
 	}
 	status = XAxiVdma_StartReadFrame(&AxiVdma, &ReadCfg);
 	status = XAxiVdma_StartWriteFrame(&AxiVdma, &WriteCfg);
-
-
-
 //	for(i = 0; i < 50; i++) {
 //		xil_printf("frame %d\r\n", frame[2][i]);
 //	}
@@ -392,11 +348,8 @@ int VdmaStart(void){
 	xil_printf("\tMM2S Start Address 1: %x\r\n",XAxiVdma_ReadReg(AxiVdma.ReadChannel.ChanBase, XAXIVDMA_MM2S_ADDR_OFFSET + XAXIVDMA_START_ADDR_OFFSET));
 	xil_printf("pointer to address %d\r\n", fptr);
 	xil_printf("value at init %d\r\n", *fptr);
-
 	xil_printf("pointer to address %d\r\n", fptr2);
 	xil_printf("value at init %d\r\n", *fptr2);
-
-
 	/*
 	status =  XAxiVdma_DmaStart(&AxiVdma, XAXIVDMA_READ);
 	if (status != XST_SUCCESS) {

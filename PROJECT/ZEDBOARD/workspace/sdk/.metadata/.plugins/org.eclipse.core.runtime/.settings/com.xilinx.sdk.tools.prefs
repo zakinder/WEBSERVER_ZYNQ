@@ -1,0 +1,16 @@
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.bss=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.data=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.data1=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.fixup=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.rodata=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.rodata1=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.sbss=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.sbss2=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.sdata=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.sdata2=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:.text=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:heap=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:heap-size=4096
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:stack=ps7_ddr_0
+com.xilinx.sdk.linkgen.prefs.d5mCamera\:stack-size=4096
+eclipse.preferences.version=1

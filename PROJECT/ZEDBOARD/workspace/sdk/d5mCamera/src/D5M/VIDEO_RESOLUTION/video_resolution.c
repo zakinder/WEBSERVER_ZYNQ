@@ -1,3 +1,4 @@
+// LAST TESTED : 12/16/2018
 #include "video_resolution.h"
 #include "../SYSTEM_CONFIG_HEADER/system_config_header.h"
 #include <xil_printf.h>
@@ -45,7 +46,6 @@ Xuint32 vres_get_timing(Xuint32 ResolutionId, vres_timing_t *pTiming )
     pTiming->VSyncWidth    = vres_resolutions[ResolutionId].VSyncWidth;
     pTiming->VBackPorch    = vres_resolutions[ResolutionId].VBackPorch;
     pTiming->VSyncPolarity = vres_resolutions[ResolutionId].VSyncPolarity;
-
 //    xil_printf("vres_get_timing(%d,...)\n\r", ResolutionId );
 //    xil_printf("\tpName = %s\n\r", pTiming->pName );
 //    xil_printf("\tHActiveVideo = %d\n\r", pTiming->HActiveVideo );

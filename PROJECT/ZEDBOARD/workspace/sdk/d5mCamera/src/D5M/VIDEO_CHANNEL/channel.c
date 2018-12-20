@@ -1,3 +1,4 @@
+// LAST TESTED : 12/16/2018
 #include <xil_types.h>
 #include <stdio.h>
 #include <xil_io.h>
@@ -28,6 +29,11 @@ void point_Interest(u16 videoType)
 {
     D5M_mWriteReg(D5M_BASE,REG19,videoType);
 }
+void pointInterestFixed()
+{
+    u16 pointInterestFixedValue = 0x0064;
+    D5M_mWriteReg(D5M_BASE,REG19,pointInterestFixedValue);
+}
 void deltaConfig(u16 videoType)
 {
     D5M_mWriteReg(D5M_BASE,REG20,videoType);
@@ -36,17 +42,26 @@ void framefifoMode(u16 fifoMode)
 {
     D5M_mWriteReg(D5M_BASE,REG21,fifoMode);
 }
+void framefifoFixed()
+{
+    u16 fifoFixedValue = 0x0004;
+    D5M_mWriteReg(D5M_BASE,REG21,fifoFixedValue);
+}
 void frameReadData()
 {
-    pvideo.fifoData    = D5M_mReadReg(D5M_BASE,REG1);//gridLockDatao
-    printf("pvideo.fifoData %d\n\r",(unsigned) (pvideo.fifoData));
+	//1st 12
+	//2nd 7 to read and lock rather stream mode.
+    u16 emptyRegister = (D5M_mReadReg(D5M_BASE,REG1));
+	// just leaving 12 will result stream mode
+    usleep(1);
+    printf("%d %d %d\n\r",(unsigned) ((D5M_mReadReg(D5M_BASE,REG2)) & 0xff),((unsigned) ((D5M_mReadReg(D5M_BASE,REG2)) & 0xff00)>>8),(unsigned) ((D5M_mReadReg(D5M_BASE,REG2)) & 0xff0000)>>16);
 }
 void fifoStatus()
 {
-    pvideo.lockData    = D5M_mReadReg(D5M_BASE,REG2);
-    pvideo.fifoEmptyh  = D5M_mReadReg(D5M_BASE,REG3);
-    pvideo.fifoFullh   = D5M_mReadReg(D5M_BASE,REG4);
-    pvideo.cpuGridCont = D5M_mReadReg(D5M_BASE,REG5);
+    pvideo.lockData    = D5M_mReadReg(D5M_BASE,REG3);
+    pvideo.fifoEmptyh  = D5M_mReadReg(D5M_BASE,REG4);
+    pvideo.fifoFullh   = D5M_mReadReg(D5M_BASE,REG5);
+    pvideo.cpuGridCont = D5M_mReadReg(D5M_BASE,REG6);
     printf("pvideo.lockData %d\n\r",(unsigned) (pvideo.lockData));
     printf("pvideo.fifoEmptyh %d\n\r",(unsigned) (pvideo.fifoEmptyh));
     printf("pvideo.fifoFullh %d\n\r",(unsigned) (pvideo.fifoFullh));

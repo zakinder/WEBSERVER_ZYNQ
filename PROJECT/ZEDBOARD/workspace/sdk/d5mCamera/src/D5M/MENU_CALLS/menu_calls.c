@@ -1,3 +1,4 @@
+// LAST TESTED : 12/16/2018
 #include "menu_calls.h"
 #include <stdio.h>
 #include <xil_io.h>
@@ -23,9 +24,6 @@ void menu_calls(ON_OFF) {
     u32 green_value;
     u32 blue_value;
     u32 th_set;
-    u16 sec;
-    u16 min;
-    u32 hr;
     int i;
     u32 system_time;
     while (menu_calls_enable == TRUE)
@@ -110,6 +108,51 @@ void menu_calls(ON_OFF) {
             colorBars_vdma_hdmi(&pvideo);
             cmd_status_substate = enter_value_or_quit("colorbars",colorbars);current_state = cmd_status_substate;break;
             /*****************************************************************************************************************/
+        case rgb:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(7);
+            cmd_status_substate = enter_value_or_quit("rgb",rgb);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case sharp:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(4);
+            cmd_status_substate = enter_value_or_quit("sharp",sharp);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case blur:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(5);
+            cmd_status_substate = enter_value_or_quit("blur",blur);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case hsv:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(6);
+            cmd_status_substate = enter_value_or_quit("hsv",hsv);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+            /*****************************************************************************************************************/
+        case parttern1:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(8);
+            cmd_status_substate = enter_value_or_quit("parttern1",parttern1);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case parttern2:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(9);
+            cmd_status_substate = enter_value_or_quit("parttern2",parttern2);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case parttern3:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(10);
+            cmd_status_substate = enter_value_or_quit("parttern3",parttern3);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case parttern4:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(11);
+            cmd_status_substate = enter_value_or_quit("parttern4",parttern4);current_state = cmd_status_substate;break;
+            /*****************************************************************************************************************/
+        case parttern5:
+            /*****************************************************************************************************************/
+        	videoFeatureSelect(12);
+            cmd_status_substate = enter_value_or_quit("parttern5",parttern5);current_state = cmd_status_substate;break;
         case cmds_printpixel:
             /*****************************************************************************************************************/
             printf("Enter row Address\n");
@@ -143,7 +186,7 @@ void menu_calls(ON_OFF) {
             menu_print_prompt();
             value = uart_prompt_io();
             point_Interest(value);
-            current_state = cmds_griddelta;
+            current_state = mainmenu;
             break;
             /*****************************************************************************************************************/
         case cmds_griddelta:
@@ -153,7 +196,7 @@ void menu_calls(ON_OFF) {
             menu_print_prompt();
             value = uart_prompt_io();
             deltaConfig(value);
-            current_state = cmds_fifomode;
+            current_state = mainmenu;
             break;
             /*****************************************************************************************************************/
         case cmds_fifomode:
@@ -170,43 +213,41 @@ void menu_calls(ON_OFF) {
             value = uart_prompt_io();
             framefifoMode(value);
             fifoStatus();
-            current_state = cmds_readfifo;
+            current_state = mainmenu;
             break;
             /*****************************************************************************************************************/
         case cmds_readfifo:
-            /*****************************************************************************************************************/
+//            /*****************************************************************************************************************/
             printf("Enter cpuGridCont value for all read cmds_readfifo\n");
             menu_print_prompt();
             value = uart_prompt_io();
             for (i = 0; i < value; i++)
             {
             	frameReadData();
-                xil_printf("\r\n");
+
             }
-            current_state = cmds_gridpoint;
-            break;
+            cmd_status_substate = enter_value_or_quit("cmds_readfifo",cmds_readfifo);current_state = cmd_status_substate;break;
+
+
+//        case cmds_readfifo:
+//            /*****************************************************************************************************************/
+//        	frameReadData();
+//            cmd_status_substate = enter_value_or_quit("cmds_readfifo",cmds_readfifo);current_state = cmd_status_substate;break;
             /*****************************************************************************************************************/
-
-
+            /*****************************************************************************************************************/
         case vga:
             /*****************************************************************************************************************/
         	 point_Interest(10);
-        	 deltaConfig(100);
-        	 pvideo.time = D5M_mReadReg(D5M_BASE,REG30);
-        	         if (pvideo.time !=  (0x0000ff & D5M_mReadReg(D5M_BASE,REG30)))
-        	         {
-        	        	 i++;
-        	        	 point_Interest(i);
-        	         }
-        	         if (i == 5000) {
-        	        	 i=0;
-        	        	 point_Interest(i);
-        	         }
+        	             for (i = 0; i < 1000; i++)
+        	             {
+        	             	frameReadData();
+        	                 xil_printf("\r\n");
+        	             }
+        	             fifoStatus();
             //printf("Current State : camera_exposer\n");
             //d5m_config2();
             //camerarUpdate();
-            current_state = vga;
-            break;
+        	cmd_status_substate = enter_value_or_quit("vga",vga);current_state = cmd_status_substate;break;
         case cmds_updated5m:
             /*****************************************************************************************************************/
             D5mReg(&d5m_rreg_ptr);
@@ -227,14 +268,11 @@ void menu_calls(ON_OFF) {
             if (uart_io == 0)
             {
                 ret = img_write_register(address,value);
-
                 if (!ret)
                 {printf("ERROR : XST_FAILURE: %d\n" ,ret);}
-
                 camerarUpdate();
                 break;
             }else {current_state = mainmenu;break;}
-                
             /*****************************************************************************************************************/
         case cmds_configd5m:
             /*****************************************************************************************************************/
@@ -267,7 +305,6 @@ void menu_calls(ON_OFF) {
                 }
             }else {current_state = mainmenu;break;}
             /*****************************************************************************************************************/
-
             /*****************************************************************************************************************/
         case hdmi:
             /*****************************************************************************************************************/
@@ -355,17 +392,15 @@ void menu_calls(ON_OFF) {
             printf("th_set2[%x]\n",(unsigned) ((th_set & 0xffff0000)>>16));
             cmd_status_substate = enter_value_or_quit("threshold",threshold);current_state = cmd_status_substate;break;
             /*****************************************************************************************************************/
-
-
         case timex:
             /*****************************************************************************************************************/
-            sec=D5M_mReadReg(D5M_BASE,REG30);
-            min=D5M_mReadReg(D5M_BASE,REG31);
-            hr=D5M_mReadReg(D5M_BASE,REG32);
+            pvideo.sec = D5M_mReadReg(D5M_BASE,REG30);
+            pvideo.min = D5M_mReadReg(D5M_BASE,REG31);
+            pvideo.hr = D5M_mReadReg(D5M_BASE,REG32);
+            printf("%d:%d:%d\n\r",(unsigned) pvideo.hr,(unsigned) pvideo.min,(unsigned) pvideo.sec);
             system_time=(((0x0000ff& D5M_mReadReg(D5M_BASE,REG32))<<16)|((D5M_mReadReg(D5M_BASE,REG31) & 0x0000ff)<<8)|(0x0000ff & D5M_mReadReg(D5M_BASE,REG30)));
             pvideo.time = (((0x0000ff& D5M_mReadReg(D5M_BASE,REG32))<<16)|((D5M_mReadReg(D5M_BASE,REG31) & 0x0000ff)<<8)|(0x0000ff & D5M_mReadReg(D5M_BASE,REG30)));
             uart_Yellow_Text();
-            printf("%d:%d:%d\n\r",(unsigned) hr,(unsigned) min,(unsigned) sec);
             uart_Default_Text();
             cmd_status_substate = enter_value_or_quit("timex",timex);current_state = cmd_status_substate;break;
             /*****************************************************************************************************************/
@@ -376,11 +411,6 @@ void menu_calls(ON_OFF) {
             uartvalue();
             current_state =uartcmd(mainmenu,cmds_uart);
             break;
-
-
-
-
-
         default:
             printf("\r\n");
             current_state = mainmenu;
@@ -389,5 +419,4 @@ void menu_calls(ON_OFF) {
     }
     printf("Break\r\n");
     menu_calls_enable = TRUE;
-
 }

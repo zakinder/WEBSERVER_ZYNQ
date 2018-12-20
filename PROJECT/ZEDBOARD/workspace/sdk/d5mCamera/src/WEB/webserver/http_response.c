@@ -13,7 +13,6 @@
 #include "platform_gpio.h"
 #include "webserver.h"
 #include "../../D5M/VIDEO_CHANNEL/channel.h"
-
 #define LEDS_TOGGLE XPAR_LEDS_8BITS_BASEADDR
 #define D5MBASE XPAR_PS_VIDEO_D5M_VIDEOPROCESS_CONFIG_AXIS_BASEADDR
 #define out_buf_size 4
@@ -21,9 +20,7 @@ int out_buf_i = 0 ;
 static char bufVideo[out_buf_size];
 static char dataVideo[12];
 static char regPack[4];
-
 static char registerPack[12];
-
 static char *registe;
 u32 address = 0x01000000 + 0x01000000;
     static u16 value;
@@ -34,7 +31,6 @@ u32 address = 0x01000000 + 0x01000000;
     static u16 r_gain;
     static int y;
     static int x;
-
     char *notfound_header =
     "<html> \
     <head> \
@@ -75,18 +71,12 @@ void fetchPack(char *sample) {
 	}
 }
 void dataPack(int sample) {
-
 	out_buf_i++;
 	snprintf(regPack, sizeof(regPack), "%d", sample);
 	strcpy(dataVideo[out_buf_i*4], regPack);
 	printf  ("%s\n", regPack);
-
-
-
 	if (out_buf_i == out_buf_size) {
-
 			for (out_buf_i = 0 ; out_buf_i != out_buf_size ; out_buf_i++){
-
 				xil_printf("%d  %s\n\r",out_buf_i, dataVideo[out_buf_i*4]);
 			}
 			//pbuf_free(p);
@@ -230,7 +220,6 @@ int DO_HTTP_POST(struct tcp_pcb *pcb, char *req, int rlen)
     int n;
     int len;
     char *p;
-
     static char *txPixel;
     SWITCH_STATE = GET_SWITCH_STATE();
     if(SWITCH_STATE==0)
@@ -256,17 +245,8 @@ int DO_HTTP_POST(struct tcp_pcb *pcb, char *req, int rlen)
                     pvideo.pixelvalue = (Xil_In16(address) & 0xffff);//[mpeg444Y 8 bits only] [1byte read in given address][instead Xil_In16 for 2 bytes]
                 }
                 //duals
-
                 	dataPack(pvideo.pixelvalue & 0x00ff);
-
-
-
-
-
-
-
                 char *json_response = regPack;//pointer of buff_json_response
-
                 len = GENERATE_HTTP_HEADER(buf, "js", strlen(regPack));//header infront of buff_json_response
                 p = buf + len;//add buf and buff_json_response lenght size to pointer p char
                 strcpy(p, json_response);//copy string to pointer p

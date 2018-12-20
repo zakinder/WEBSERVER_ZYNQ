@@ -144,7 +144,15 @@ void uartvalue();
 #define hdmi 0x1C1FB
 #define vga 0x327F
 #define xbright 0xA8B548
-
+#define blur 0x1AE04
+#define sharp 0x134D38
+#define hsv 0x2D94
+#define rgb 0x30F0
+#define parttern1 0x494E615D
+#define parttern2 0x494E615E
+#define parttern3 0x494E615F
+#define parttern4 0x494E6160
+#define parttern5 0x494E6161
 #define fullhdmi 0x447C467B
 #define zoom 0x20CAF
 #define threshold 0xF8E00808

@@ -22,7 +22,18 @@ entity videoProcess_v1_0_config_axis is
 		configReg8    			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         configReg19 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         configReg20 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-        configReg40 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg21 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg22 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg23 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg24 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg25 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg26 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg27 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg28 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg29 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg30 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg31 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        configReg32 			: out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         configReg41 			: in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         gridLockDatao           : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
         gridDataRdEn            : out std_logic;
@@ -108,7 +119,8 @@ architecture arch_imp of videoProcess_v1_0_config_axis is
     signal configRegister32      : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     -------------------------------------------------------------------------
     signal slv_reg_rden          : std_logic;
-    signal slv_reg_srden         : std_logic;
+    signal gridDataRd            : std_logic := '0';
+    signal gridDataRdPulse       : std_logic := '0';
     signal slv_reg_wren          : std_logic;
     signal reg_data_out          : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal byte_index            : integer;
@@ -490,115 +502,114 @@ begin
       end if;
     end process;
     slv_reg_rden <= axi_arready and S_AXI_ARVALID and (not axi_rvalid) ;
-    process (seconds, minutes, hours, configReg41, gridLockDatao, configRegister3, configRegister4, configRegister5, configRegister6, configRegister7, configRegister8, configRegister9, configRegister10, configRegister11, configRegister12, configRegister13, configRegister14, configRegister15, configRegister16, configRegister17, configRegister18, configRegister19, configRegister20, configRegister21, configRegister22, configRegister23, configRegister24, configRegister25, configRegister26, configRegister27, configRegister28, configRegister29, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
+    process (seconds, minutes, hours, configReg41, gridLockDatao, configRegister1, configRegister7, configRegister8, configRegister9, configRegister10, configRegister11, configRegister12, configRegister13, configRegister14, configRegister15, configRegister16, configRegister17, configRegister18, configRegister19, configRegister20, configRegister21, configRegister22, configRegister23, configRegister24, configRegister25, configRegister26, configRegister27, configRegister28, configRegister29, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
     variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
     begin
         loc_addr := axi_araddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
         case loc_addr is
           when b"00000" =>
-            reg_data_out <= gridLockDatao;
-            slv_reg_srden <='1';
+            reg_data_out <= configRegister1;
+            gridDataRd <='1';
           when b"00001" =>
-            slv_reg_srden <='0';
-            reg_data_out <= x"000000" & "0000000" & configReg41(0);
-            slv_reg_srden <='0';
+            reg_data_out <= gridLockDatao;
+            gridDataRd <='0';
           when b"00010" =>
-            reg_data_out <= x"000000" & "0000000" & configReg41(1);
-            slv_reg_srden <='0';
+            reg_data_out <= x"000000" & "0000000" & configReg41(0);
+            gridDataRd <='0';
           when b"00011" =>
-            reg_data_out <= x"000000" & "0000000" & configReg41(2);
-            slv_reg_srden <='0';
+            reg_data_out <= x"000000" & "0000000" & configReg41(1);
+            gridDataRd <='0';
           when b"00100" =>
-            reg_data_out <= x"000000" & configReg41(23 downto 16);
-            slv_reg_srden <='0';
+            reg_data_out <= x"000000" & "0000000" & configReg41(2);
+            gridDataRd <='0';
           when b"00101" =>
-            reg_data_out <= configRegister6;
-            slv_reg_srden <='0';
+            reg_data_out <= x"000000" & configReg41(23 downto 16);
+            gridDataRd <='0';
           when b"00110" =>
             reg_data_out <= configRegister7;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"00111" =>
             reg_data_out <= configRegister8;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01000" =>
             reg_data_out <= configRegister9;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01001" =>
             reg_data_out <= configRegister10;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01010" =>
             reg_data_out <= configRegister11;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01011" =>
             reg_data_out <= configRegister12;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01100" =>
             reg_data_out <= configRegister13;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01101" =>
             reg_data_out <= configRegister14;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01110" =>
             reg_data_out <= configRegister15;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"01111" =>
             reg_data_out <= configRegister16;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10000" =>
             reg_data_out <= configRegister17;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10001" =>
             reg_data_out <= configRegister18;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10010" =>
             reg_data_out <= configRegister19;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10011" =>
             reg_data_out <= configRegister20;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10100" =>
             reg_data_out <= configRegister21;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10101" =>
             reg_data_out <= configRegister22;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10110" =>
             reg_data_out <= configRegister23;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"10111" =>
             reg_data_out <= configRegister24;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11000" =>
             reg_data_out <= configRegister25;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11001" =>
             reg_data_out <= configRegister26;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11010" =>
             reg_data_out <= configRegister27;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11011" =>
             reg_data_out <= configRegister28;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11100" =>
             reg_data_out <= configRegister29;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11101" =>
             reg_data_out <= x"000000" & "00" & seconds;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11110" =>
             reg_data_out <= x"000000" & "00" & minutes;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when b"11111" =>
             reg_data_out <= x"000000" & "000" & hours;
-            slv_reg_srden <='0';
+            gridDataRd <='0';
           when others =>
-            slv_reg_srden <='0';
+            gridDataRd <='0';
             reg_data_out  <= (others => '0');
         end case;
     end process;
     
-    gridDataRdEn <= '1' when (slv_reg_srden ='1' and slv_reg_rden ='1') else '0';
+
     
     process( S_AXI_ACLK ) is
     begin
@@ -636,6 +647,17 @@ begin
 		dataBuffer(18) <= configRegister19;
 		dataBuffer(19) <= configRegister20;
 		dataBuffer(20) <= configRegister21;
+		dataBuffer(21) <= configRegister22;
+		dataBuffer(22) <= configRegister23;
+		dataBuffer(23) <= configRegister24;
+		dataBuffer(24) <= configRegister25;
+		dataBuffer(25) <= configRegister26;
+		dataBuffer(26) <= configRegister27;
+		dataBuffer(27) <= configRegister28;
+		dataBuffer(28) <= configRegister29;
+		dataBuffer(29) <= configRegister30;
+		dataBuffer(30) <= configRegister31;
+		dataBuffer(31) <= configRegister32;
 		-------------------------
     end if;
     end process portaW;
@@ -662,15 +684,38 @@ begin
 		KernalConfig   <= dataBuffer(17);
 		configReg19    <= dataBuffer(18);
 		configReg20    <= dataBuffer(19);
-		configReg40    <= dataBuffer(20);
+		configReg21    <= dataBuffer(20);
+		configReg22    <= dataBuffer(21);
+		configReg23    <= dataBuffer(22);
+		configReg24    <= dataBuffer(23);
+		configReg25    <= dataBuffer(24);
+		configReg26    <= dataBuffer(25);
+		configReg27    <= dataBuffer(26);
+		configReg28    <= dataBuffer(27);
+		configReg29    <= dataBuffer(28);
+		configReg30    <= dataBuffer(29);
+		configReg31    <= dataBuffer(30);
+		configReg32    <= dataBuffer(31);
 		-------------------------
     end if;
     end process portar;
+    
+
+    process (m_axis_mm2s_aclk)begin
+        if (rising_edge (m_axis_mm2s_aclk)) then
+          if (gridDataRd ='1' and gridDataRdPulse ='0') then
+          gridDataRdEn <= '1';
+          else
+          gridDataRdEn <= '0';
+          end if;
+        end if;
+    end process;    
     wsync: process (m_axis_mm2s_aclk)begin
-    if (rising_edge (m_axis_mm2s_aclk)) then
-            w1sync      <= slv_reg_wren;
-            w2sync      <= w1sync;
-            configRegW  <= w2sync;
-    end if;
+        if (rising_edge (m_axis_mm2s_aclk)) then
+            gridDataRdPulse <= gridDataRd;
+            w1sync          <= slv_reg_wren;
+            w2sync          <= w1sync;
+            configRegW      <= w2sync;
+        end if;
     end process wsync;
 end arch_imp;

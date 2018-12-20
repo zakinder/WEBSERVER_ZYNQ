@@ -1,3 +1,4 @@
+// LAST TESTED : 12/16/2018
 #include "i2c_d5m.h"
 #include <sleep.h>
 #include <stdio.h>
@@ -137,61 +138,61 @@ void camerawrite(u16 value) {
     printf("Column Size After @ 0x004 : %d\n",columnsize);
 }
 void d5m_config1() {
-	u16 R_20_value = 0xc000; //    Mirror Row and Columns
-    d5m_registers_write(32,R_20_value);   // Mirror Row and Columns
-    d5m_registers_write(9,1984);     // Exposure default_exposure
-    d5m_registers_write(5,0);        // H_Blanking
-    d5m_registers_write(6,25);       // V_Blanking
-    d5m_registers_write(10,32768);   // change latch
-    d5m_registers_write(43,2);      // [h2B][h0013]Green 1 Gain
-    d5m_registers_write(44,3);     // [h2C][h009A]Blue Gain
-    d5m_registers_write(45,3);     // [h2D][h019C]Red Gain
-    d5m_registers_write(46,2);      // [h2E][h0013]Green 2 Gain
-    d5m_registers_write(16,81);      // set up PLL power on
-    d5m_registers_write(17,6151);    // PLL_m_Factor<<8+PLL_n_Divider
-    d5m_registers_write(18,2);       // PLL_p1_Divider
-    usleep(1000); //1ms
-    d5m_registers_write(16,83);      // set USE PLL
-    usleep(1000); //1ms
-    d5m_registers_write(152,0);      // disble calibration
-    d5m_registers_write(1,54);       // sensor_start_row
-    d5m_registers_write(2,16);       // sensor_start_column
-    d5m_registers_write(3,959);      // sensor_row_size
-    d5m_registers_write(4,1279);     // sensor_column_size
-    d5m_registers_write(34,0);       // sensor_row_mode
-    d5m_registers_write(35,0);       // sensor_column_mode
-    d5m_registers_write(73,424);     // row black target
+    u16 R_20_value = 0xc000;           //    Mirror Row and Columns
+    d5m_registers_write(32,R_20_value);// Mirror Row and Columns
+    d5m_registers_write(9,1984);       // Exposure default_exposure
+    d5m_registers_write(5,0);          // H_Blanking
+    d5m_registers_write(6,25);         // V_Blanking
+    d5m_registers_write(10,32768);     // change latch
+    d5m_registers_write(43,2);         // [h2B][h0013]Green 1 Gain
+    d5m_registers_write(44,3);         // [h2C][h009A]Blue Gain
+    d5m_registers_write(45,3);         // [h2D][h019C]Red Gain
+    d5m_registers_write(46,2);         // [h2E][h0013]Green 2 Gain
+    d5m_registers_write(16,81);        // set up PLL power on
+    d5m_registers_write(17,6151);      // PLL_m_Factor<<8+PLL_n_Divider
+    d5m_registers_write(18,2);         // PLL_p1_Divider
+    usleep(1000);                      //1ms
+    d5m_registers_write(16,83);        // set USE PLL
+    usleep(1000);                      //1ms
+    d5m_registers_write(152,0);        // disble calibration
+    d5m_registers_write(1,54);         // sensor_start_row
+    d5m_registers_write(2,16);         // sensor_start_column
+    d5m_registers_write(3,959);        // sensor_row_size
+    d5m_registers_write(4,1279);       // sensor_column_size
+    d5m_registers_write(34,0);         // sensor_row_mode
+    d5m_registers_write(35,0);         // sensor_column_mode
+    d5m_registers_write(73,424);       // row black target
 }
 void d5m_config2() {
-    //VGA_640x480p60 iZOOM_MODE not
-	u16 R_20_value = 0xc000; //    Mirror Row and Columns
-    d5m_registers_write(32,R_20_value);   // Mirror Row and Columns
-    d5m_registers_write(9,1984);     // [h09][h7c0]Exposure default_exposure
-    d5m_registers_write(5,0);        // [h05][h0000]H_Blanking
-    d5m_registers_write(6,25);       // [h06][h19]V_Blanking
-    d5m_registers_write(10,32768);   // [h0A][h8000]change latch
-    d5m_registers_write(43,3);      // [h2B][h0013]Green 1 Gain
-    d5m_registers_write(44,2);     // [h2C][h009A]Blue Gain
-    d5m_registers_write(45,2);     // [h2D][h019C]Red Gain
-    d5m_registers_write(46,3);      // [h2E][h0013]Green 2 Gain
-    d5m_registers_write(16,81);      // [h10][h0051]set up PLL power on
-    d5m_registers_write(17,6151);    // [h11][h1f04]PLL_m_Factor<<8+PLL_n_Divider
-    d5m_registers_write(18,2);       // [h12][h0001]PLL_p1_Divider
-    usleep(1000); //1ms
-    d5m_registers_write(16,83);      // [h10][h0053]set USE PLL
-    usleep(1000); //1ms
-    d5m_registers_write(152,0);      // [h98][h1807]disble calibration
-    d5m_registers_write(1,54);       // [h01][h0036]sensor_start_row
-    d5m_registers_write(2,16);       // [h02][h0010]sensor_start_column
-    d5m_registers_write(3,959);      // [h03][h03BF]sensor_row_size
-    d5m_registers_write(4,1279);     // [h04][h04FF]sensor_column_size
-    d5m_registers_write(34,0);       // [h22][h0000]sensor_row_mode
-    d5m_registers_write(35,0);       // [h23][h0000]sensor_column_mode
-    d5m_registers_write(73,424);     // [h49][h01A8]row black target
+                                       //VGA_640x480p60 iZOOM_MODE not
+    u16 R_20_value = 0xc000;           //    Mirror Row and Columns
+    d5m_registers_write(32,R_20_value);// Mirror Row and Columns
+    d5m_registers_write(9,1984);       // [h09][h7c0]Exposure default_exposure
+    d5m_registers_write(5,0);          // [h05][h0000]H_Blanking
+    d5m_registers_write(6,25);         // [h06][h19]V_Blanking
+    d5m_registers_write(10,32768);     // [h0A][h8000]change latch
+    d5m_registers_write(43,3);         // [h2B][h0013]Green 1 Gain
+    d5m_registers_write(44,2);         // [h2C][h009A]Blue Gain
+    d5m_registers_write(45,2);         // [h2D][h019C]Red Gain
+    d5m_registers_write(46,3);         // [h2E][h0013]Green 2 Gain
+    d5m_registers_write(16,81);        // [h10][h0051]set up PLL power on
+    d5m_registers_write(17,6151);      // [h11][h1f04]PLL_m_Factor<<8+PLL_n_Divider
+    d5m_registers_write(18,2);         // [h12][h0001]PLL_p1_Divider
+    usleep(1000);                      //1ms
+    d5m_registers_write(16,83);        // [h10][h0053]set USE PLL
+    usleep(1000);                      //1ms
+    d5m_registers_write(152,0);        // [h98][h1807]disble calibration
+    d5m_registers_write(1,54);         // [h01][h0036]sensor_start_row
+    d5m_registers_write(2,16);         // [h02][h0010]sensor_start_column
+    d5m_registers_write(3,959);        // [h03][h03BF]sensor_row_size
+    d5m_registers_write(4,1279);       // [h04][h04FF]sensor_column_size
+    d5m_registers_write(34,0);         // [h22][h0000]sensor_row_mode
+    d5m_registers_write(35,0);         // [h23][h0000]sensor_column_mode
+    d5m_registers_write(73,424);       // [h49][h01A8]row black target
 }
 void d5m_config3() {
     //VGA_640x480p60 iZOOM_MODE
-	u16 R_20_value = 0xc000; //    Mirror Row and Columns
+    u16 R_20_value = 0xc000; //    Mirror Row and Columns
     d5m_registers_write(32,R_20_value);   // Mirror Row and Columns
     d5m_registers_write(9,1984);     // [h09][h7c0]Exposure default_exposure
     d5m_registers_write(5,0);        // [h05][h0000]H_Blanking
@@ -302,8 +303,8 @@ int camera_exposer(u16 exposer_value) {
     }
 }
 void pRexposer(){
-	pvideo.exposer = d5mregread(0x009);
-	printf("Exposer :%i\n",(unsigned)pvideo.exposer);
+    pvideo.exposer = d5mregread(0x009);
+    printf("Exposer :%i\n",(unsigned)pvideo.exposer);
 }
 void d5mcolorgain() {
     int ret = 0;

@@ -1,8 +1,7 @@
+// LAST TESTED : 12/16/2018
 #ifndef __CHANNEL_H__
 #define __CHANNEL_H__
-
 #include <xil_types.h>
-
 #define RegKernel_1   32
 #define RegKernel_2   36
 #define RegKernel_3   40
@@ -13,7 +12,6 @@
 #define RegKernel_8   60
 #define RegKernel_9   64
 #define KernalConfig  68
-
 void sobel();
 void prewitt();
 void computeBrightness();
@@ -29,4 +27,6 @@ void framefifoMode(u16 fifoMode);
 void point_Interest(u16 videoType);
 void frameReadData();
 void fifoStatus();
+void pointInterestFixed();
+void framefifoFixed();
 #endif // __CHANNEL_H__

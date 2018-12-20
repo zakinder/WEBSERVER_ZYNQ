@@ -1,11 +1,9 @@
+// LAST TESTED : 12/16/2018
 #include "uartio.h"
-
 #include <stdio.h>
 #include <string.h>
-
 #include "../SYSTEM_CONFIG_HEADER/system_config_header.h"
 #include "utilities.h"
-
 u8 uart_per_byte_read(u32 uart_address) {
     u8 uart_io;
     if (uart_address == uart_1_baseaddr)
@@ -225,7 +223,6 @@ u32 enter_or_quit(char s[],u32 current_state)
     }
     else
     {
-
         printf("Current State : %s\n",s);
         printf("Press Enter to remain in Current State : %s\n",s);
         uart_Green_Text();

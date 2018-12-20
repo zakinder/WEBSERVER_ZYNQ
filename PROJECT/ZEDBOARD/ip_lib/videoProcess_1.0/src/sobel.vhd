@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+
 entity sobel is
 generic (
     i_data_width   : integer := 8;
@@ -51,13 +52,22 @@ port (
     taps1x        : out std_logic_vector(p_data_width downto 0);
     taps2x        : out std_logic_vector(p_data_width downto 0));
 end component buffer_controller;
-component squareRoot is
-port (                
-    clock      : in std_logic;
-    rst_l      : in std_logic;
-    data_in    : in unsigned(31 downto 0); 
-    data_out   : out unsigned(15 downto 0));
-end component squareRoot;
+--component squareRoot is
+--port (                
+--    clock      : in std_logic;
+--    rst_l      : in std_logic;
+--    data_in    : in unsigned(31 downto 0); 
+--    data_out   : out unsigned(15 downto 0));
+--end component squareRoot;
+component squareRootTop is
+port ( 
+    aclk            : in std_logic;
+    sFXtFoTvalid    : in std_logic;
+    sFXtFoTdata     : in std_logic_vector(31 downto 0);
+    mFOtFxRtvalid   : out std_logic;
+    mFOtFxRtdata    : out std_logic_vector(31 downto 0));
+end component squareRootTop;
+
 ---------------------------------------------------------------------------------
 --GX
 --[-1 +0 +1]
@@ -115,8 +125,9 @@ signal Kernel_9_Y : signed(i_data_width-1 downto 0) :=x"FF";
         mx         : signed (34 downto 0);
         my         : signed (34 downto 0);
         sxy        : signed (34 downto 0);
-        sqr        : unsigned (31 downto 0);
+        sqr        : std_logic_vector (31 downto 0);
         sbo        : unsigned (15 downto 0);
+        sbof       : std_logic_vector (31 downto 0);
     end record;
 ---------------------------------------------------------------------------------
     signal vsobel      : vSB;
@@ -139,11 +150,23 @@ signal Kernel_9_Y : signed(i_data_width-1 downto 0) :=x"FF";
     signal tpd1        : detap;
     signal tpd2        : detap;
     signal tpd3        : detap;
-    signal en_datao    : std_logic;
-    signal d1en        : std_logic;
-    signal d2en        : std_logic;
-    signal d3en        : std_logic;
+    
+    signal en_datao     : std_logic;
+    signal d1en         : std_logic;
+    signal d2en         : std_logic;
+    signal d3en         : std_logic;
+    signal d4en         : std_logic;
+    signal d5en         : std_logic;
+    signal d6en         : std_logic;
+    signal d7en         : std_logic;
+    signal d8en         : std_logic;
+    signal d9en         : std_logic;
+    signal sFXtFoTvalid : std_logic;
+
+
     signal configReg   : integer;
+    signal s_axis_a_tvalid         : std_logic := '1';
+    signal m_axis_result_tvalid    : std_logic := '1';
 ---------------------------------------------------------------------------------
 begin
 configReg <= to_integer(unsigned(configReg6));
@@ -202,7 +225,13 @@ mod6_1_1_inst: buffer_controller
       d1en      <= '0';
       d2en      <= '0';
       d3en      <= '0';
-      oValid    <= '0';
+      d4en      <= '0';
+      d5en      <= '0';
+      d6en      <= '0';
+      d7en      <= '0';
+      d8en      <= '0';
+      sFXtFoTvalid    <= '0';
+
     elsif rising_edge(clk) then
       d1R      <= iRed;  
       d2R      <= d1R;
@@ -213,9 +242,17 @@ mod6_1_1_inst: buffer_controller
       d1en     <= en_datao;
       d2en     <= d1en;
       d3en     <= d2en;
-      oValid   <= d3en;
+      d4en     <= d3en;
+      d5en     <= d4en;
+      d6en     <= d5en;
+      d7en     <= d6en;
+      d8en     <= d7en;
+      sFXtFoTvalid <=d9en;
     end if;
   end process TAP_SIGNED;
+  
+  d9en <= d4en or d8en;
+  
   TAP_DELAY : process (clk, rst_l)
   begin
     if rst_l = '0' then
@@ -357,15 +394,24 @@ mod6_1_1_inst: buffer_controller
     if rst_l = '0' then
         sobel.sqr <=(others => '0');
     elsif rising_edge(clk) then
-        sobel.sqr    <= unsigned(std_logic_vector(sobel.sxy(31 downto 0)));
+        sobel.sqr    <= std_logic_vector(sobel.sxy(31 downto 0));
     end if;
   end process SQROOT;
-mod6_1_2_inst: squareRoot
+--mod6_1_2_inst: squareRoot
+--port map(
+--    clock    => clk,
+--    rst_l    => rst_l,
+--    data_in  => sobel.sqr,
+--    data_out => sobel.sbo);
+
+mod6_1_2_inst: squareRootTop
 port map(
-    clock    => clk,
-    rst_l    => rst_l,
-    data_in  => sobel.sqr,
-    data_out => sobel.sbo);
+    aclk              => clk,
+    sFXtFoTvalid      => sFXtFoTvalid,
+    sFXtFoTdata       => sobel.sqr,
+    mFOtFxRtvalid     => oValid,
+    mFOtFxRtdata      => sobel.sbof);
+sobel.sbo    <= unsigned(std_logic_vector(sobel.sbof(15 downto 0)));
 ------------------------------------------------------------------------------------------------
   RT : process (clk, rst_l) begin
     if rst_l = '0' then
@@ -392,3 +438,48 @@ port map(
   end process RT;
 ------------------------------------------------------------------------------------------------
 end architecture;
+--library ieee;
+--use ieee.std_logic_1164.all;
+--use ieee.numeric_std.all;
+--entity squareRoot is port( 
+--    clock      : in std_logic;
+--    rst_l      : in std_logic;
+--    data_in    : in unsigned(31 downto 0); 
+--    data_out   : out unsigned(15 downto 0)); 
+--end squareRoot;
+--architecture behaviour of squareRoot  is
+--    function  sqrt  ( d : UNSIGNED ) return UNSIGNED is
+--    variable a : unsigned(31 downto 0):=d;  --original input.
+--    variable q : unsigned(15 downto 0):=(others => '0');  --result.
+--    variable left,right,r : unsigned(17 downto 0):=(others => '0');  --input to adder/sub.r-remainder.
+--    variable i : integer:=0;
+--    begin
+--    for i in 0 to 15 loop
+--    right(0):='1';
+--    right(1):=r(17);
+--    right(17 downto 2):=q;
+--    left(1 downto 0):=a(31 downto 30);
+--    left(17 downto 2):=r(15 downto 0);
+--    a(31 downto 2):=a(29 downto 0);  --shifting by 2 bit.
+--    if ( r(17) = '1') then
+--    r := left + right;
+--    else
+--    r := left - right;
+--    end if;
+--    q(15 downto 1) := q(14 downto 0);
+--    q(0) := not r(17);
+--    end loop; 
+--    return q;
+--    end sqrt;
+--begin
+
+--sqRoot : process (clock, rst_l) begin
+--  if (rst_l = '0') then
+--	data_out <=(others => '0');
+--  elsif rising_edge(clock) then
+--    data_out <= sqrt (data_in);
+--  end if;
+--end process sqRoot;
+
+
+--end behaviour;

@@ -266,6 +266,7 @@ BEGIN LIBRARY
  PARAMETER dhcp_does_arp_check = true
  PARAMETER emac_number = 1
  PARAMETER lwip_dhcp = true
+ PARAMETER lwip_stats = true
  PARAMETER lwip_tcp_keepalive = true
  PARAMETER mem_size = 524288
  PARAMETER memp_n_pbuf = 2048

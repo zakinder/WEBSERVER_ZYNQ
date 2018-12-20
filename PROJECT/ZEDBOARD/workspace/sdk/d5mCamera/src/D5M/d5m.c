@@ -1,3 +1,4 @@
+// LAST TESTED : 12/16/2018
 #include <stdio.h>
 #include <xparameters.h>
 #include "HDMI_DISPLAY/hdmi_display.h"
@@ -21,13 +22,19 @@ void d5m()
     pvideo.exposer  = 0;
     pvideo.brightness = 0;
     pvideo.pixelvalue = 0;
+    pvideo.sec = D5M_mReadReg(D5M_BASE,REG30);
+    pvideo.min = D5M_mReadReg(D5M_BASE,REG31);
+    pvideo.hr  = D5M_mReadReg(D5M_BASE,REG32);
+    printf("%d:%d:%d\n\r",(unsigned) pvideo.hr,(unsigned) pvideo.min,(unsigned) pvideo.sec);
     //buffer_vdma_hdmi(&pvideo);
     //colorBars_vdma_hdmi(&pvideo);
     //bars(&pvideo);
     videoFeatureSelect(0x0004);
     d5m_vdma_hdmi(&pvideo);
-    test();
+    VdmaInit();
     selected_channel();
+    pointInterestFixed();
+    framefifoFixed();
     //d5mtestpattern(0x0004);
     //exposerCompansate();
 }

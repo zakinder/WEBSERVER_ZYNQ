@@ -18,12 +18,24 @@ port (
     iXcont          : in std_logic_vector(s_data_width-1 downto 0);
     iYcont          : in std_logic_vector(s_data_width-1 downto 0);
     -----------------------------------------------------------
+    --debug
+--    fifoEmptyhdb   : out std_logic;
+--    fifoFullhdb    : out std_logic;
+--    fifoWritehdb   : out std_logic;
+--    gridDataRdEndb : out std_logic;
+--    gridDataEndb   : out std_logic;
+--    clearDatadb    : out std_logic;
+--    gridLocationdb : out std_logic;
+--    fifoDataindb   : out std_logic_vector(b_data_width-1 downto 0);
+--    cpuGridContdb  : out std_logic_vector(s_data_width-1 downto 0);
+--    fifoDataOutdb  : out std_logic_vector(b_data_width-1 downto 0);
+    -----------------------------------------------------------
     endOfFrame      : in std_logic;
     gridDataRdEn    : in std_logic;
     gridLockDatao   : out std_logic_vector(b_data_width-1 downto 0);
     configReg19     : in std_logic_vector(b_data_width-1 downto 0);
     configReg20     : in std_logic_vector(b_data_width-1 downto 0);
-    configReg40     : in std_logic_vector(b_data_width-1 downto 0);
+    configReg21     : in std_logic_vector(b_data_width-1 downto 0);
     configReg41     : out std_logic_vector(b_data_width-1 downto 0);
     -----------------------------------------------------------
     oGridLocation   : out std_logic;
@@ -85,14 +97,16 @@ end component;
     signal pYcont           : integer;
     signal gridLocationCont : integer := 0;
     signal gridContMax      : integer := 0;
-    signal point_Interest   : integer;
-    signal deltaConfig      : integer;
+    signal point_Interest   : integer := 0;
+    signal deltaConfig      : integer := 0;
     signal Cur_Color_R      : std_logic_vector(i_data_width-1 downto 0);
     signal Cur_Color_G      : std_logic_vector(i_data_width-1 downto 0);
     signal Cur_Color_B      : std_logic_vector(i_data_width-1 downto 0); 
     --------------------------------------------------------------
-    type autoResolution is (idleMode,waitFrameLock,frameWrite,dataReadAtSink,frameLocked,frameRead,frameStreamMode,ClearFifoRegisters);
+    type autoResolution is (idleMode,waitFrameLock,frameWrite,dataReadAtSink,frameLocked,frameRead,frameStreamMode);
     signal autoResolutionFrame : autoResolution;
+    type masterState is (idleRead,masterRead);
+    signal automasterframe : masterState;    
     signal gridLocation    : std_logic;
     signal gridLocationR   : std_logic;
     signal gridLockData    : std_logic_vector(23 downto 0);
@@ -109,9 +123,9 @@ end component;
     signal cpuIdleMode     : std_logic;
     signal lockData        : std_logic; 
     signal cpuGridCont     : std_logic_vector(15 downto 0);
+    signal stateStatus     : std_logic_vector(3 downto 0);
     signal gridDataEn      : std_logic;
-    
-    
+     signal gridRdEn        : std_logic;    
 begin
     -----------------------------------------------------------
     point_Interest      <= to_integer(unsigned(configReg19(s_data_width-1 downto 0)));
@@ -121,7 +135,7 @@ begin
     -----------------------------------------------------------
     pixelRangeP: process (clk)begin
         if rising_edge(clk) then
-            if (((pXcont >= point_Interest) and (pXcont <= deltaConfig)) and ((pYcont >= point_Interest) and (pYcont <= deltaConfig))) and (iValid = '1') then
+            if (((pXcont >= point_Interest) and (pXcont <= point_Interest + deltaConfig + 127)) and ((pYcont >= point_Interest) and (pYcont <= point_Interest + deltaConfig + 127))) and (iValid = '1') then
                 gridLocation <='1';
             else
                 gridLocation <='0';
@@ -143,44 +157,80 @@ begin
         end if;
     end process gridLocationP;
     -----------------------------------------------------------
-    cpuAckLock     <=configReg40(0);
-    cpuReadData    <=configReg40(1);
-    cpuReadytoRead <=configReg40(2);
-    cpuStreamMode  <=configReg40(3);
-    cpuIdleMode    <=configReg40(4);
+    cpuAckLock     <=configReg21(0);
+    cpuReadData    <=configReg21(1);
+    cpuReadytoRead <=configReg21(2);
+    cpuStreamMode  <=configReg21(3);
+    cpuIdleMode    <=configReg21(4);
     -----------------------------------------------------------
     configReg41    <=x"00" & cpuGridCont & "00000" & fifoFullh & fifoEmptyh & lockData;
     gridLockDatao  <=x"00" & gridLockData;
     -----------------------------------------------------------
+--    fifoEmptyhdb   <= fifoEmptyh;
+--    fifoFullhdb    <= fifoFullh;
+--    fifoWritehdb   <= fifoWriteh;
+--    gridDataRdEndb <= gridDataRdEn;
+--    gridDataEndb   <= gridRdEn;
+--    clearDatadb    <= clearData;
+--    gridLocationdb <= gridLocation;
+--    fifoDataindb   <= x"00" & fifoDatain;
+--    cpuGridContdb  <= std_logic_vector(to_unsigned(gridContMax,16));
+--    fifoDataOutdb  <= x"00" & gridLockData;
+    -----------------------------------------------------------
+    -----------------------------------------------------------
+    --            ___________________________________________________________________________________
+    --           |                                                                                   |
+    --      _____v____                   _______________                    _______________          |
+    --     |          |                 |               |                  |               |         |
+    --     | idleMode |--cpuIdleMode--> | waitFrameLock |--gridLocation--> |  frameWrite   |         |
+    --     |__________|                 |_______________|                  |_______________|         |
+    --                                                                             |                 |
+    --             ___________________________fifoFullh____________________________|                 |
+    --            |                                                                                  |
+    --      ______v______                      _______________                  _______________      |
+    --     |             |                    |               |                |               |     |
+    --     | frameLocked |--cpuReadytoRead--> |   frameRead   |--fifoEmptyh--> |frameStreamMode|-----/
+    --     |_____________|                    |_______________|                |_______________|
+    --                                            |     ^
+    --                                         ___v_____|_____ 
+    --                                        |               |
+    --                                        | frameReadNext |
+    --                                        |_______________|
+    --
     process (clk) begin
         if (rising_edge (clk)) then
             if (rst_l = '0') then
                 autoResolutionFrame <= idleMode;
                 lockData  <= '0';
                 clearData <= '1';
+            stateStatus <="0000";
             else
             case (autoResolutionFrame) is
             when idleMode =>
+            stateStatus <="0001";
                 if (cpuIdleMode = '1') then
                     autoResolutionFrame <= idleMode;            
                 else
                     autoResolutionFrame <= waitFrameLock;    
                 end if;
             when waitFrameLock =>
+            stateStatus <="0010";
                     lockData  <= '0';
                     clearData <= '0';
                 if (gridLocation = '1') then
-                    autoResolutionFrame <= frameWrite;            
+                    autoResolutionFrame <= dataReadAtSink;            
                 else
                     autoResolutionFrame <= waitFrameLock;    
                 end if;
             when dataReadAtSink =>
+            stateStatus <="0011";
                 if (endOfFrame = '1') then
                     autoResolutionFrame <= frameWrite;
                 else
                     autoResolutionFrame <= dataReadAtSink;
                 end if;
             when frameWrite =>
+            stateStatus <="0100";
                     --Delayed 1 cycle
                     fifoWriteh    <= gridLocationR;
                     fifoDatain    <= fifoDatainR;
@@ -190,6 +240,7 @@ begin
                     autoResolutionFrame <= frameWrite;
                 end if;
             when frameLocked =>
+            stateStatus <="0101";
                     lockData   <= '1';
                     fifoWriteh <= '0';
                 if (cpuReadytoRead = '1') then
@@ -198,37 +249,57 @@ begin
                     autoResolutionFrame <= frameLocked;
                 end if;
             when frameRead =>
-                gridDataEn <=gridDataRdEn;
+            stateStatus <="0110";
                 if (fifoEmptyh = '1') then
                     autoResolutionFrame <= frameStreamMode;
                     clearData  <= '1';
                     lockData   <= '0';
                 else
                     autoResolutionFrame <= frameRead;
-                    clearData <= '0';
-                    lockData  <= '1';
                 end if;
+
             when frameStreamMode =>
+            stateStatus <="1001";
                 clearData <= '0';
                 if (cpuStreamMode = '1') then
                     autoResolutionFrame <= idleMode;
                 else
                     autoResolutionFrame <= frameStreamMode;
                 end if;
-            when ClearFifoRegisters =>
-                    fifoWriteh    <= '1';
-                    fifoDatain    <=(others => '0');
-                if (fifoFullh = '1') then
-                    autoResolutionFrame <= frameLocked;
-                else
-                    autoResolutionFrame <= ClearFifoRegisters;
-                end if;
             when others =>
+            stateStatus <="1111";
                 autoResolutionFrame <= waitFrameLock;
             end case;
             end if;
         end if;
     end process;
+    process (rclk) begin
+        if (rising_edge (rclk)) then
+            if (rst_l = '0') then
+                automasterframe <= idleRead;
+                gridRdEn <= '0';
+            else
+            case (automasterframe) is
+            when idleRead =>
+            gridRdEn <= '0';
+                if (fifoFullh = '1') then
+                    automasterframe <= masterRead;            
+                else
+                    automasterframe <= idleRead;    
+                end if;
+            when masterRead =>
+            gridRdEn <= gridDataRdEn;
+                if (fifoEmptyh = '1') then
+                    automasterframe <= idleRead;            
+                else
+                    automasterframe <= masterRead;    
+                end if;
+            when others =>
+                automasterframe <= idleRead;
+            end case;
+            end if;
+        end if;
+    end process;    
     -----------------------------------------------------------
     gridLockFifo_int : gridLockFifo
     generic map(
@@ -237,7 +308,7 @@ begin
     port map(
         Data_out     => gridLockData,
         empty_out    => fifoEmptyh,
-        ReadEn_in    => gridDataEn,
+        ReadEn_in    => gridRdEn,
         RClk         => rclk,
         Data_in      => fifoDatain,
         Full_out     => fifoFullh,
