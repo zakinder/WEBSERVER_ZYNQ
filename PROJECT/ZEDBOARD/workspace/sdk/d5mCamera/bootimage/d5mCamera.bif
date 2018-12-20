@@ -4,5 +4,5 @@ the_ROM_image:
 	[bootloader]V:\RELEASED\ZEDBOARD\workspace\sdk\fsbl\Debug\fsbl.elf
 	V:\RELEASED\ZEDBOARD\workspace\sdk\ZEDBOARD_hw_platform_0\zynq_soc_wrapper.bit
 	V:\RELEASED\ZEDBOARD\workspace\sdk\d5mCamera\Debug\d5mCamera.elf
-	[load = 0x7200000]V:\HTTP\image.mfs
+	[load = 0x7200000]V:\RELEASED\ZEDBOARD\http\image.mfs
 }
